@@ -7,7 +7,7 @@ const bloco_de_terra_com_grama = { //objeto com características simples de um b
 const pack_espaco_1 = new Array(64).fill(bloco_de_terra_com_grama); //simulei um pack de blocos, que pode ser preenchido com no máximo 64 blocos
                                                                     // essa variavel é const apenas para testar a função a seguir
 
-function verificar_Qtd_blocos_de_terra(pack){ //função simples para verificar se pode pegar mais um objeto para o pack ou não
+function verificar_Qtd_blocos(pack){ //função simples para verificar se pode pegar mais um objeto para o pack ou não
     if (pack.length === 64) {
         console.log("Não é mais possível adicionar blocos nesse pack, criando novo pack para preencher")
         let pack_espaco_2 = new Array(64)
