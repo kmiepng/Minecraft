@@ -1,11 +1,23 @@
-let experience_points = Math.random(); // quantidade de xp ganha ao abater monstro, usada para aprimorar certas habilidades de uma determinada ferramenta
+class Ferramenta{
+    constructor(nome, material, durabilidade, velocidade){
+        this.nome = nome; //nome da ferramenta
+        this.material = material; //de que material ela é feita, ex: picareta de ferro
+        this.durabilidade = durabilidade; //quantos blocos consegue quebrar antes de acabar a ferramenta
+        this.velocidade = velocidade; //velocidade de quebra dos blocos
+    }
+}
 
-const bloco_de_terra_com_grama = { //objeto com características simples de um bloco de terra com grama
-    nome: "Terra com Grama", cor: "marrom e verde"
-};
+class Bloco{
+    constructor(nome, cores, resistência){
+        this.nome = nome; //nome do bloco
+        this.cores = cores; //esquema de cores simples do bloco
+        this.resistência = resistência; //depende da ferramenta que usa, se ta quebrando com a mao ou não
+        // alguns blocos só quebram com picareta
+    }
+}
 
-const pack_espaco_1 = new Array(64).fill(bloco_de_terra_com_grama); //simulei um pack de blocos, que pode ser preenchido com no máximo 64 blocos
-                                                                    // essa variavel é const apenas para testar a função a seguir
+let experience_points = Math.random(); // quantidade de xp ganha ao abater monstro
+// usada para aprimorar certas habilidades de uma determinada ferramenta
 
 function verificar_Qtd_blocos(pack){ //função simples para verificar se pode pegar mais um objeto para o pack ou não
     if (pack.length === 64) {
