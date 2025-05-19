@@ -14,6 +14,16 @@ class Itens{
     usar_bloco(){
         this.quantidade > 0? this.quantidade-- : console.log(`Não há mais ${this.nome} no slot`);
     }
+    adicionar_bloco(quantidade){
+        let espaço_sobrando = this.quantidade - quantidade
+        if (this.quantidade === 64){
+            console.log('Slot cheio');
+        } else if (espaço_sobrando >= quantidade){
+            this.quantidade += quantidade;
+        } else{
+            this.quantidade += espaço_sobrando;
+        }
+    }
     informacao_item(){
         let informacao = `${this.nome}, Quantidade: ${this.quantidade}`;  //informações básicas
 
@@ -53,4 +63,7 @@ diamante.informacao_item();
 picareta_de_ferro.informacao_item();
 
 let pedregulho = new Itens('Pedregulho', 'Bloco', 64)
+pedregulho.informacao_item();
+pedregulho.adicionar_bloco(10);
+pedregulho.usar_bloco();
 pedregulho.informacao_item();
