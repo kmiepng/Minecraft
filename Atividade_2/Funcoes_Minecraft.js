@@ -26,7 +26,7 @@ class Itens{
     }
     informacao_item(){
         let informacao
-        this.tipo === 'Ferramenta'? informacao = `${this.nome}` : informacao = `${this.nome}, Quantidade: ${this.quantidade}`
+        this.tipo === ('Ferramenta' || 'Armadura')? informacao = `${this.nome}` : informacao = `${this.nome}, Quantidade: ${this.quantidade}`
         if (this.durabilidade !== null){
             this.fortalecimento !== null? informacao += `, Durabilidade: ${this.durabilidade}, Fortalecimento: ${this.fortalecimento}` : informacao += `, Durabilidade: ${this.durabilidade}`;
         }
@@ -64,3 +64,5 @@ pedregulho.informacao_item();
 pedregulho.adicionar_bloco(10);
 pedregulho.usar_bloco();
 pedregulho.informacao_item();
+pedregulho.adicionar_bloco(10)
+pedregulho.informacao_item()
