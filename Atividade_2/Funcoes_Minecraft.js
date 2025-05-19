@@ -15,7 +15,7 @@ class Itens{
         this.quantidade > 0? this.quantidade-- : console.log(`Não há mais ${this.nome} no slot`);
     }
     adicionar_bloco(quantidade){
-        let espaço_sobrando = this.quantidade - quantidade
+        let espaço_sobrando = 64 - this.quantidade;
         if (this.quantidade === 64){
             console.log('Slot cheio');
         } else if (espaço_sobrando >= quantidade){
