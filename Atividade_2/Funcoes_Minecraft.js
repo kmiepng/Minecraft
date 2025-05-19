@@ -25,13 +25,10 @@ class Itens{
         }
     }
     informacao_item(){
-        let informacao = `${this.nome}, Quantidade: ${this.quantidade}`;  //informações básicas
-
+        let informacao
+        this.tipo === 'Ferramenta'? informacao = `${this.nome}` : informacao = `${this.nome}, Quantidade: ${this.quantidade}`
         if (this.durabilidade !== null){
-            if (this.fortalecimento !== null){ //verifica se há algum encantamento para concatenar às infos
-            informacao += `, Durabilidade: ${this.durabilidade}, Fortalecimento: ${this.fortalecimento}`;
-            }
-            informacao += `, Durabilidade: ${this.durabilidade}`;
+            this.fortalecimento !== null? informacao += `, Durabilidade: ${this.durabilidade}, Fortalecimento: ${this.fortalecimento}` : informacao += `, Durabilidade: ${this.durabilidade}`;
         }
         return console.log(`${informacao}`);
     }
