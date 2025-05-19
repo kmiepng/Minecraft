@@ -1,19 +1,19 @@
 # Minecraft
 
-Repositório para armazernar a atividade 01 da disciplina Projeto de Algoritmos I
+Repositório para armazernar atividades da disciplina Projeto de Algoritmos I
 
 ## Organização
 
 ``` 
 Minecraft/ #Repositório
-├── Atividade_1/ #Atividade inicial, contém um site html simples da descrição do jogo
+├── Atividade_1/ # Atividade inicial, contém um site html simples da descrição do jogo
 │   ├── Minecraft.html
 │   ├── Minecraft.js
 │   └── Minecraft.png        
-└── Atividade 2/ #Segunda atividade, contém um site html mais detalhado do jogo
-    ├── GeneratingRandomVariables/ #Diferentes funções para gerar números aleatórios em um intervalo
-    ├── Funcoes_Minecraft.js #Algumas funcionalidades contidas dentro do Minecraft
-    └── Minecraft_2.html #Site mais detalhado do game
+└── Atividade_2/ # Segunda atividade, contém um site html mais detalhado do jogo
+    ├── GeneratingRandomVariables/ # Diferentes funções para gerar números aleatórios em um intervalo
+    ├── Funcoes_Minecraft.js # Algumas funcionalidades contidas dentro do Minecraft
+    └── Minecraft_2.html # Site mais detalhado do game
 ```
 
 ## Autora
