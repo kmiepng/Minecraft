@@ -24,7 +24,7 @@ class Ferramenta extends Itens{
     fortalecimento : any;
     info_ferramenta(){
         let informacao = this.informacao_item();
-        this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : `Durabilidade: ${this.durabilidade}`;
+        this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : informacao += `Durabilidade: ${this.durabilidade}`;
         return console.log(informacao);
     }
     usar_ferramenta(){
@@ -45,7 +45,7 @@ class Armadura extends Itens{
         fortalecimento : any;
     info_armadura(){
         let informacao = this.informacao_item();
-        this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : `Durabilidade: ${this.durabilidade}`;
+        this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : informacao += `Durabilidade: ${this.durabilidade}`;
         return console.log(informacao);
     }
     equipar_armadura(armadura : any){
