@@ -7,7 +7,7 @@ class slot_Inventário{
     }
     item : any
     capacidade : number
-    adicionar_slot(item){
+    adicionar_slot(item : any){
         const itemExistente = this.item.find(i => i.nome === item.nome)
         if (itemExistente){
             if (item.tipo === 'Ferramenta' || item.tipo === 'Armadura'){
@@ -20,7 +20,7 @@ class slot_Inventário{
         return false
     }
     info(){
-        return console.log(this.item)
+        return this.item.toString()
     }
 }
 

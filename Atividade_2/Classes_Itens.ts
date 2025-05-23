@@ -1,6 +1,6 @@
 //classe de itens do mine
 class Itens{ 
-    constructor(nome, tipo){
+    constructor(nome : string, tipo : string){
         
         this.nome = nome; //nome do item, ex: Picareta de Ferro
         this.tipo = tipo; // tipo do item, ex: Ferramenta
@@ -15,7 +15,7 @@ class Itens{
 }
 
 class Ferramenta extends Itens{
-    constructor(nome, tipo, durabilidade, fortalecimento = null){
+    constructor(nome : string, tipo : string, durabilidade : number, fortalecimento = null){
         super(nome, tipo);
         this.durabilidade = durabilidade; //quantos blocos consegue quebrar antes de acabar a ferramenta
         this.fortalecimento = fortalecimento; //aprimoramentos da ferramenta ex: fortuna I
@@ -34,7 +34,7 @@ class Ferramenta extends Itens{
 }
 
 class Armadura extends Itens{
-    constructor(nome, tipo, armadura_tipo, durabilidade, fortalecimento = null){
+    constructor(nome : string, tipo : string, armadura_tipo : string, durabilidade : number, fortalecimento = null){
         super(nome, tipo);
         this.armadura_tipo = armadura_tipo; //se é capacete, calça, bota ou peitoral
         this.durabilidade = durabilidade; //quanto de dano pode tomar
@@ -48,7 +48,7 @@ class Armadura extends Itens{
         this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : `Durabilidade: ${this.durabilidade}`;
         return console.log(informacao);
     }
-    equipar_armadura(armadura){
+    equipar_armadura(armadura : any){
         const slot_cabeca : any = [];
         const slot_peitoral : any = [];
         const slot_calca : any = [];
@@ -85,7 +85,7 @@ class Armadura extends Itens{
 }
 
 class Bloco extends Itens{
-    constructor(nome, tipo, quantidade = 64){
+    constructor(nome : string, tipo : string, quantidade = 64){
         super(nome, tipo);
         this.quantidade = quantidade;
     }
@@ -95,7 +95,7 @@ class Bloco extends Itens{
         informacao += `Quantidade: ${this.quantidade}`;
         return console.log(informacao);
     }
-    add_bloco(quantidade){
+    add_bloco(quantidade : number){
         let espaço_sobrando = 64 - this.quantidade;
         if (this.quantidade === 64){
             console.log('Slot cheio');
