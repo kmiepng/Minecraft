@@ -129,19 +129,19 @@ class slot_Armadura{
         if (itemExistente){ //aqui é pra verificar o tipo do item que quero remover
             if (armadura.armadura_tipo === 'Capacete'){
                this.slot_cabeca.shift()
-               return this.armaduras
+               return armadura
             }
             if (armadura.armadura_tipo === 'Peitoral'){
                 this.slot_peitoral.shift()
-                return this.armaduras
+                return armadura
             }
             if (armadura.armadura_tipo === 'Calca'){
                 this.slot_calca.shift()
-                return this.armaduras
+                return armadura
             }
             if (armadura.armadura_tipo === 'Bota'){
                 this.slot_bota.shift()
-                return this.armaduras
+                return armadura
             }
         }
         return false //caso não tenha item pra remover, usei esse return false pra não dar erro no código
