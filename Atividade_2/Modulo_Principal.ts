@@ -40,5 +40,5 @@ zumbi.info_mob()
 picareta_de_ferro.usar_ferramenta()
 let fortalecimento = picareta_de_ferro.fortalecimento
 let diamante = drop_Minerio('Diamante', fortalecimento)
-picareta_de_ferro.info_ferramenta()
-diamante.info_bloco()
+console.log(picareta_de_ferro.info_ferramenta())
+console.log(diamante.info_bloco())
