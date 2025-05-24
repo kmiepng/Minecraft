@@ -110,7 +110,11 @@ function drop_Minerio(nome_drop : any, encantamento = null, min_drop = 1, max_dr
     //não to considerando os drops extras de carvão, cobre e redstone
     let drop =  Math.floor(Math.random() * (max_drop-min_drop +1)) + min_drop;
     if (encantamento !== null){ //verificando se quebrou o minério com a picareta encantada
-        encantamento === 'Toque de seda' ? nome_drop = new Bloco(`Bloco de ${nome_drop}`, 'Bloco') : nome_drop = new Minerio(nome_drop, 'Minério', drop);
+        if (encantamento === 'Toque de seda') { 
+            nome_drop = new Bloco(`Bloco de ${nome_drop}`, 'Bloco') 
+        } else if (encantamento === 'Fortuna') {
+            nome_drop = new Minerio(nome_drop, 'Minério', drop);
+        }
     }
     else{
         nome_drop = new Minerio(nome_drop, 'Minério'); //caso não, dropa apenas 1 minério normal
