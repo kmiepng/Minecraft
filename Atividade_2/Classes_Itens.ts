@@ -65,7 +65,7 @@ class Bloco extends Itens{
         return informacao;
     }
     add_bloco(quantidade : number){
-        let capacidade = 64
+        const capacidade = 64
         let espaço_sobrando = capacidade - this.quantidade; //verifica se tem espaço sobrando
         if (this.quantidade === capacidade){ //se a quantidade do bloco for igual a 64 não dá mais pra adicionar bloco
             console.log('Slot cheio');
