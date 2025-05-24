@@ -14,7 +14,7 @@ class Itens{
 }
 //Ferramenta é um tipo de item que serve para facilitar a gameplay, como quebrar blocos, matar mobs, etc.
 class Ferramenta extends Itens{
-    constructor(nome : string, tipo : string, durabilidade : number, fortalecimento = ''){
+    constructor(nome : string, tipo : string, durabilidade : number, fortalecimento = null){
         super(nome, tipo);
         this.durabilidade = durabilidade; //quantos blocos consegue quebrar antes de acabar a ferramenta
         this.fortalecimento = fortalecimento; //aprimoramentos da ferramenta ex: fortuna III
@@ -37,7 +37,7 @@ class Ferramenta extends Itens{
 //Criei a classe armadura pois ao usá-la, ela sai do inventário principal e vai para o invetário de armaduras
 //Então, para testar essa funcionalidade, criei essa classe separada para testar em outro modulo
 class Armadura extends Itens{
-    constructor(nome : string, tipo : string, armadura_tipo : string, durabilidade : number, fortalecimento = ''){
+    constructor(nome : string, tipo : string, armadura_tipo : string, durabilidade : number, fortalecimento = null){
         super(nome, tipo);
         this.armadura_tipo = armadura_tipo; //se é capacete, calça, bota ou peitoral
         this.durabilidade = durabilidade; //quanto de dano pode tomar
