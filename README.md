@@ -12,8 +12,11 @@ Minecraft/ #Repositório
 │   └── Minecraft.png        
 └── Atividade_2/ # Segunda atividade, contém um site html mais detalhado do jogo
     ├── GeneratingRandomVariables/ # Diferentes funções para gerar números aleatórios em um intervalo
-    ├── Funcoes_Minecraft.js # Algumas funcionalidades contidas dentro do Minecraft
-    └── Minecraft_2.html # Site mais detalhado do game
+    ├── Classe_Mob.ts # Classe pra gerar mob
+    ├── Classes_Inventario.ts # Classes pra armazenar os itens
+    ├── Classes_Itens.ts # Classe de criação de itens
+    ├── Minecraft_2.html # Site mais detalhado do game
+    └── Modulo_Principal.ts #Modulo pra testar as classes e funções que criei
 ```
 
 ## Autora
