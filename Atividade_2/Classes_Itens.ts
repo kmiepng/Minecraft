@@ -22,7 +22,7 @@ class Ferramenta extends Itens{
     durabilidade : number;
     fortalecimento : any;
     info_ferramenta(){
-        let informacao = this.informacao_item(); //informação para a ferramenta
+        let informacao = super.informacao_item(); //informação para a ferramenta
         this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : informacao += `Durabilidade: ${this.durabilidade}`;
         return informacao; //verifica se tem encantamento
     }
@@ -47,7 +47,7 @@ class Armadura extends Itens{
         durabilidade : number;
         fortalecimento : any;
     info_armadura(){
-        let informacao = this.informacao_item(); //informação para armadura
+        let informacao = super.informacao_item(); //informação para armadura
         this.fortalecimento !== null ? informacao += `Durabilidade: ${this.durabilidade}, Encantamento: ${this.fortalecimento}` : informacao += `Durabilidade: ${this.durabilidade}`;
         return informacao; //verifica se tem encantamento
     }
@@ -60,7 +60,7 @@ class Bloco extends Itens{
     }
     quantidade : number;
     info_bloco(){
-        let informacao = this.informacao_item();
+        let informacao = super.informacao_item();
         informacao += `Quantidade: ${this.quantidade}`; //um bloco pode ser stackado
         return informacao;
     }
@@ -89,7 +89,7 @@ class Minerio extends Itens{
     }
     quantidade : number
     info_minerio(){
-        let informacao = this.informacao_item();
+        let informacao = super.informacao_item();
         informacao += `Quantidade: ${this.quantidade}`; //mostra as informações do minério
         return informacao;
     }

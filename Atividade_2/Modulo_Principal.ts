@@ -5,6 +5,9 @@ import { Ferramenta, Armadura, Bloco, Minerio, drop_Minerio } from "./Classes_It
 import {slot_Armadura, slot_Inventario} from "./Classes_Invetario"
 import {Mob, vida_aleatoria} from "./Classe_Mob"
 
+/*=================TABELINHA DE INFORMAÇÕES=================
+
+*/
 //criando itens
 let capacete_de_ferro = new Armadura('Capacete de Ferro', 'Armadura', 'Capacete', 250);
 let bota_de_ferro = new Armadura('Botas de Ferro', 'Armadura', 'Bota', 250);
