@@ -33,7 +33,7 @@ class slot_Inventario{
             item.quantidade -= quantidade; //quero remover, ent remove so oq quero
         } else {
             this.item = [] //senão, remove tudo do slot
-            return item;
+            return item; //retorno o objeto
         }
     }
     info(){
