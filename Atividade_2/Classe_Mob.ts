@@ -15,6 +15,7 @@ class Mob{ //estou criando um mob pra testar se as armaduras tão dando dano ou 
     }
     info_mob(){
         let informacao = `${this.nome}, Vida: ${this.vida}` //informações do mob pra testar no código principal
+        return console.log(informacao)
     }
 }
 
