@@ -65,7 +65,7 @@ class Bloco extends Itens{
         return informacao;
     }
     add_bloco(quantidade : number){
-        const capacidade = 64
+        const capacidade = 64 //evita numero magico
         let espaço_sobrando = capacidade - this.quantidade; //verifica se tem espaço sobrando
         if (this.quantidade === capacidade){ //se a quantidade do bloco for igual a 64 não dá mais pra adicionar bloco
             console.log('Slot cheio');
@@ -94,7 +94,8 @@ class Minerio extends Itens{
         return informacao;
     }
     add_minerio(quantidade : number){ //adiciona da mesma maneira que um bloco
-        let espaço_sobrando = 64 - this.quantidade;
+        const capacidade = 64 //evita numero magico
+        let espaço_sobrando = capacidade - this.quantidade;
         if (this.quantidade === 64){
             console.log('Slot cheio');
         } else if (espaço_sobrando >= quantidade){
