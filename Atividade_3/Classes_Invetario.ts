@@ -163,6 +163,9 @@ class Inventario{
         this.inventario = [];
         this.linhas = linhas;
         this.colunas = colunas;
+        for (let i = 0; i < this.linhas*this.colunas; i++){
+            this.inventario.push(new slot_Inventario())
+        }
     }
     inventario : any;
     linhas : number;
