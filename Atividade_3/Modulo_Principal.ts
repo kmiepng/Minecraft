@@ -6,11 +6,20 @@ import {slot_Armadura, slot_Inventario} from "./Classes_Invetario"
 import {Mob, vida_aleatoria} from "./Classe_Mob"
 
 /*=================TABELINHA DE INFORMAÇÕES=================
-
+FERRAMENTAS DE FERRO: Durabilidade = 250
+CAPACETE DE FERRO: Durabilidade = 165
+PEITORAL DE FERRO: Durabilidade = 240
+CALCA DE FERRO: Durabilidade = 225
+BOTA DE FERRO: Durabilidade = 195
+FERRAMENTAS DE DIAMANTE: Durabilidade = 1561
+CAPACETE DE DIAMANTE: Durabilidade = 363
+PEITORAL DE DIAMANTE: Durabilidade = 528
+CALCA DE DIAMANTE: Durabilidade = 495
+BOTA DE DIAMANTE: Durabilidade = 429
 */
 //criando itens
-let capacete_de_ferro = new Armadura('Capacete de Ferro', 'Armadura', 'Capacete', 250);
-let bota_de_ferro = new Armadura('Botas de Ferro', 'Armadura', 'Bota', 250);
+let capacete_de_ferro = new Armadura('Capacete de Ferro', 'Armadura', 'Capacete', 165);
+let bota_de_ferro = new Armadura('Botas de Ferro', 'Armadura', 'Bota', 195);
 let espada_de_ferro = new Ferramenta('Espada de Ferro', 'Ferramenta', 250);
 let espada_de_ferro_atacar = espada_de_ferro.usar_ferramenta()
 let picareta_de_ferro = new Ferramenta('Picareta de Ferro', 'Ferramenta', 250, 'Toque de seda')
