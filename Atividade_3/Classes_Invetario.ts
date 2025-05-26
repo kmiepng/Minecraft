@@ -157,8 +157,9 @@ class slot_Armadura{
         return this.armaduras //aqui retorno a atualização do array
     }
 }
-//tentei fazer o inventario maior, mas n deu certo
-class Inventario{
+//tentei fazer o inventario maior, aqui eu ia abrigar todos os slots criados na classe slot_Inventario, 
+//mas n deu certo pq ñ sei manipular array direito
+/*class Inventario{ 
     constructor(linhas = 4, colunas = 9){
         this.inventario = [];
         this.linhas = linhas;
@@ -170,6 +171,6 @@ class Inventario{
     inventario : any;
     linhas : number;
     colunas : number;
-}
+}*/
 
 export {slot_Armadura, slot_Inventario}
