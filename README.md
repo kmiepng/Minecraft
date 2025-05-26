@@ -18,7 +18,8 @@ Minecraft/ #Repositório
     ├── Classe_Mob.ts # Classe pra gerar mob
     ├── Classes_Inventario.ts # Classes pra armazenar os itens
     ├── Classes_Itens.ts # Classe de criação de itens
-    └── Modulo_Principal.ts #Modulo pra testar as classes e funções que criei
+    ├── Modulo_Principal.ts #Modulo pra testar as classes e funções que criei
+    └── UML.png # Esquema pra criar as classes
 ```
 
 ## Autora
