@@ -1,21 +1,20 @@
-type tipoItem = 'bloco' | 'ferramenta' | 'armadura' | 'minerio'
+type tipoItem = 'Bloco' | 'Ferramenta' | 'Armadura' | 'Minerio'
 
-interface Item {
-    nome : string
-    quantidade : number
-    tipo : tipoItem
-    encantamento ?: string
-}
-
-export default class Itens {
-    item : Item
-    constructor(item : Item){
-        this.item = item
+class Itens {
+    nome : string;
+    quantidade : number;
+    tipo : tipoItem;
+    encantamento ?: string;
+    constructor(nome : string, quantidade : number, tipo : tipoItem, encantamento ?: string){
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.tipo = tipo;
+        this.encantamento = encantamento;
     }
-    info(){
-        let informacao = `${this.item.nome}, Quantidade: ${this.item.quantidade}`
-        if (this.item.encantamento !== undefined){
-            informacao += `, Encantamento: ${this.item.encantamento}`
+    informacao(){
+        let informacao = `${this.nome}, x${this.quantidade}`
+        if (this.encantamento !== undefined){
+            informacao += `, ${this.encantamento}`
         }
         return informacao
     }
