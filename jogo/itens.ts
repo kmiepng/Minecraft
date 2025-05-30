@@ -5,11 +5,13 @@ class Itens {
     quantidade : number;
     tipo : tipoItem;
     encantamento ?: string;
-    constructor(nome : string, quantidade : number, tipo : tipoItem, encantamento ?: string){
+    armadura ?: number;
+    constructor(nome : string, quantidade : number, tipo : tipoItem, encantamento ?: string, armadura ?: number){
         this.nome = nome;
         this.quantidade = quantidade;
         this.tipo = tipo;
         this.encantamento = encantamento;
+        this.armadura = armadura;
     }
     informacao(){
         let informacao = `${this.nome}, x${this.quantidade}`
@@ -19,3 +21,5 @@ class Itens {
         return informacao
     }
 }
+
+export { Itens }
