@@ -38,6 +38,15 @@ class Inventario{
         }
         return false;
     }
+    removeItem(item : Itens, qtd_remove = 1){
+        for (let i = 0; i < this.inventario.length; i++){
+            const slot = this.inventario[i]
+            if(slot?.item.nome === item.nome){
+                slot.quantidade -= qtd_remove
+            }
+            if (slot?.quantidade === 0) this.inventario[i] = null;  
+        }
+    }
     mostrarInventario(){
         console.log('======INVENTÁRIO======')
         for (let linha = 0; linha < this.linhas; linha++) {
@@ -56,3 +65,5 @@ class Inventario{
         }
     }
 }
+
+export { Inventario }
