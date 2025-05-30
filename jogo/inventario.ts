@@ -47,10 +47,9 @@ class Inventario{
                 const slot = this.inventario[indice];
 
                 if (slot) {
-                    const texto = `${slot.item.nome} x${slot.quantidade}`;
-                    linhaTexto += `[ ${texto} ] `;
+                    linhaTexto += `[ ${slot.item.informacao()} ] `;
                 } else {
-                    linhaTexto += `[ ${'vazio'} ] `;
+                    linhaTexto += ' [ vazio      ] ';
                 }
             }
             console.log(linhaTexto);
