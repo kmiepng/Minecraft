@@ -6,7 +6,7 @@ interface slotInventario{ //criei interface pois criar uma classe pra adicionar 
 }
 
 class Inventario{
-    inventario : (slotInventario | null)[];
+    inventario : (slotInventario | undefined)[];
     linhas : number;
     colunas : number;
     constructor(linhas = 4, colunas = 9){
@@ -26,7 +26,7 @@ class Inventario{
             }
         }
         for (let i = 0; i < this.inventario.length; i++) {
-            if (this.inventario[i] === null) {
+            if (this.inventario[i] === undefined) {
                 const espaco = Math.min(item_sobrando, max_slot)
                 this.inventario[i] = {
                     item: item,
@@ -44,7 +44,7 @@ class Inventario{
             if(slot?.item.nome === item.nome){
                 slot.quantidade -= qtd_remove
             }
-            if (slot?.quantidade === 0) this.inventario[i] = null;  
+            if (slot?.quantidade === 0) this.inventario[i] = undefined;  
         }
     }
     mostrarInventario(){
@@ -55,8 +55,8 @@ class Inventario{
                 const indice = linha * this.colunas + coluna;
                 const slot = this.inventario[indice];
 
-                if (slot) {
-                    linhaTexto += `[ ${slot.item.informacao()} ] `;
+                if (slot !== undefined) {
+                    linhaTexto += `[ ${slot?.item.informacao()} ] `;
                 } else {
                     linhaTexto += ' [ vazio      ] ';
                 }

@@ -6,7 +6,7 @@ interface slotArmadura {
 }
 
 class Inventario_Armadura {
-    inventario : (slotArmadura | null )[];
+    inventario : (slotArmadura | undefined )[];
     capacidade : number;
     constructor(capacidade = 4){
         this.capacidade = capacidade
@@ -28,7 +28,7 @@ class Inventario_Armadura {
         if (slotRemove){
             for (let i = 0; i < this.capacidade; i++){
                 const slot = this.inventario[i]
-                if (armadura.armadura === slot?.armadura.armadura) this.inventario[i] = null;
+                if (armadura.armadura === slot?.armadura.armadura) this.inventario[i] = undefined;
                 return true
             }
         }
@@ -36,13 +36,14 @@ class Inventario_Armadura {
     }
     mostrarInventario(){
         console.log("INVENTARIO");
-        this.inventario.forEach((slot, i) => {
-            if (slot) {
-                console.log(`[${slot.armadura.informacao()}]`);
+        for(let i = 0; i < this.inventario.length; i ++){
+            const slot = this.inventario[i]
+            if (slot !== undefined) {
+                console.log(`[${slot?.armadura.informacao()}]`);
             } else {
                 console.log(`[  vazio  ]`);
             }
-        });
+        };
     }
 }
 
