@@ -15,9 +15,20 @@ class Inventario_Armadura {
     addArmadura(armadura : Itens){
         const slotOcupado = this.inventario.find(i => i?.armadura.nome === armadura.nome)
         if (!slotOcupado){
-            for (let i = 0; i < this.capacidade; i++){
-                const slot = this.inventario[i]
-                if (armadura.armadura === slot?.armadura.armadura) this.inventario[i] = {armadura : armadura, tipo : armadura.armadura};
+            if (armadura.armadura = 'Capacete') {
+                this.inventario[0] = {armadura : armadura, tipo : armadura.armadura}
+                return true
+            }
+            if (armadura.armadura = 'Peitoral') {
+                this.inventario[1] = {armadura : armadura, tipo : armadura.armadura}
+                return true
+            }
+            if (armadura.armadura = 'Calca') {
+                this.inventario[2] = {armadura : armadura, tipo : armadura.armadura}
+                return true
+            }
+            if (armadura.armadura = 'Bota') {
+                this.inventario[3] = {armadura : armadura, tipo : armadura.armadura}
                 return true
             }
         }
