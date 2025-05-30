@@ -8,3 +8,8 @@ const picareta_de_ferro = new Itens('Picareta de Ferro', 1, 'Ferramenta', 'Fortu
 let bloco_terra = new Itens('Bloco de Terra', 64, 'Bloco')
 let diamante = new Itens('Diamante', 16, 'Minerio')
 let pedrgulho = new Itens('Bloco de Pedrgulho', 64, 'Bloco')
+
+let inventario = new Inventario()
+
+inventario.addItem(espada_de_ferro)
+inventario.mostrarInventario()

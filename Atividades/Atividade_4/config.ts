@@ -72,6 +72,6 @@ export function salva_config(): void
   }
   catch (error)
   {
-    console.error("Erro ao salvar a configuração:", error);
-  }
+    console.error("Erro ao salvar a configuração:", error);
+  }
 }
