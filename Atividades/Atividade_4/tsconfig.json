@@ -9,6 +9,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "moduleResolution": "node16"
-  },
-  "include": ["config.ts"]
+  }
 }
