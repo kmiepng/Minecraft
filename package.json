@@ -1,0 +1,24 @@
+{
+  "name": "minecraft",
+  "version": "1.0.0",
+  "description": "Repositório para armazernar atividades da disciplina Projeto de Algoritmos I",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmiepng/Minecraft.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kmiepng/Minecraft/issues"
+  },
+  "homepage": "https://github.com/kmiepng/Minecraft#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.29"
+  }
+}
