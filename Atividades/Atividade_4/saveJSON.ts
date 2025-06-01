@@ -17,10 +17,10 @@ const data : slotInventario[] = [
 const jsonData = JSON.stringify(data, null, 2);
 
 // Write JSON to a file
-fs.writeFile('people.json', jsonData, (err) => {
+fs.writeFile('itens.json', jsonData, (err) => {
   if (err) {
     console.error("Error writing file:", err);
   } else {
-    console.log("File saved successfully as people.json");
+    console.log("File saved successfully as itens.json");
   }
 });

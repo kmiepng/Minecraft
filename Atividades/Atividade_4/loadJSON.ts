@@ -1,7 +1,8 @@
 import * as fs from 'fs';
+import { Itens } from './typescript/itens'
 
 type slotInventario = {
-    item : string;
+    item : Itens;
     quantidade : number;
 }
 
