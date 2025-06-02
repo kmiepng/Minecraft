@@ -9,7 +9,7 @@ export function escreverArrayHtml(array : any[]) : void {
         if (slot === undefined){
             html += `<li>[vazio]</li>`
         } else {
-            html += `<li>[${slot.informacao()}]</li>`
+            html += `<li>[${slot?.item.informacao()}]</li>`
         }
     }
     html += `</ul></li>`

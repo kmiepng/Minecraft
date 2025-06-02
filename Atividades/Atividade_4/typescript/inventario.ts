@@ -14,7 +14,7 @@ class Inventario{
         this.colunas = colunas;
         this.inventario = new Array(linhas*colunas)
     }
-    addItem(item : Itens, qtd_add = 1){
+    addItem(item : Itens, qtd_add : number){
         let item_sobrando = qtd_add;
         const max_slot = 64;
         for (let i = 0; i < this.inventario.length; i ++){
