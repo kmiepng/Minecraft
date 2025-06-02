@@ -5,8 +5,7 @@ import { escreverArrayHtml } from "./htmlReport";
 
 // Carrega o JSON existente
 const configPath = "./jogadores.json";
-const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-let inventario = config.inventario;
+const dados = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
 const iron = new Itens('Barra de Ferro', 64, 'Minerio');
 const diamant = new Itens('Diamante', 64, 'Minerio');
@@ -19,17 +18,24 @@ function gerarRecursosAleatorios() {
   const recursos = [iron, diamant, gold, lapis, coal];
   for (let i = 0; i < 4; i++) {
     const r = recursos[Math.floor(Math.random() * recursos.length)];
-    inventario.addItem(r, r.quantidade);
+    for (const jogador of dados){
+      jogador.inventario.inventario.addItem(r)
+    }
   }
 }
+
 // Atualiza recursos minerados
 gerarRecursosAleatorios();
 
 // Salva o JSON atualizado
-fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+fs.writeFileSync(configPath, JSON.stringify(dados, null, 2));
 
 // Mostra inventário no terminal
-inventario.mostrarInventario()
+for (const jogador of dados){
+  console.log(`Jogador(a): ${jogador.nome}`)
+  console.log(`Dificuldade escolhida: ${jogador.dificuldade}`)
+  jogador.inventario.inventario.mostrarInventario()
+}
 
 // Gera o relatório HTML
-escreverArrayHtml(config);
+escreverArrayHtml(dados);
