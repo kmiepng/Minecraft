@@ -11,5 +11,5 @@ let pedrgulho = new Itens('Bloco de Pedrgulho', 64, 'Bloco')
 
 let inventario = new Inventario()
 
-inventario.addItem(espada_de_ferro)
+inventario.addItem(espada_de_ferro, espada_de_ferro.quantidade)
 inventario.mostrarInventario()
