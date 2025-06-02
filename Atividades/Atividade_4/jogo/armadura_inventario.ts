@@ -7,9 +7,7 @@ interface slotArmadura {
 
 class Inventario_Armadura {
     inventario : (slotArmadura | undefined )[];
-    capacidade : number;
     constructor(capacidade = 4){
-        this.capacidade = capacidade
         this.inventario = new Array(capacidade)
     }
     addArmadura(armadura : Itens){
@@ -35,9 +33,10 @@ class Inventario_Armadura {
         return false
     }
     removeArmadura(armadura : Itens){
+        const capacidade = 4
         const slotRemove = this.inventario.find(i => i?.armadura.nome === armadura.nome)
         if (slotRemove){
-            for (let i = 0; i < this.capacidade; i++){
+            for (let i = 0; i < capacidade; i++){
                 const slot = this.inventario[i]
                 if (armadura.armadura === slot?.armadura.armadura) this.inventario[i] = undefined;
                 return true

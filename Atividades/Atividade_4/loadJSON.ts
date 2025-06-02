@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import { Itens } from './typescript/itens'
-import { Inventario } from './typescript/inventario'
+import { Itens } from './jogo/itens'
+import { Inventario } from './jogo/inventario'
 import { escreverArrayHtml } from "./htmlReport";
 
 // Carrega o JSON existente

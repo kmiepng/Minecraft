@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Itens } from './typescript/itens'
+import { Itens } from './jogo/itens'
 
 export function escreverArrayHtml(config : any) : void {
     let html = `<html>
