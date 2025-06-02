@@ -1,20 +1,44 @@
 import * as fs from 'fs';
 import { Itens } from './typescript/itens'
+import { Inventario } from './typescript/inventario'
+import { escreverArrayHtml } from "./htmlReport";
 
-type slotInventario = {
-    item : Itens;
-    quantidade : number;
+let inventario = new Inventario();
+const iron_pickaxe = new Itens('Picareta de Ferro', 1, 'Ferramenta');
+inventario.addItem(iron_pickaxe)
+
+const iron = new Itens('Barra de Ferro', 64, 'Minerio');
+const diamant = new Itens('Diamante', 64, 'Minerio');
+const gold = new Itens('Barra de Ouro', 64, 'Minerio');
+const lapis = new Itens('Lapis Lazuli', 64, 'Minerio');
+const coal = new Itens('Minério de Carvão', 64, 'Minerio')
+
+// Função para gerar recursos aleatórios
+function gerarRecursosAleatorios() {
+  const recursos = [iron, diamant, gold, lapis, coal];
+  for (let i = 0; i < 4; i++) {
+    const r = recursos[Math.floor(Math.random() * recursos.length)];
+    inventario.addItem(r);
+  }
 }
 
-const picareta_de_ferro = new Itens('Picareta de Ferro', 1, 'Ferramenta');
-const pedrgulho = new Itens('Pedregulho', 64, 'Bloco');
+// Carrega o JSON existente
+const configPath = "./jogoconfig.json";
+const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 
-const data : slotInventario[] = [
-    { item : picareta_de_ferro, quantidade : 1},
-    { item : pedrgulho, quantidade : 64}
-]
+// Atualiza recursos minerados
+config.inventario = gerarRecursosAleatorios();
 
-const jsonData = JSON.stringify(data, null, 2);
+// Salva o JSON atualizado
+fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+
+// Mostra inventário no terminal
+inventario.mostrarInventario()
+
+// Gera o relatório HTML
+escreverArrayHtml(config);
+
+const jsonData = JSON.stringify(inventario, null, 2);
 
 // Write JSON to a file
 fs.writeFile('itens.json', jsonData, (err) => {
