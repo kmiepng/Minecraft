@@ -26,10 +26,10 @@ export function escreverArrayHtml(config : any) : void {
     fs.writeFileSync("relatorio.html", html);
 }
 
-function escreverInventario(){
+/*function escreverInventario(){
     document.addEventListener("DOMContentLoaded", async() => {
         const response = await fetch ("jogoconfig.json");
         const inventario = await response.json();
         escreverArrayHtml(inventario);
     });
-}
+}*/

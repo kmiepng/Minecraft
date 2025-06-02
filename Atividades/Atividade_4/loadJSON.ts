@@ -19,7 +19,7 @@ function gerarRecursosAleatorios() {
   for (let i = 0; i < 4; i++) {
     const r = recursos[Math.floor(Math.random() * recursos.length)];
     for (const jogador of dados){
-      jogador.inventario.inventario.addItem(r)
+      jogador.inventario.inventario.addItem(r, r.quantidade)
     }
   }
 }
