@@ -1,0 +1,29 @@
+[
+  {
+    "nome": "Kamila",
+    "dificuldade": "Normal",
+    "inventario": {
+      "linhas": 2,
+      "colunas": 5,
+      "inventario": [
+        {
+          "item": {
+            "nome": "Picareta de Ferro",
+            "quantidade": 1,
+            "tipo": "Ferramenta"
+          },
+          "quantidade": 1
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  }
+]

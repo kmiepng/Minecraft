@@ -34,31 +34,22 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
-const itens_1 = require("./typescript/itens");
-const htmlReport_1 = require("./htmlReport");
-// Carrega o JSON existente
-const configPath = "./jogadores.json";
-const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
-let inventario = config.inventario;
-const iron = new itens_1.Itens('Barra de Ferro', 64, 'Minerio');
-const diamant = new itens_1.Itens('Diamante', 64, 'Minerio');
-const gold = new itens_1.Itens('Barra de Ouro', 64, 'Minerio');
-const lapis = new itens_1.Itens('Lapis Lazuli', 64, 'Minerio');
-const coal = new itens_1.Itens('Minério de Carvão', 64, 'Minerio');
-// Função para gerar recursos aleatórios
-function gerarRecursosAleatorios() {
-    const recursos = [iron, diamant, gold, lapis, coal];
-    for (let i = 0; i < 4; i++) {
-        const r = recursos[Math.floor(Math.random() * recursos.length)];
-        inventario.addItem(r, r.quantidade);
+const itens_1 = require("./javascript/itens");
+const inventario_1 = require("./javascript/inventario");
+let inventario = new inventario_1.Inventario();
+const iron_pickaxe = new itens_1.Itens('Picareta de Ferro', 1, 'Ferramenta');
+inventario.addItem(iron_pickaxe, iron_pickaxe.quantidade);
+const data = [
+    { nome: "Kamila", dificuldade: "Normal", inventario: inventario }, //deixei só um jogador msm
+];
+const jsonData = JSON.stringify(data, null, 2);
+// Write JSON to a file
+fs.writeFile('jogadores.json', jsonData, (err) => {
+    if (err) {
+        console.error("Error writing file:", err);
     }
-}
-// Atualiza recursos minerados
-gerarRecursosAleatorios();
-// Salva o JSON atualizado
-fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-// Mostra inventário no terminal
-inventario.mostrarInventario();
-// Gera o relatório HTML
-(0, htmlReport_1.escreverArrayHtml)(config);
-//# sourceMappingURL=loadJSON.js.map
+    else {
+        console.log("File saved successfully as itens.json");
+    }
+});
+//# sourceMappingURL=saveJSON.js.map
