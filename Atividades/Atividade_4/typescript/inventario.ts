@@ -7,11 +7,7 @@ interface slotInventario{ //criei interface pois criar uma classe pra adicionar 
 
 class Inventario{
     inventario : (slotInventario | undefined)[];
-    linhas : number;
-    colunas : number;
     constructor(linhas = 2, colunas = 5){
-        this.linhas = linhas;
-        this.colunas = colunas;
         this.inventario = new Array(linhas*colunas)
     }
     addItem(item : Itens, qtd_add : number){
@@ -48,11 +44,12 @@ class Inventario{
         }
     }
     mostrarInventario(){
+        const [linhas, colunas] = [2, 5]
         console.log('======INVENTÁRIO======')
-        for (let linha = 0; linha < this.linhas; linha++) {
+        for (let linha = 0; linha < linhas; linha++) {
             let linhaTexto = '';
-            for (let coluna = 0; coluna < this.colunas; coluna++) {
-                const indice = linha * this.colunas + coluna;
+            for (let coluna = 0; coluna < colunas; coluna++) {
+                const indice = linha * colunas + coluna;
                 const slot = this.inventario[indice];
 
                 if (slot !== undefined) {
