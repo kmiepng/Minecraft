@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { Itens } from './typescript/itens'
 
 export function escreverArrayHtml(array : any[]) : void {
@@ -12,6 +13,7 @@ export function escreverArrayHtml(array : any[]) : void {
         }
     }
     html += `</ul></li>`
+    fs.writeFileSync("relatorio.html", html);
 }
 
 function escreverInventario(){
@@ -21,5 +23,3 @@ function escreverInventario(){
         escreverArrayHtml(inventario);
     });
 }
-
-escreverInventario()
