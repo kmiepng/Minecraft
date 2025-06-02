@@ -20,8 +20,9 @@ export function escreverArrayHtml(config : any) : void {
             }
         }
 
-    html += `</ul></li></body></html>`
+    html += `</ul></li>`
     }
+    html += `</body></html>`
     fs.writeFileSync("relatorio.html", html);
 }
 
