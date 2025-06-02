@@ -1,18 +1,23 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { Itens } from './typescript/itens'
 
-export function escreverArrayHtml(array : any[]) : void {
-    let html = '<ul><li>'
-
-    for (let i = 0; i<array.length; i++){
-        const slot = array[i]
+export function escreverArrayHtml(config : any) : void {
+    let html = `<html>
+      <head><title>Minecraft Jogadores</title></head>
+      <body>
+        <h1>${config.nome}</h1>
+         <p><strong>Dificuldade:</strong> ${config.dificuldade}</p>
+        <ul><li>
+    `
+    for (let i = 0; i<config.inventario.length; i++){
+        const slot = config.inventario[i]
         if (slot === undefined){
             html += `<li>[vazio]</li>`
         } else {
             html += `<li>[${slot?.item.informacao()}]</li>`
         }
     }
-    html += `</ul></li>`
+    html += `</ul></li></body></html>`
     fs.writeFileSync("relatorio.html", html);
 }
 

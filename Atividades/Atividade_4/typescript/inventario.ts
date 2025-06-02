@@ -9,7 +9,7 @@ class Inventario{
     inventario : (slotInventario | undefined)[];
     linhas : number;
     colunas : number;
-    constructor(linhas = 4, colunas = 9){
+    constructor(linhas = 2, colunas = 5){
         this.linhas = linhas;
         this.colunas = colunas;
         this.inventario = new Array(linhas*colunas)

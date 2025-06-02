@@ -4,7 +4,7 @@ import { Inventario } from './typescript/inventario'
 import { escreverArrayHtml } from "./htmlReport";
 
 // Carrega o JSON existente
-const configPath = "./itens.json";
+const configPath = "./jogadores.json";
 const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
 let inventario = config.inventario;
 
