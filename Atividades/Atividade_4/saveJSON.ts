@@ -20,10 +20,11 @@ const data : Jogador[] = [
 const jsonData = JSON.stringify(data, null, 2);
 
 // Write JSON to a file
-fs.writeFile('jogadores.json', jsonData, (err) => {
-  if (err) {
-    console.error("Error writing file:", err);
-  } else {
-    console.log("File saved successfully as itens.json");
-  }
-});
+localStorage.setItem('jogadores', jsonData);
+// fs.writeFile('jogadores.json', jsonData, (err) => {
+//   if (err) {
+//     console.error("Error writing file:", err);
+//   } else {
+//     console.log("File saved successfully as itens.json");
+//   }
+// });
