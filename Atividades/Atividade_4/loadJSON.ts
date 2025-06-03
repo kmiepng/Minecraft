@@ -1,6 +1,5 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { Itens } from './itens'
-import { escreverHtml } from './reportHtml'
 
 // Carrega o JSON existente
 const configPath = "./jogadores.json";
@@ -15,14 +14,14 @@ const cobblestone = new Itens('Pedregulho', 64)
 
 // Função para gerar recursos aleatórios
 function gerarRecursosAleatorios() {
-    let aleatorios = []
     const recursos = [iron, diamant, gold, copper, coal, cobblestone];
     for (const jogador of dados){
+        let aleatorios = []
         for (let i = 0; i < 4; i++) {
             const r = recursos[Math.floor(Math.random() * recursos.length)];
             aleatorios.push(r)
         }
-        jogador.inventario.push(aleatorios)
+        jogador.inventario = [...aleatorios]
     }
 }
 
@@ -31,6 +30,3 @@ gerarRecursosAleatorios();
 
 // Salva o JSON atualizado
 fs.writeFileSync(configPath, JSON.stringify(dados, null, 2));
-
-//Escreve o HTML
-escreverHtml(dados)

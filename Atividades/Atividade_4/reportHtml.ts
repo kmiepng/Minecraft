@@ -1,12 +1,10 @@
-import fs from 'fs';
-
-export function escreverHtml(array : any[]){
+function escreverHtml(array : any[]){
     const dados = document.getElementById("Inventário")
     let html = '<li><ul>';
     for (let i = 0; i < array.length; i ++){
         html += `
-        <h2><strong>Jogador(a):</strong> ${array[i].nome}</h2>;
-        <p><strong>Dificuldade:</strong> ${array[i].dificuldade}</p>;
+        <h2><strong>Jogador(a):</strong> ${array[i].nome}</h2>
+        <p><strong>Dificuldade:</strong> ${array[i].dificuldade}</p>
         `
         for (const slot of array[i].inventario){
             if (slot !== undefined){
@@ -17,6 +15,7 @@ export function escreverHtml(array : any[]){
         }
     }
     html += '</ul></li>';
+    dados!.innerHTML = html;
 }
 
 function escreverInventario(){
@@ -27,4 +26,4 @@ function escreverInventario(){
     });
 }
 
-escreverInventario;
+escreverInventario();

@@ -1,6 +1,5 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { Itens } from './itens'
-
 
 type Jogador = {
   nome : string;
