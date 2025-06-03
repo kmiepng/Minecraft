@@ -1,0 +1,68 @@
+[
+  {
+    "nome": "Kamila",
+    "dificuldade": "Normal",
+    "inventario": [
+      {
+        "nome": "Barra de Ferro",
+        "quantidade": 64
+      },
+      {
+        "nome": "Barra de Ouro",
+        "quantidade": 64
+      },
+      {
+        "nome": "Barra de Ferro",
+        "quantidade": 64
+      },
+      {
+        "nome": "Barra de Ferro",
+        "quantidade": 64
+      }
+    ]
+  },
+  {
+    "nome": "Emanoel",
+    "dificuldade": "Dificil",
+    "inventario": [
+      {
+        "nome": "Minério de Carvão",
+        "quantidade": 64
+      },
+      {
+        "nome": "Minério de Carvão",
+        "quantidade": 64
+      },
+      {
+        "nome": "Minério de Carvão",
+        "quantidade": 64
+      },
+      {
+        "nome": "Barra de Ferro",
+        "quantidade": 64
+      }
+    ]
+  },
+  {
+    "nome": "Taygo",
+    "dificuldade": "Hardcore",
+    "inventario": [
+      {
+        "nome": "Diamante",
+        "quantidade": 64
+      },
+      {
+        "nome": "Cobre",
+        "quantidade": 64
+      },
+      {
+        "nome": "Pedregulho",
+        "quantidade": 64
+      },
+      {
+        "nome": "Pedregulho",
+        "quantidade": 64
+      }
+    ]
+  }
+]
