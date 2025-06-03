@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 
 function escreverHtml(array) {
     const dados = document.getElementById("Inventário");
-    let html = '<li><ul>';
+    let html = '<ul>';
     for (let i = 0; i < array.length; i++) {
         html += `
         <h2><strong>Jogador(a):</strong> ${array[i].nome}</h2>
@@ -26,7 +26,7 @@ function escreverHtml(array) {
             }
         }
     }
-    html += '</ul></li>';
+    html += '</ul>';
     dados.innerHTML = html;
 }
 function escreverInventario() {
