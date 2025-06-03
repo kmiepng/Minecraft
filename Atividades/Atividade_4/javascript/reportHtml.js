@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-//Object.defineProperty(exports, "__esModule", { value: true });
+
 function escreverHtml(array) {
     const dados = document.getElementById("Inventário");
     let html = '<li><ul>';
@@ -31,7 +31,7 @@ function escreverHtml(array) {
 }
 function escreverInventario() {
     document.addEventListener("DOMContentLoaded", () => __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch("jogadores.json");
+        const response = yield fetch("./javascript/jogadores.json");
         const jogadores = yield response.json();
         escreverHtml(jogadores);
     }));
