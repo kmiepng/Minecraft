@@ -23,7 +23,7 @@ function gerarRecursosAleatorios() {
             const r = recursos[Math.floor(Math.random() * recursos.length)];
             aleatorios.push(r);
         }
-        jogador.inventario = [...aleatorios];
+        jogador.inventario += [...aleatorios];
     }
 }
 // Atualiza recursos minerados

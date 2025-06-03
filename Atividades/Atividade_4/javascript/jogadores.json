@@ -4,6 +4,10 @@
     "dificuldade": "Normal",
     "inventario": [
       {
+        "nome": "Picareta de Ferro",
+        "quantidade": 1
+      },
+      {
         "nome": "Barra de Ferro",
         "quantidade": 64
       },
@@ -26,6 +30,10 @@
     "dificuldade": "Dificil",
     "inventario": [
       {
+        "nome": "Picareta de Ferro",
+        "quantidade": 1
+      },
+      {
         "nome": "Minério de Carvão",
         "quantidade": 64
       },
@@ -47,6 +55,10 @@
     "nome": "Taygo",
     "dificuldade": "Hardcore",
     "inventario": [
+      {
+        "nome": "Picareta de Ferro",
+        "quantidade": 1
+      },
       {
         "nome": "Diamante",
         "quantidade": 64
