@@ -25,10 +25,12 @@ function gerarRecursosAleatorios() {
 
 gerarRecursosAleatorios();
 
+console.log('Inventário antes de ordenar:')
 for (let i = 0; i < tamArray; i++){
     console.log(`${Inventario[i].nome}, x${Inventario[i].quantidade}`)
 }
 bubblesort(Inventario);
+console.log('Inventário após ordenar:')
 for (let i = 0; i < tamArray; i++){
     console.log(`${Inventario[i].nome}, x${Inventario[i].quantidade}`)
 }
