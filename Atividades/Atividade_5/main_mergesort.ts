@@ -24,3 +24,13 @@ function gerarRecursosAleatorios() {
 }
 
 gerarRecursosAleatorios();
+
+console.log('Inventário antes de ordenar:')
+for (let i = 0; i < tamArray; i++){
+    console.log(`${Inventario[i].nome}, x${Inventario[i].quantidade}`)
+}
+mergeSort(Inventario, 0, tamArray - 1);
+console.log('Inventário após ordenar:')
+for (let i = 0; i < tamArray; i++){
+    console.log(`${Inventario[i].nome}, x${Inventario[i].quantidade}`)
+}
