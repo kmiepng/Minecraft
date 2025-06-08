@@ -1,56 +1,33 @@
-function merge(arr : any[], left : number, mid : number, right : number) {
-    const n1 = mid - left + 1;
-    const n2 = right - mid;
-
-    // Create temp arrays
-    const L = new Array(n1);
-    const R = new Array(n2);
-
-    // Copy data to temp arrays L[] and R[]
-    for (let i = 0; i < n1; i++)
-        L[i] = arr[left + i];
-    for (let j = 0; j < n2; j++)
-        R[j] = arr[mid + 1 + j];
-
-    let i = 0, j = 0;
-    let k = left;
-
-    // Merge the temp arrays back into arr[left..right]
-    while (i < n1 && j < n2) {
-        const compareNomes = L[i].nome.localeCompare(R[j].nome, 'pt-BR');
+function merge(leftArr : any[], rightArr : any[]) : any{
+    let resultArr = [];
+    let leftIndex = 0;
+    let rightIndex = 0;
+    
+    while (leftIndex < leftArr.length && rightIndex < rightArr.length){
+        // comparação das strings
+        const compareNomes = leftArr[leftIndex].nome.localeCompare(rightArr[rightIndex].nome, 'pt-BR');
+        //quando dá -1, é pq a string q comparamos é a menor
         if (compareNomes < 0 ||
-            compareNomes === 0 && L[i].quantidade < R[j].quantidade
-        ) {
-            arr[k] = L[i];
-            i++;
+            (compareNomes === 0 && leftArr[leftIndex].quantidade < rightArr[rightIndex].quantidade)
+        )  {
+            resultArr.push(leftArr[leftIndex]);
+            leftIndex += 1;
         } else {
-            arr[k] = R[j];
-            j++;
+            resultArr.push(rightArr[rightIndex]);
+            rightIndex += 1;
         }
-        k++;
     }
-
-    // Copy the remaining elements of L[], if there are any
-    while (i < n1) {
-        arr[k] = L[i];
-        i++;
-        k++;
-    }
-
-    // Copy the remaining elements of R[], if there are any
-    while (j < n2) {
-        arr[k] = R[j];
-        j++;
-        k++;
-    }
+    return resultArr.concat(leftArr.slice(leftIndex)).concat(rightArr.slice(rightIndex));
 }
 
-export function mergeSort(arr : any[], left : number, right : number) {
-    if (left >= right)
-        return;
+export function mergeSort(arr : any[]) : any{
+    if (arr.length < 2){
+        return arr;
+    }
 
-    const mid = Math.floor(left + (right - left) / 2);
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
-    merge(arr, left, mid, right);
+    const middleIndex = Math.floor(arr.length/2);
+    const leftArr = arr.slice(0, middleIndex);
+    const rightArr = arr.slice(middleIndex, arr.length);
+
+    return merge(mergeSort(leftArr), mergeSort(rightArr));
 }
