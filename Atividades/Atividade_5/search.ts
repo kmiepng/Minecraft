@@ -27,9 +27,9 @@ export function binarySearch(arr : any[], target : any) {
 }
 
 export function linearSearch(arr : any[], target : any){
-    const n = arr.length
+  const n = arr.length
     for (let i = 0; i < n; i++)
-        if (arr[i].nome == target)
-            return i;
-    return -1;
+      if (arr[i].nome == target)
+        return i;
+  return -1;
 }

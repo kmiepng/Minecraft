@@ -1,6 +1,5 @@
 export function bubblesort(arr : any[]){
     let n = arr.length;
-
     // Outer loop: Iterate over the entire array
     for (let i = 0; i < n - 1; i++) {
     // Flag to detect if any swapping happened
@@ -26,6 +25,5 @@ export function bubblesort(arr : any[]){
       break;
     }
   }
-
   return arr;
 }

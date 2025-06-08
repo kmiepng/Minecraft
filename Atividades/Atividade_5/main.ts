@@ -5,13 +5,17 @@ import { gerarRecursosAleatorios } from './gerar_listas';
 import { testSearch, testSort } from './testeSort';
 import { binarySearch, linearSearch } from './search';
 
-//Criando o inventário com distribuição aleatória de itens
-const tamArray = 10;
+//Criando o inventário
+const tamArray = [100, 500, 1000, 5000, 10000];
 let Inventario : Itens[] = []
-gerarRecursosAleatorios(Inventario, tamArray);
+
 //Saída no terminal
-console.log(`Tamanho do array: ${tamArray}`);
-testSort("BubbleSort", bubblesort, Inventario);
-testSort("Mergesort", mergeSort, Inventario);
-testSearch("Binary Search", binarySearch, Inventario, "Carvão")
-testSearch("Linear Search", linearSearch, Inventario, "Carvão")
+for (const tam of tamArray){
+    gerarRecursosAleatorios(Inventario, tam);
+    
+    console.log(`Tamanho do array: ${tam}`);
+    testSort("BubbleSort", bubblesort, Inventario);
+    testSort("Mergesort", mergeSort, Inventario);
+    testSearch("Binary Search", binarySearch, Inventario, "Carvão")
+    testSearch("Linear Search", linearSearch, Inventario, "Carvão")
+}
