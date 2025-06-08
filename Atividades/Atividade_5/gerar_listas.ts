@@ -14,10 +14,9 @@ const coal = new Itens('Carvão', qtd_item)
 //Gerar recursos aleatórios
 export function gerarRecursosAleatorios(Inventario : any[], tamArray : number) {
     const recursos = [diamant, gold, cobblestone, sword_d, coal];
-    let aleatorios : Itens[] = []
     for (let i = 0; i < tamArray; i++) {
         const r = recursos[Math.floor(Math.random() * recursos.length)];
-        aleatorios.push(r)
+        Inventario.push(r)
     }
-    Inventario = [...aleatorios]
+    return Inventario
 }

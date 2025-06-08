@@ -9,7 +9,6 @@ import { binarySearch, linearSearch } from './search';
 const tamArray = 10;
 let Inventario : Itens[] = []
 gerarRecursosAleatorios(Inventario, tamArray);
-
 //Saída no terminal
 console.log(`Tamanho do array: ${tamArray}`);
 testSort("BubbleSort", bubblesort, Inventario);
