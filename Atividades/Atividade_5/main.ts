@@ -7,7 +7,7 @@ import { binarySearch, linearSearch } from './search';
 import fs from 'fs'
 
 //Criando o inventário e arrays para armazenar dados
-const tamArray = [100, 500, 1000, 5000, 10000];
+const tamArray = [100, 500, 1000, 5000, 7500, 10000, 25000, 50000];
 let Inventario : Itens[] = []
 const bubbleTimes: number[] = [];
 const mergeTimes: number[] = [];
@@ -16,13 +16,15 @@ const linearTimes: number[] = [];
 
 //Gerar inventário
 for (const tam of tamArray){
-    gerarRecursosAleatorios(Inventario, tam);
+  gerarRecursosAleatorios(Inventario, tam);
     
-    console.log(`Tamanho do array: ${tam}`);
-    bubbleTimes.push(testSort("BubbleSort", bubblesort, Inventario));
-    mergeTimes.push(testSort("Mergesort", mergeSort, Inventario));
-    binaryTimes.push(testSearch("Binary Search", binarySearch, Inventario, "Carvão"));
-    linearTimes.push(testSearch("Linear Search", linearSearch, Inventario, "Carvão"));
+  console.log(`Tamanho do array: ${tam}`);
+  bubbleTimes.push(testSort("BubbleSort", bubblesort, Inventario));
+  mergeTimes.push(testSort("Mergesort", mergeSort, Inventario));
+  linearTimes.push(testSearch("Linear Search", linearSearch, Inventario, "Carvão"));
+  //Testando o binary com inventário ordenado
+  const sortInventario = mergeSort(Inventario);
+  binaryTimes.push(testSearch("Binary Search", binarySearch, sortInventario, "Carvão"));
 }
 
 //Salvar dados
@@ -31,7 +33,7 @@ const output = {
   bubble: bubbleTimes,
   merge: mergeTimes,
   binary: binaryTimes,
-  linear: linearSearch
+  linear: linearTimes
 };
 
 fs.writeFileSync("dados.json", JSON.stringify(output, null, 2));

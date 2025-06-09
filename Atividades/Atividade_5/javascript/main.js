@@ -10,7 +10,7 @@ const testeSort_1 = require("./testeSort");
 const search_1 = require("./search");
 const fs_1 = __importDefault(require("fs"));
 //Criando o inventário e arrays para armazenar dados
-const tamArray = [100, 500, 1000, 5000, 10000];
+const tamArray = [100, 500, 1000, 5000, 7500, 10000, 25000, 50000];
 let Inventario = [];
 const bubbleTimes = [];
 const mergeTimes = [];
@@ -19,10 +19,13 @@ const linearTimes = [];
 //Gerar inventário
 for (const tam of tamArray) {
     (0, gerar_listas_1.gerarRecursosAleatorios)(Inventario, tam);
+    console.log(`Tamanho do array: ${tam}`);
     bubbleTimes.push((0, testeSort_1.testSort)("BubbleSort", bubblesort_1.bubblesort, Inventario));
     mergeTimes.push((0, testeSort_1.testSort)("Mergesort", mergesort_1.mergeSort, Inventario));
-    binaryTimes.push((0, testeSort_1.testSearch)("Binary Search", search_1.binarySearch, Inventario, "Carvão"));
     linearTimes.push((0, testeSort_1.testSearch)("Linear Search", search_1.linearSearch, Inventario, "Carvão"));
+    //Testando o binary com inventário ordenado
+    const sortInventario = (0, mergesort_1.mergeSort)(Inventario);
+    binaryTimes.push((0, testeSort_1.testSearch)("Binary Search", search_1.binarySearch, sortInventario, "Carvão"));
 }
 //Salvar dados
 const output = {
@@ -30,7 +33,7 @@ const output = {
     bubble: bubbleTimes,
     merge: mergeTimes,
     binary: binaryTimes,
-    linear: search_1.linearSearch
+    linear: linearTimes
 };
 fs_1.default.writeFileSync("dados.json", JSON.stringify(output, null, 2));
 console.log("Dados salvos em dados.json");
