@@ -6,14 +6,110 @@
   <body>
     <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
     <div style="width: 800px;"><canvas id="sortingChart"></canvas></div>
-
+    
     <!-- <script type="module" src="dimensions.js"></script> -->
-    <script type="module" src="main.js"></script>
+    <script>
+      fetch("dados.json")
+        .then(response => response.json())
+        .then(data => {
+          const sort = document.getElementById("sortingChart");
+          new Chart(sort, {
+            type: "line",
+            data: {
+              labels: data.tamArray,
+              datasets: [
+                {
+                  label: "BubbleSort",
+                  data: data.bubble,
+                  borderColor: "rgb(255, 99, 132)",
+                  fill: false,
+                },
+                {
+                label: "MergeSort",
+                data: data.merge,
+                borderColor: "rgb(54, 162, 235)",
+                fill: false,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Comparação de Algoritmos de Ordenação",
+                  },
+                },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Tamanho do Array",
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Tempo de processamento em ms",
+                  },
+                },
+              },
+          },
+        });})
+    </script>
 
     <div style="width: 800px;"><canvas id="searchingChart"></canvas></div>
 
     <!-- <script type="module" src="dimensions.js"></script> -->
-    <script type="module" src="main.js"></script>
+    <script>
+      fetch("dados.json")
+        .then(response => response.json())
+        .then(data => {
+          const search = document.getElementById("searchingChart");
+          new Chart(search, {
+            type: "line",
+            data: {
+              labels: data.tamArray,
+              datasets: [
+                {
+                  label: "Binary Search",
+                  data: data.binary,
+                  borderColor: "rgb(255, 99, 132)",
+                  fill: false,
+                },
+                {
+                label: "Linear Search",
+                data: data.linear,
+                borderColor: "rgb(54, 162, 235)",
+                fill: false,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Comparação de Algoritmos de Ordenação",
+                  },
+                },
+              scales: {
+                x: {
+                  title: {
+                    display: true,
+                    text: "Tamanho do Array",
+                  },
+                },
+                y: {
+                  title: {
+                    display: true,
+                    text: "Tempo de processamento",
+                  },
+                },
+              },
+          },
+        });})
+    </script>
 
   </body>
 </html>

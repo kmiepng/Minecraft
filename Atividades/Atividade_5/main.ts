@@ -4,7 +4,7 @@ import { mergeSort } from './mergesort';
 import { gerarRecursosAleatorios } from './gerar_listas';
 import { testSearch, testSort } from './testeSort';
 import { binarySearch, linearSearch } from './search';
-import ('chart.js/auto')
+import fs from 'fs'
 
 //Criando o inventário e arrays para armazenar dados
 const tamArray = [100, 500, 1000, 5000, 10000];
@@ -14,7 +14,7 @@ const mergeTimes: number[] = [];
 const binaryTimes: number[] = [];
 const linearTimes: number[] = [];
 
-//Saída no terminal
+//Gerar inventário
 for (const tam of tamArray){
     gerarRecursosAleatorios(Inventario, tam);
     
@@ -25,92 +25,14 @@ for (const tam of tamArray){
     linearTimes.push(testSearch("Linear Search", linearSearch, Inventario, "Carvão"));
 }
 
-/*const sort = document.getElementById("sortingChart") as HTMLCanvasElement;
-new Chart(sort, {
-  type: "line",
-  data: {
-    labels: tamArray,
-    datasets: [
-      {
-        label: "BubbleSort",
-        data: bubbleTimes,
-        borderColor: "rgb(255, 99, 132)",
-        fill: false,
-      },
-      {
-        label: "MergeSort",
-        data: mergeTimes,
-        borderColor: "rgb(54, 162, 235)",
-        fill: false,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: "Comparação de Algoritmos de Ordenação",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Tamanho do Array",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Tempo de processamento",
-        },
-      },
-    },
-  },
-});
+//Salvar dados
+const output = {
+  tamArray,
+  bubble: bubbleTimes,
+  merge: mergeTimes,
+  binary: binaryTimes,
+  linear: linearSearch
+};
 
-const ctx = document.getElementById("searchingChart") as HTMLCanvasElement;
-new Chart(ctx, {
-  type: "line",
-  data: {
-    labels: tamArray,
-    datasets: [
-      {
-        label: "Binary Search",
-        data: binaryTimes,
-        borderColor: "rgb(255, 99, 132)",
-        fill: false,
-      },
-      {
-        label: "Linear Search",
-        data: linearTimes,
-        borderColor: "rgb(54, 162, 235)",
-        fill: false,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: "Comparação de Algoritmos de Busca",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Tamanho do Array",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Tempo de processamento",
-        },
-      },
-    },
-  },
-});*/
+fs.writeFileSync("dados.json", JSON.stringify(output, null, 2));
+console.log("Dados salvos em dados.json");
