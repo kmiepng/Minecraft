@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const bubblesort_1 = require("./bubblesort");
 const mergesort_1 = require("./mergesort");
 const gerar_listas_1 = require("./gerar_listas");
