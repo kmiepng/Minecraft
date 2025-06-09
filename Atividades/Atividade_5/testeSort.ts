@@ -6,6 +6,7 @@ export function testSort(name: string, sortFunc: (arr: number[]) => number[], da
 
   console.log(`\n=== ${name} ===`);
   console.log(`Tempo: ${(endTime - startTime).toFixed(3)} ms`);
+  return endTime - startTime
 }
 
 export function testSearch(name: string, searchFunc: (arr: any[], target : any) => any, data: any[], target : any) {
@@ -15,4 +16,5 @@ export function testSearch(name: string, searchFunc: (arr: any[], target : any) 
 
   console.log(`\n=== ${name} ===`);
   console.log(`Tempo: ${(endTime - startTime).toFixed(3)} ms`);
+  return endTime - startTime
 }
