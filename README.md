@@ -11,7 +11,7 @@ Minecraft/ #Repositório
 │   ├── Atividade_2/ # Criação de funções simples relacionadas ao Minecraft
 │   ├── Atividade_3/ # Criação de classes relacionadas ao Minecraft e modularização do código
 │   ├── Atividade_4/ # Criação de arquivos .json para criar a interface do código do jogo
-│   └── Atividade_5/ # Comparação de algoritmos de comparação e busca
+│   └── Atividade_5/ # Comparação de algoritmos de ordenação e busca
 └── node_modules/ # Pasta pra poder manipular os arquivos .json e usar chart.js
     
 ```
