@@ -4,7 +4,7 @@ import { mergeSort } from './mergesort';
 import { gerarRecursosAleatorios } from './gerar_listas';
 import { testSearch, testSort } from './testeSort';
 import { binarySearch, linearSearch } from './search';
-import Chart from 'chart.js/auto'
+import ('chart.js/auto')
 
 //Criando o inventário e arrays para armazenar dados
 const tamArray = [100, 500, 1000, 5000, 10000];
@@ -25,7 +25,7 @@ for (const tam of tamArray){
     linearTimes.push(testSearch("Linear Search", linearSearch, Inventario, "Carvão"));
 }
 
-const sort = document.getElementById("sortingChart") as HTMLCanvasElement;
+/*const sort = document.getElementById("sortingChart") as HTMLCanvasElement;
 new Chart(sort, {
   type: "line",
   data: {
@@ -113,4 +113,4 @@ new Chart(ctx, {
       },
     },
   },
-});
+});*/
