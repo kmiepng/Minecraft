@@ -84,7 +84,7 @@ new Chart(ctx, {
       },
       {
         label: "Linear Search",
-        data: binaryTimes,
+        data: linearTimes,
         borderColor: "rgb(54, 162, 235)",
         fill: false,
       },

@@ -4,8 +4,6 @@ export function testSort(name: string, sortFunc: (arr: number[]) => number[], da
   const sorted = sortFunc(data);
   const endTime = performance.now();
 
-  console.log(`\n=== ${name} ===`);
-  console.log(`Tempo: ${(endTime - startTime).toFixed(3)} ms`);
   return endTime - startTime
 }
 
@@ -14,7 +12,5 @@ export function testSearch(name: string, searchFunc: (arr: any[], target : any) 
   const search = searchFunc(data, target);
   const endTime = performance.now();
 
-  console.log(`\n=== ${name} ===`);
-  console.log(`Tempo: ${(endTime - startTime).toFixed(3)} ms`);
   return endTime - startTime
 }
