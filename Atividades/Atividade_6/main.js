@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var itens_1 = require("./itens");
+var funil_1 = require("./funil");
+var pedregulho = new itens_1.Itens('Pedregulho', 64);
+var funil = new funil_1.Funil();
+funil.add_item(pedregulho);
+funil.add_item(pedregulho);
+funil.add_item(pedregulho);
+funil.print();
