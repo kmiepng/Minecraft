@@ -10,3 +10,7 @@ export class Itens{
         return informacao
     }
 }
+
+export const pedregulho = new Itens('Pedregulho', 64);
+export const pickaxe_sword = new Itens('Picareta de Ferro', 1)
+export const Inventario : Itens[] = []
