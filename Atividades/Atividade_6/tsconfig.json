@@ -1,14 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "Node16",
-    "outDir": "javascript",
-    "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node16"
+  "outDir": "javascript",
+  "target": "es2020",
+  "module": "es2020",
+  "strict": true
   },
   "include": ["typescript"]
 }

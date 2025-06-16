@@ -55,7 +55,7 @@ class Funil {
     let result = ''
     while (current !== null){
       result += current.getData()
-      if (current.next !== null) result += ' <- '
+      if (current.next !== null) result += '|'
       current = current.next
     }
     return result
@@ -66,6 +66,10 @@ class Funil {
       return null;
     }
     return this.head.getData();
+  }
+  toArray() {
+    const result = this.print().split("|")
+    return result
   }
 }
 
