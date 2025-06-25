@@ -12,7 +12,7 @@ class Node {
     }
 }
 
-export class TrouxaPilha {
+class TrouxaPilha {
     top : Node | null
     size : number
     constructor() {
@@ -63,3 +63,5 @@ export class TrouxaPilha {
         console.log(result);
     }
 }
+
+export const trouxa = new TrouxaPilha();

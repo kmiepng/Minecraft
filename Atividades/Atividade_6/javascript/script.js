@@ -1,5 +1,6 @@
-import { diamant, gold, cobblestone, sword_d, coal } from "./itens.js";
-import { funil } from "./funil.js";
+//Incompleto
+import { diamant, gold, cobblestone, sword_d, coal } from "./itens";
+import { funil } from "./funil";
 const addBtn = document.querySelector("#add_item");
 const remBtn = document.querySelector("#remove_item");
 const list = document.querySelector("#list");

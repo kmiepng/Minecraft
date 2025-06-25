@@ -1,9 +1,13 @@
-class Empilhamento {
+export class Empilhamento {
     constructor() {
         this.count = 0;
         this.items = {};
     }
     push(element) {
+        if (this.count === 64) {
+            console.log("Stack de itens cheio");
+            return false;
+        }
         this.items[this.count] = element;
         this.count++;
     }
@@ -36,12 +40,12 @@ class Empilhamento {
         if (this.isEmpty()) {
             return '';
         }
-        let objString = `| ${this.items[0].info()}`;
+        let objString = `| ${this.items[0]}`;
         for (let i = 1; i < this.count; i++) {
-            objString = `${objString} | ${this.items[i].info()}`;
+            objString = `${objString} | ${this.items[i]}`;
         }
         objString += ' |';
         return objString;
     }
 }
-export {};
+export const empilhamentoItens = new Empilhamento();

@@ -16,4 +16,3 @@ export const diamant = new Itens('Diamante', 64)
 export const gold = new Itens('Ouro', 64)
 export const sword_d = new Itens('Espada de Diamante', 1)
 export const coal = new Itens('Carvão', 64)
-export const Inventario : Itens[] = []

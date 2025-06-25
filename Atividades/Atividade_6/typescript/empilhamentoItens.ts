@@ -1,5 +1,3 @@
-import { Itens } from "./itens";
-
 export class Empilhamento {
     count : number;
     items : any;
@@ -7,7 +5,11 @@ export class Empilhamento {
         this.count = 0;
         this.items = {};
     }
-    push(element : Itens) {
+    push(element : string) {
+        if (this.count === 64){
+            console.log("Stack de itens cheio")
+            return false
+        }
         this.items[this.count] = element;
         this.count++;
     }
@@ -40,11 +42,13 @@ export class Empilhamento {
         if (this.isEmpty()) {
             return '';
         }
-        let objString = `| ${this.items[0].info()}`;
+        let objString = `| ${this.items[0]}`;
         for (let i = 1; i < this.count; i++) {
-            objString = `${objString} | ${this.items[i].info()}`;
+            objString = `${objString} | ${this.items[i]}`;
         }
         objString += ' |';
         return objString;
     }
 }
+
+export const empilhamentoItens = new Empilhamento();
