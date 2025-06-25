@@ -3,40 +3,43 @@ import { cobblestone, coal, sword_d, diamant, gold } from "./itens.js";
 import { empilhamentoItens } from "./empilhamentoItens.js";
 import { trouxa } from "./trouxa.js";
 //Fila com Node
+console.log("=====Funil=====")
 funil.add_item(cobblestone);
 funil.add_item(coal);
-funil.print();
-funil.peek();
+console.log(funil.print());
+console.log(funil.peek());
 funil.add_item(cobblestone);
 funil.remove_item();
 funil.add_item(diamant);
-funil.print();
+console.log(funil.print());
 //Fila Deque
+console.log("===Funil Deque===")
 funilDeque.addBack(gold);
 funilDeque.addFront(sword_d);
 funilDeque.addBack(cobblestone);
-funilDeque.toString();
-funilDeque.isEmpty();
-funilDeque.addFront(coal);
+console.log(funilDeque.toString());
+console.log(funilDeque.isEmpty());
 funilDeque.removeBack();
-funilDeque.addBack(cobblestone);
-funilDeque.removeFront();
-funilDeque.toString();
+funilDeque.addBack(coal);
+funilDeque.addFront(cobblestone);
+console.log(funilDeque.toString());
 //Pilha com Node
-trouxa.isEmpty();
+console.log("=====Trouxa=====")
+console.log(trouxa.isEmpty());
 trouxa.push(coal);
 trouxa.push(sword_d);
 trouxa.push(diamant);
-trouxa.peek();
-trouxa.print();
+console.log(trouxa.peek());
+console.log(trouxa.print());
 trouxa.pop();
-trouxa.print();
+console.log(trouxa.print());
 //Pilha como objeto
+console.log("==Empilhando itens==")
 empilhamentoItens.isEmpty();
 for (let i = 0; i < 65; i++) {
     empilhamentoItens.push('Pedregulho');
 }
-empilhamentoItens.peek();
+console.log(empilhamentoItens.peek());
 empilhamentoItens.pop();
-empilhamentoItens.toString();
+console.log(empilhamentoItens.toString());
 empilhamentoItens.push('Pedregulho');
