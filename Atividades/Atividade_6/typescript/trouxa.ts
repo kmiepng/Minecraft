@@ -55,9 +55,9 @@ class TrouxaPilha {
 
     print() {
         let current = this.top;
-        let result = "";
+        let result = "|";
         while (current !== null) {
-            result += current.getData() + " -> ";
+            result += current.getData() + " | ";
             current = current.next;
         }
         console.log(result);
