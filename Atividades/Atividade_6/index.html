@@ -11,13 +11,36 @@
   <body>
 
     <div class="Fila e Pilha" id="javascript/main.js">
-      <div class="Funil com Node">
+      <div class="Fila com Node">
         <h1>Funil</h1>
 
-        <button id="add_item">Adicionar Pedregulho</button>
-        <button id="remove_item">Retirar Pedregulho</button>
-        <h2>Conteúdo atual:</h2>
-        <p id="list"></p>
+        <button id="add_item">Adicionar Item Aleatório</button>
+        <button id="remove_item">Retirar Item</button>
+        <h2>Próximo item a sair:</h2>
+        <ul id="list"></ul>
+      </div>
+      <div class="Fila deque">
+        <h1>Funil</h1>
+        
+        <div class="Modificar frente da fila">
+          <button id="add_item_front">
+          Adicionar Item à Frente
+          </button>
+          <button id="remove_item_front">
+            Remover Item à Frente
+          </button>
+        </div>
+        <div class="Modificar atrás da fila">
+          <button id="add_item_back">
+            Adicionar Item Atrás
+          </button>
+          <button id="remove_item_back">
+            Remover Item Atrás
+          </button>
+        </div>
+
+        <h2>Próximo item a sair:</h2>
+        
       </div>
     </div>
     <!-- importa o UI já transpilado -->

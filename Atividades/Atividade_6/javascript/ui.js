@@ -1,4 +1,4 @@
-import { pedregulho } from "./itens.js";
+import { diamant, gold, cobblestone, sword_d, coal } from "./itens.js";
 import { funil } from "./funil.js";
 const addBtn = document.querySelector("#add_item");
 const remBtn = document.querySelector("#remove_item");
@@ -7,13 +7,15 @@ const list = document.querySelector("#list");
 function render() {
     list.innerHTML = "";
     funil.toArray().forEach(element => {
-        const p = document.createElement("p");
-        p.textContent = element;
-        list.appendChild(p);
+        const li = document.createElement("li");
+        li.textContent = element;
+        list.appendChild(li);
     });
 }
 addBtn.addEventListener("click", () => {
-    funil.add_item(pedregulho);
+    const recursos = [diamant, gold, cobblestone, sword_d, coal];
+    const r = recursos[Math.floor(Math.random() * recursos.length)];
+    funil.add_item(r);
     render();
 });
 remBtn.addEventListener("click", () => {
