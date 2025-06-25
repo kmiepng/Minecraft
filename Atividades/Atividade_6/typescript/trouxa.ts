@@ -12,7 +12,7 @@ class Node {
     }
 }
 
-class TrouxaPilha {
+export class TrouxaPilha {
     top : Node | null
     size : number
     constructor() {
@@ -28,7 +28,7 @@ class TrouxaPilha {
 
     pop() {
         if (this.top === null) {
-            console.log("Stack is empty");
+            console.log("Trouxa está vazia");
             return null;
         }
         const poppedData = this.top.getData();
@@ -39,7 +39,7 @@ class TrouxaPilha {
 
     peek() {
         if (this.top === null) {
-            console.log("Stack is empty");
+            console.log("Trouxa está vazia");
             return null;
         }
         return this.top.getData();
@@ -55,12 +55,11 @@ class TrouxaPilha {
 
     print() {
         let current = this.top;
-        let result = "Top ";
+        let result = "";
         while (current !== null) {
             result += current.getData() + " -> ";
             current = current.next;
         }
-        result += "End";
         console.log(result);
     }
 }

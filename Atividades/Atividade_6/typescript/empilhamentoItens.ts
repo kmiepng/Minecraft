@@ -1,6 +1,6 @@
 import { Itens } from "./itens";
 
-class Empilhamento {
+export class Empilhamento {
     count : number;
     items : any;
     constructor() {

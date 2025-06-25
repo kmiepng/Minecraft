@@ -1,3 +1,5 @@
+//Incompleto
+
 import { diamant, gold, cobblestone, sword_d, coal } from "./itens";
 import { funil, funilDeque } from "./funil";
 
