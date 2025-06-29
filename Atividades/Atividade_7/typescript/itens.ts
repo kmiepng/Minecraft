@@ -1,0 +1,106 @@
+//classe de itens
+class Itens{
+    nome : string;
+    quantidade : number;
+    tipo : string;
+    constructor(nome : string, quantidade : number, tipo : string){
+        this.nome = nome; //nome do item, ex: Picareta de Ferro
+        this.quantidade = quantidade; //quantos itens tem em um stack
+        this.tipo = tipo; // tipo do item, ex: Ferramenta
+    } 
+
+    informacao_item(){
+        let informacao : string;
+        informacao = `${this.nome}, x${this.quantidade}`; //função genérica para moldar de acordo com a informação q o player quer
+        return informacao;
+    }
+}
+//inventario como conjunto
+class Inventario {
+    inventario: any
+    constructor() {
+        this.inventario = {};
+    }
+    add(element : any) {
+        if (!this.has(element)) {
+            this.inventario[element.nome] = element;
+            return true;                                                                        
+        }
+        return false;
+    }
+    delete(element : any) {
+        if (this.has(element)) {
+            delete this.inventario[element.nome];
+            return true;
+        }
+        return false;
+    }
+    has(element : any) {
+        return Object.prototype.hasOwnProperty.call(this.inventario, element);
+    }
+    values() {
+        return Object.values(this.inventario);
+    }
+    union(otherSet : Inventario) {
+        const unionInventario = new Inventario();
+        this.values().forEach(value => unionInventario.add(value));
+        otherSet.values().forEach(value => unionInventario.add(value));
+        return unionInventario;
+    }
+    intersection(otherSet : Inventario, filtro : string) {
+        const intersectionSet = new Inventario();
+        const values = this.values();
+        const otherValues = otherSet.values();
+        let biggerSet = values;
+        let smallerSet = otherValues;
+        if (otherValues.length - values.length > 0) {
+            biggerSet = otherValues;
+            smallerSet = values;
+        }
+        for (let i = 0; i < smallerSet.length; i++){
+            for (let j = 0; j < biggerSet.length; j++){
+                const smallerValue = smallerSet[i];
+                const biggerValue = biggerSet[j];
+
+                if (smallerValue.tipo&&biggerValue.tipo === filtro){
+                    if (smallerValue.nome === biggerValue.nome){
+                        intersectionSet.add(smallerValue);
+                    } else {
+                        intersectionSet.add(smallerValue);
+                        intersectionSet.add(biggerValue)
+                    }
+                }
+            }
+        }
+        return intersectionSet;
+    }
+    difference(otherSet : Inventario) {
+        const differenceSet = new Inventario();
+        this.values().forEach(value => {
+        if (!otherSet.has(value)) {
+            differenceSet.add(value);
+        }
+        });
+        return differenceSet;
+    }
+    isEmpty() {
+        return this.size() === 0;
+    }
+    size() {
+        return Object.keys(this.inventario).length;
+    }
+    clear() {
+        this.inventario = {};
+    }
+    toString() {
+        if (this.isEmpty()) {
+            return '';
+        }
+        const values = this.values();
+        let objString = `${values[0].nome}, x${values[0].quantidae}`;
+        for (let i = 1; i < values.length; i++) {
+            objString = `${objString} | ${values[i].nome}, x${values[i].quantidade}`;
+        }
+        return objString;
+    }
+}
