@@ -1,5 +1,5 @@
 //classe de itens
-class Itens{
+export class Itens{
     nome : string;
     quantidade : number;
     tipo : string;
@@ -8,15 +8,15 @@ class Itens{
         this.quantidade = quantidade; //quantos itens tem em um stack
         this.tipo = tipo; // tipo do item, ex: Ferramenta
     } 
-
+    //função para pegar informação do item
     informacao_item(){
         let informacao : string;
-        informacao = `${this.nome}, x${this.quantidade}`; //função genérica para moldar de acordo com a informação q o player quer
+        informacao = `${this.nome}, x${this.quantidade}`;
         return informacao;
     }
 }
 //inventario como conjunto
-class Inventario {
+export class Inventario {
     inventario: any
     constructor() {
         this.inventario = {};
@@ -41,12 +41,14 @@ class Inventario {
     values() {
         return Object.values(this.inventario);
     }
+    //não alterei a função pois funcionou normalmente para os mesmos objetos criados
     union(otherSet : Inventario) {
         const unionInventario = new Inventario();
         this.values().forEach(value => unionInventario.add(value));
         otherSet.values().forEach(value => unionInventario.add(value));
         return unionInventario;
     }
+    //fiz uma alteração para fazer interseção pelo tipo do item
     intersection(otherSet : Inventario, filtro : string) {
         const intersectionSet = new Inventario();
         const values = this.values();
@@ -57,11 +59,12 @@ class Inventario {
             biggerSet = otherValues;
             smallerSet = values;
         }
+        //aqui fiz uma operação de custo O(n²) para poder fazer oq eu queria direitinho
         for (let i = 0; i < smallerSet.length; i++){
             for (let j = 0; j < biggerSet.length; j++){
                 const smallerValue = smallerSet[i];
                 const biggerValue = biggerSet[j];
-
+                //aparece como erro pq o tipo de values é unknown, mas a operação funciona
                 if (smallerValue.tipo&&biggerValue.tipo === filtro){
                     if (smallerValue.nome === biggerValue.nome){
                         intersectionSet.add(smallerValue);
@@ -97,7 +100,8 @@ class Inventario {
             return '';
         }
         const values = this.values();
-        let objString = `${values[0].nome}, x${values[0].quantidae}`;
+        //aqui aparece como erro mas é pq o tipo de values é unknown, mas funciona direitinho o que eu quero
+        let objString = `${values[0].nome}, x${values[0].quantidade}`;
         for (let i = 1; i < values.length; i++) {
             objString = `${objString} | ${values[i].nome}, x${values[i].quantidade}`;
         }

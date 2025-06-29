@@ -1,29 +1,31 @@
+import { Inventario } from "./itens";
+
 // Construct Single Node
 class NodeInventario {
-    data : Nodee;
-    next : Nodee | null
-  constructor(data : Nodee, next = null) {
+    data : Inventario;
+    next : Inventario | null
+  constructor(data : Inventario, next : (Inventario | null) = null) {
     this.data = data;
     this.next = next;
   }
 }
 
-// Create/Get/Remove Nodes From Linked List
 class Jogadores {
+  head : NodeInventario | null;
+  size : number;
   constructor() {
     this.head = null;
     this.size = 0;
   }
-
   // Insert first node
-  insertFirst(data) {
-    this.head = new Node(data, this.head);
+  insertFirst(data : Inventario) {
+    this.head = new NodeInventario(data, this.head);
     this.size++;
   }
 
   // Insert last node
-  insertLast(data) {
-    let node = new Node(data);
+  insertLast(data : Inventario) {
+    let node = new NodeInventario(data);
     let current;
 
     // If empty, make head
@@ -43,7 +45,7 @@ class Jogadores {
   }
 
   // Insert at index
-  insertAt(data, index) {
+  insertAt(data : Inventario, index : number) {
     //  If index is out of range
     if (index > 0 && index > this.size) {
       return;
@@ -55,7 +57,7 @@ class Jogadores {
       return;
     }
 
-    const node = new Node(data);
+    const node = new NodeInventario(data);
     let current, previous;
 
     // Set current to first
@@ -75,7 +77,7 @@ class Jogadores {
   }
 
   // Get at index
-  getAt(index) {
+  getAt(index : number) {
     let current = this.head;
     let count = 0;
 
@@ -91,7 +93,7 @@ class Jogadores {
   }
 
   // Remove at index
-  removeAt(index) {
+  removeAt(index : number) {
     if (index > 0 && index > this.size) {
       return;
     }
