@@ -42,14 +42,14 @@ export class Inventario {
         return Object.values(this.inventario);
     }
     //não alterei a função pois funcionou normalmente para os mesmos objetos criados
-    union(otherSet : Inventario) {
+    bau_comunitario(otherSet : Inventario) {
         const unionInventario = new Inventario();
         this.values().forEach(value => unionInventario.add(value));
         otherSet.values().forEach(value => unionInventario.add(value));
         return unionInventario;
     }
     //fiz uma alteração para fazer interseção pelo tipo do item
-    intersection(otherSet : Inventario, filtro : string) {
+    bau_filtrado(otherSet : Inventario, filtro : string) {
         const intersectionSet = new Inventario();
         const values = this.values();
         const otherValues = otherSet.values();
@@ -77,10 +77,12 @@ export class Inventario {
         }
         return intersectionSet;
     }
-    difference(otherSet : Inventario) {
+    //verifico pelo nome se o item é o mesmo ou não
+    //aparece como erro pq o valor de value é unknown pro transpilador, mas funciona direitinho
+    diferenca_inventarios(otherSet : Inventario) {
         const differenceSet = new Inventario();
         this.values().forEach(value => {
-        if (!otherSet.has(value)) {
+        if (!otherSet.has(value.nome)) {
             differenceSet.add(value);
         }
         });

@@ -2,15 +2,17 @@ import { Inventario } from "./itens";
 
 // Construct Single Node
 class NodeInventario {
+    jogador : string
     data : Inventario;
-    next : Inventario | null
-  constructor(data : Inventario, next : (Inventario | null) = null) {
+    next : NodeInventario | null
+  constructor(jogador : string, data : Inventario, next : (NodeInventario | null) = null) {
+    this.jogador = jogador;
     this.data = data;
     this.next = next;
   }
 }
-
-class Jogadores {
+//lista ligada que recebe os sets(inventários) dos jogadores e o nome
+export class Jogadores {
   head : NodeInventario | null;
   size : number;
   constructor() {
@@ -18,14 +20,14 @@ class Jogadores {
     this.size = 0;
   }
   // Insert first node
-  insertFirst(data : Inventario) {
-    this.head = new NodeInventario(data, this.head);
+  insertFirst(nome : string, data : Inventario) {
+    this.head = new NodeInventario(nome, data, this.head);
     this.size++;
   }
 
   // Insert last node
-  insertLast(data : Inventario) {
-    let node = new NodeInventario(data);
+  insertLast(nome : string, data : Inventario) {
+    let node = new NodeInventario(nome, data);
     let current;
 
     // If empty, make head
@@ -45,7 +47,7 @@ class Jogadores {
   }
 
   // Insert at index
-  insertAt(data : Inventario, index : number) {
+  insertAt(nome : string, data : Inventario, index : number) {
     //  If index is out of range
     if (index > 0 && index > this.size) {
       return;
@@ -53,11 +55,11 @@ class Jogadores {
 
     // If first index
     if (index === 0) {
-      this.insertFirst(data);
+      this.insertFirst(nome, data);
       return;
     }
 
-    const node = new NodeInventario(data);
+    const node = new NodeInventario(nome, data);
     let current, previous;
 
     // Set current to first
@@ -98,12 +100,6 @@ class Jogadores {
       return;
     }
     
-    /*
-    if (index < 0 || index >= this.size) {
-        return;
-    }
-    */
-    
     let current = this.head;
     let previous;
     let count = 0;
@@ -135,7 +131,8 @@ class Jogadores {
     let current = this.head;
 
     while (current) {
-      console.log(current.data);
+      console.log(`Inventário de ${current.jogador}:`);
+      console.log(current.data.toString())
       current = current.next;
     }
   }
