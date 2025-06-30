@@ -109,4 +109,8 @@ export class Inventario {
         }
         return objString;
     }
+    verificarTipo(filtro : string){
+        const IsTipo = this.values().every(item => item.tipo === filtro)
+        return IsTipo
+    }
 }

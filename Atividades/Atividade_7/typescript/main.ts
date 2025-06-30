@@ -27,13 +27,15 @@ i3.add(bloco_terra)
 
 const bau = i1.bau_comunitario(i2)
 const bau_ferramentas = i1.bau_filtrado(i2, 'Ferramenta')
-const bau_exclusivo_kamila = i1.diferenca_inventarios(i2)
+const bau_exclusivo_k = i1.diferenca_inventarios(i2)
+const bau_exclusivo_kamila = bau_exclusivo_k.diferenca_inventarios(i3)
 
 console.log(i1.toString())
 console.log(i2.toString())
 console.log(i3)
 console.log(bau.toString())
 console.log(bau_ferramentas.toString())
+console.log(bau_ferramentas.verificarTipo('Ferramenta'))
 console.log(bau_exclusivo_kamila.toString())
 
 jogadores.printListData()
