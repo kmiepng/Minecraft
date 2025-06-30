@@ -61,7 +61,7 @@ export class Inventario {
                 const smallerValue = smallerSet[i];
                 const biggerValue = biggerSet[j];
                 //aparece como erro pq o tipo de values é unknown, mas a operação funciona
-                if (smallerValue.tipo && biggerValue.tipo === filtro) {
+                if ((smallerValue.tipo === filtro) && (biggerValue.tipo === filtro)) {
                     if (smallerValue.nome === biggerValue.nome) {
                         intersectionSet.add(smallerValue);
                     }
