@@ -1,6 +1,6 @@
-import { Itens, Inventario } from "./itens";
-import { Jogadores } from "./jogadores";
-import { CicloDia } from "./ciclo_tempo";
+import { Itens, Inventario } from "./itens.js";
+import { Jogadores } from "./jogadores.js";
+import { CicloDia } from "./ciclo_tempo.js";
 //teste da lista ligada de sets
 const espada_ferro = new Itens('Espada de Ferro', 1, 'Ferramenta');
 const picareta_ferro = new Itens('Picareta de Ferro', 1, 'Ferramenta');
