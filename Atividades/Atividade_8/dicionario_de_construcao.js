@@ -1,8 +1,9 @@
 import { defaultToString } from './util.js';
 import { ValuePair } from './valuepair.js';
+import { LinkedList } from './listaligada.js';
 //O dicionário será usado como uma 'wiki' para ver a lista de 'crafting' dos itens disponíveis
 export class Dictionary {
-    //O construtor se mantém o mesmo
+    //O construtor se mantem o mesmo
     constructor(toStrFn = defaultToString) {
         this.toStrFn = toStrFn;
         this.table = {};
@@ -19,7 +20,7 @@ export class Dictionary {
         if (this.table[tableKey] == null){
             this.table[tableKey] = new LinkedList()
         }
-        this.table[tableKey].push(new ValuePair(key, value));
+        this.table[tableKey].insertLast(new ValuePair(key, value));
         return true;
         }
         return false;

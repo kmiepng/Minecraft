@@ -1,3 +1,4 @@
+//Base para a atividade
 export class Itens {
     constructor(nome, quantidade, tipo, durabilidade = null, encantamento = null){
         this.nome = nome;
