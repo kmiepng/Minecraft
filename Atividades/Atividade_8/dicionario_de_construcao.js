@@ -20,22 +20,22 @@ export class Dictionary {
         if (this.table[tableKey] == null){
             this.table[tableKey] = new LinkedList()
         }
-        this.table[tableKey].insertLast(new ValuePair(key, value));
+        this.table[tableKey].insertLast(new ValuePair(tableKey, value));
         return true;
         }
         return false;
     }
     get(key) {
         const valuePair = this.table[this.toStrFn(key)];
-        return valuePair == null ? undefined : valuePair.forEach(key);
+        return valuePair == null ? undefined : valuePair.toStringLinkedList();
     }
     hasKey(key) {
         return this.table[this.toStrFn(key)] != null;
     }
     remove(key) {
         if (this.hasKey(key)) {
-        delete this.table[this.toStrFn(key)];
-        return true;
+            delete this.table[this.toStrFn(key)];
+            return true;
         }
         return false;
     }
@@ -48,15 +48,16 @@ export class Dictionary {
     keyValues() {
         return Object.values(this.table);
     }
-    forEach(callbackFn) {
-        const valuePairs = this.keyValues();
-        for (let i = 0; i < valuePairs.length; i++) {
-        const result = callbackFn(valuePairs[i].key, valuePairs[i].value);
-        if (result === false) {
-            break;
-        }
-        }
-    }
+    //O método forEach não deu certo
+    // forEach(callbackFn) {
+    //     const valuePairs = this.keyValues();
+    //     for (let i = 0; i < valuePairs.length; i++) {
+    //         const result = callbackFn(valuePairs[i].key, valuePairs[i].value);
+    //         if (result === false) {
+    //             break;  
+    //     }
+    //     }
+    // }
     isEmpty() {
         return this.size() === 0;
     }
@@ -66,14 +67,14 @@ export class Dictionary {
     clear() {
         this.table = {};
     }
-    toString() {
+    toStringMap() {
         if (this.isEmpty()) {
         return '';
         }
         const valuePairs = this.keyValues();
-        let objString = `${valuePairs[0].toString()}`;
+        let objString = `${valuePairs[0].toStringLinkedList()}`;
         for (let i = 1; i < valuePairs.length; i++) {
-        objString = `${objString},${valuePairs[i].toString()}`;
+            objString += `${valuePairs[i].toStringLinkedList()}`;
         }
         return objString;
     }

@@ -6,5 +6,5 @@ export function defaultToString(item) {
     } else if (typeof item === 'string' | item instanceof String) {
         return `${item}`;
     }
-    return item.toString();
+    return item.nome;
 }

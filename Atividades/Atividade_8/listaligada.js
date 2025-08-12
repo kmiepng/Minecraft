@@ -135,4 +135,14 @@ export class LinkedList {
         current = current.next;
         }
     }
+    
+    toStringLinkedList() {
+        let current = this.head;
+        let info = ''
+        while (current) {
+            info += current.data.info();
+            current = current.next
+        }
+        return info
+    }
 }
