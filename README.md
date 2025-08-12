@@ -13,7 +13,8 @@ Minecraft/ #Repositório
 │   ├── Atividade_4/ # Criação de arquivos .json para criar a interface do código do jogo
 │   ├── Atividade_5/ # Comparação de algoritmos de ordenação e busca
 │   ├── Atividade_6/ # Uso de pilhas e filas
-│   └── Atividade_7/ # Implementação de duas lista ligadas, uma para sets e outra duplamente ligada circular
+│   ├── Atividade_7/ # Implementação de duas lista ligadas, uma para sets e outra duplamente ligada circular
+│   └── Atividade_8/ # Uso de Dicionário para listar as possíveis criações a partir de um determinado item
 ├── jogo/ # Implementação de todas as estruturas de dados em cada atividade para o jogo
 └── node_modules/ # Pasta pra poder manipular os arquivos .json e usar chart.js
     
