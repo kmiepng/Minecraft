@@ -48,16 +48,20 @@ export class Dictionary {
     keyValues() {
         return Object.values(this.table);
     }
-    //O método forEach não deu certo
-    // forEach(callbackFn) {
-    //     const valuePairs = this.keyValues();
-    //     for (let i = 0; i < valuePairs.length; i++) {
-    //         const result = callbackFn(valuePairs[i].key, valuePairs[i].value);
-    //         if (result === false) {
-    //             break;  
-    //     }
-    //     }
-    // }
+    forEach(callbackFn) {
+        const valuePairs = this.keyValues();
+        for (let i = 0; i < valuePairs.length; i++) {
+            let current = valuePairs[i].head
+            let result = ''
+            while(current){
+                result += callbackFn(current.data.key, current.data.value);
+                current = current.next
+            }
+            if (result === false) {
+                break;  
+            }
+        }
+    }
     isEmpty() {
         return this.size() === 0;
     }
