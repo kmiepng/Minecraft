@@ -22,7 +22,7 @@ export class Dictionary {
         }
         this.table[tableKey].insertLast(new ValuePair(tableKey, value));
         return true;
-        }
+        } //alterar a implementação do set
         return false;
     }
     get(key) {
