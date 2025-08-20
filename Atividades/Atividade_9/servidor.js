@@ -1,5 +1,5 @@
-import { defaultToString } from '/Atividade_8/util.js';
-import { ValuePair } from '/Atividade_8/valuepair.js';
+import { defaultToString } from './util.js';
+import { ValuePair } from './valuepair.js';
 //Simulando um servidor
 export default class HashTable {
     constructor(toStrFn = defaultToString) {
