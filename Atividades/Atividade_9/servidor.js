@@ -1,7 +1,7 @@
 import { defaultToString } from './util.js';
 import { ValuePair } from './valuepair.js';
 //Simulando um servidor
-export default class HashTable {
+export class HashTable {
     constructor(toStrFn = defaultToString) {
         this.toStrFn = toStrFn;
         this.table = {};

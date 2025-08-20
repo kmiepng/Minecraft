@@ -1,5 +1,5 @@
 //Base para a atividade
-export default class Itens {
+export class Itens {
     constructor(nome, quantidade, tipo, durabilidade = null, encantamento = null){
         this.nome = nome;
         this.quantidade = quantidade;
