@@ -40,15 +40,17 @@ export class Itens {
         if (this.tipo != 'Ferramenta' || 'Armadura'){
             if (espaço_sobrando = 0){ 
                 console.log('Slot cheio');
+                return false
             } //Se tiver espaço sobrando, adiciona até atingir o limite
             else if (espaço_sobrando >= quantidade){ 
                 this.quantidade += quantidade;
+                return true
             } //Se o espaço sobrando for menor q a quantiadade que queremos adicionar, adicionamos apenas o que dá
             else{
                 this.quantidade += espaço_sobrando;
-            }
-            //Retorno o que não foi adicionado para poder utilizá-lo quando fizer o inventário
-            return  ;
+                //Retorno o que não foi adicionado para poder utilizá-lo quando fizer o inventário
+                return (quantidade-espaço_sobrando);
+            } 
         }
         return false;
     }
