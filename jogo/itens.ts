@@ -53,7 +53,7 @@ export class Itens {
             } //Se tiver espaço sobrando, adiciona até atingir o limite
             else if (espaço_sobrando >= quantidade){ 
                 this.quantidade += quantidade;
-                return true
+                return false;
             } //Se o espaço sobrando for menor q a quantiadade que queremos adicionar, adicionamos apenas o que dá
             else{
                 this.quantidade += espaço_sobrando;
