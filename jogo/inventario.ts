@@ -1,4 +1,4 @@
-import { Itens } from './itens.ts'
+import { Itens } from './itens'
 
 class Inventario{
     inventario : Itens[]
