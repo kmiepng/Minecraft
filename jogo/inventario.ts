@@ -16,10 +16,16 @@ class Inventario{
                 return false
             }
             let isSobrando = itemExistente.add_item(item.quantidade);
-            while (isSobrando != false){
-                item.quantidade = isSobrando;
+            if (isSobrando !== false){
+                if (isSobrando > capacidade){
+                    do{
+                    item.quantidade = capacidade;
+                    this.inventario.push(item);
+                    isSobrando -= capacidade;
+                    } while (isSobrando > capacidade)
+                }
+                item.quantidade = isSobrando
                 this.inventario.push(item);
-                isSobrando = item.add_item(item.quantidade);
             }
             return true
         }
