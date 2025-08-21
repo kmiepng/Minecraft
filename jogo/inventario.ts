@@ -15,6 +15,7 @@ class Inventario{
                 this.inventario.push(item)
                 return false
             }
+            //Verifica se há item para adicionar ainda
             let isSobrando = itemExistente.add_item(item.quantidade);
             if (isSobrando !== false){
                 if (isSobrando > capacidade){
@@ -31,5 +32,8 @@ class Inventario{
         }
         this.inventario.push(item);
         return true
+    }
+    rmv_slot(quantidade : number){
+        
     }
 }
