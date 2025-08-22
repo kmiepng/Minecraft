@@ -7,7 +7,7 @@ class Inventario{
     }
     add_slot(item : Itens){
         const capacidade = 64;
-        //Verificação de existência no inventário
+        //Verificacão de existência no inventário
         const itemExistente = this.inventario.find(i => i.nome === item.nome)
         if (itemExistente){
             if (item.tipo === 'Ferramenta' || item.tipo === 'Armadura'){
@@ -15,25 +15,55 @@ class Inventario{
                 this.inventario.push(item)
                 return false
             }
-            //Verifica se há item para adicionar ainda
+            //Verificando se falta adicionar item
             let isSobrando = itemExistente.add_item(item.quantidade);
             if (isSobrando !== false){
-                if (isSobrando > capacidade){
-                    do{
-                    item.quantidade = capacidade;
-                    this.inventario.push(item);
-                    isSobrando -= capacidade;
-                    } while (isSobrando > capacidade)
+                while(isSobrando > 0) {
+                    const quantidadeAdicionar = Math.min(isSobrando, capacidade);
+                    this.inventario.push(new Itens(item.nome, quantidadeAdicionar, item.tipo, item.durabilidade, item.encantamento));
+                    isSobrando -= quantidadeAdicionar;
                 }
-                item.quantidade = isSobrando
-                this.inventario.push(item);
             }
             return true
         }
         this.inventario.push(item);
         return true
     }
-    rmv_slot(quantidade : number){
-        
+    rmv_slot(nomeItem : string, quantidade : (number | null) = null){
+        const indicesItens = this.inventario.map((item, index) => item.nome === nomeItem ? index : -1).filter(index => index !== -1);
+        if (indicesItens.length === 0) {
+            console.log(`"${nomeItem}" não encontrado no inventário.`);
+            return false;
+        }
+        let quantidadeARemover: number;
+        if (quantidade === null) {
+            // Se a quantidade for nula, removemos tudo.
+            quantidadeARemover = Infinity;
+        } else {
+            quantidadeARemover = quantidade;
+        }
+        let quantidadeRemovida = 0;
+        for (let i = indicesItens.length - 1; i >= 0; i--) {
+            if (quantidadeARemover <= 0) break; // Já removemos o suficiente.
+            const indexSlot = indicesItens[i];
+            const slot = this.inventario[indexSlot];
+            if (slot.quantidade <= quantidadeARemover) {
+                // Se o stack inteiro for menor ou igual ao que queremos remover, removemos o stack.
+                quantidadeRemovida += slot.quantidade;
+                quantidadeARemover -= slot.quantidade;
+                // Remove o item do array do inventário
+                this.inventario.splice(indexSlot, 1);
+            } else {
+                // Se o stack for maior, apenas diminuímos a quantidade.
+                quantidadeRemovida += quantidadeARemover;
+                slot.quantidade -= quantidadeARemover;
+                quantidadeARemover = 0;
+            }
+        }
+        if (quantidadeRemovida > 0) {
+            console.log(`${quantidadeRemovida} de "${nomeItem}" foram removidos.`);
+            return true;
+        }
+        return false;
     }
 }
