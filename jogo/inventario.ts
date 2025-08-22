@@ -1,6 +1,6 @@
 import { Itens } from './itens'
 
-class Inventario{
+export class Inventario{
     inventario : Itens[]
     constructor(){
         this.inventario = []
