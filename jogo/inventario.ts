@@ -51,10 +51,10 @@ class Inventario{
                 // Se o stack inteiro for menor ou igual ao que queremos remover, removemos o stack.
                 quantidadeRemovida += slot.quantidade;
                 quantidadeARemover -= slot.quantidade;
-                // Remove o item do array do inventário
+                // Remove o item do inventário
                 this.inventario.splice(indexSlot, 1);
             } else {
-                // Se o stack for maior, apenas diminuímos a quantidade.
+                // Se o stack for maior, apenas diminui a quantidade.
                 quantidadeRemovida += quantidadeARemover;
                 slot.quantidade -= quantidadeARemover;
                 quantidadeARemover = 0;
@@ -65,5 +65,16 @@ class Inventario{
             return true;
         }
         return false;
+    }
+    mostrarInventario() {
+        console.log("--- Inventário ---");
+        if(this.inventario.length === 0) {
+            console.log("[ Vazio ]");
+        } else {
+            this.inventario.forEach((item, index) => {
+                console.log(`Slot ${index+1}: ${item.info_item()}`);
+            });
+        }
+        console.log("------------------");
     }
 }
