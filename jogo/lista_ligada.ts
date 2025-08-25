@@ -70,46 +70,46 @@ export class ListaLigadaCircularDuasVias {
         return info;
     }
 }
-//Lista ligada com sets
+//Classe de Sets utilizada para implementar o Bau
 class Bau {
-    inventario: Itens[]
+    bau: any
     constructor() {
-        this.inventario = [];
+        this.bau = {};
     }
     add(element : any) {
         if (!this.has(element)) {
-            this.inventario[element.nome] = element;
+            this.bau[element.nome] = element;
             return true;                                                                        
         }
         return false;
     }
     delete(element : any) {
         if (this.has(element)) {
-            delete this.inventario[element.nome];
+            delete this.bau[element.nome];
             return true;
         }
         return false;
     }
     has(element : any) {
-        return Object.prototype.hasOwnProperty.call(this.inventario, element);
+        return Object.prototype.hasOwnProperty.call(this.bau, element);
     }
-    values() {
-        return Object.values(this.inventario);
+    values() : any {
+        return Object.values(this.bau);
     }
     //não alterei a função pois funcionou normalmente para os mesmos objetos criados
     bau_comunitario(otherSet : Bau) {
-        const unionInventario = new Bau();
-        this.values().forEach(value => unionInventario.add(value));
-        otherSet.values().forEach(value => unionInventario.add(value));
-        return unionInventario;
+        const unionSet = new Bau();
+        this.values().forEach((value : any) => unionSet.add(value));
+        otherSet.values().forEach((value : any) => unionSet.add(value));
+        return unionSet;
     }
     //fiz uma alteração para fazer interseção pelo tipo do item
     bau_filtrado(otherSet : Bau, filtro : string) {
         const intersectionSet = new Bau();
         const values = this.values();
         const otherValues = otherSet.values();
-        let biggerSet = values;
-        let smallerSet = otherValues;
+        let biggerSet : any = values;
+        let smallerSet : any= otherValues;
         if (otherValues.length - values.length > 0) {
             biggerSet = otherValues;
             smallerSet = values;
@@ -133,10 +133,9 @@ class Bau {
         return intersectionSet;
     }
     //verifico pelo nome se o item é o mesmo ou não
-    //aparece como erro pq o valor de value é unknown pro transpilador, mas funciona direitinho
-    diferenca_inventarios(otherSet : Bau) {
+    diferenca_baus(otherSet : Bau) {
         const differenceSet = new Bau();
-        this.values().forEach(value => {
+        this.values().forEach((value : any) => {
         if (!otherSet.has(value.nome)) {
             differenceSet.add(value);
         }
@@ -147,10 +146,10 @@ class Bau {
         return this.size() === 0;
     }
     size() {
-        return Object.keys(this.inventario).length;
+        return Object.keys(this.bau).length;
     }
     clear() {
-        this.inventario = [];
+        this.bau = [];
     }
     toString() {
         if (this.isEmpty()) {
@@ -165,16 +164,16 @@ class Bau {
         return objString;
     }
     verificarTipo(filtro : string){
-        const IsTipo = this.values().every(item => item.tipo === filtro)
+        const IsTipo = this.values().every((item : any) => item.tipo === filtro)
         return IsTipo
     }
 }
 // Construct Single Node
-class NodeInventario {
+class NodeBau {
     jogador : string
     data : Bau;
-    next : NodeInventario | null
-  constructor(jogador : string, data : Bau, next : (NodeInventario | null) = null) {
+    next : NodeBau | null
+  constructor(jogador : string, data : Bau, next : (NodeBau | null) = null) {
     this.jogador = jogador;
     this.data = data;
     this.next = next;
@@ -182,7 +181,7 @@ class NodeInventario {
 }
 //lista ligada que recebe os sets(baús) dos jogadores e o nome
 export class Jogadores {
-  head : NodeInventario | null;
+  head : NodeBau | null;
   size : number;
   constructor() {
     this.head = null;
@@ -190,13 +189,13 @@ export class Jogadores {
   }
   // Insert first node
   insertFirst(nome : string, data : Bau) {
-    this.head = new NodeInventario(nome, data, this.head);
+    this.head = new NodeBau(nome, data, this.head);
     this.size++;
   }
 
   // Insert last node
   insertLast(nome : string, data : Bau) {
-    let node = new NodeInventario(nome, data);
+    let node = new NodeBau(nome, data);
     let current;
 
     // If empty, make head
@@ -228,7 +227,7 @@ export class Jogadores {
       return;
     }
 
-    const node = new NodeInventario(nome, data);
+    const node = new NodeBau(nome, data);
     let current, previous;
 
     // Set current to first
@@ -300,7 +299,7 @@ export class Jogadores {
     let current = this.head;
 
     while (current) {
-      console.log(`Inventário de ${current.jogador}:`);
+      console.log(`Baú de ${current.jogador}:`);
       console.log(current.data.toString())
       current = current.next;
     }
