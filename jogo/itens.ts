@@ -61,3 +61,8 @@ export class Itens {
         }
     }
 }
+//Criei uma interface para implementar o uso da Pilha
+export interface ItensPilha {
+    id: string;
+    nome: string;
+}

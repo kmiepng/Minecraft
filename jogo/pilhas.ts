@@ -1,15 +1,14 @@
-import { Itens } from "./itens";
+import { ItensPilha, Itens } from "./itens";
 
 export class Pilha {
     count : number;
-    items : Itens[];
+    items : ItensPilha[];
     constructor() {
         this.count = 0;
         this.items = [];
     }
-    push(element : Itens) {
+    push(element : ItensPilha) {
         if (this.count === 64){
-            console.log("Stack de itens cheio")
             return false
         }
         this.items[this.count] = element;
@@ -39,17 +38,6 @@ export class Pilha {
     clear() {
         this.items = [];
         this.count = 0;
-    }
-    toString() {
-        if (this.isEmpty()) {
-            return '';
-        }
-        let objString = `| ${this.items[0]}`;
-        for (let i = 1; i < this.count; i++) {
-            objString = `${objString} | ${this.items[i]}`;
-        }
-        objString += ' |';
-        return objString;
     }
 }
 
