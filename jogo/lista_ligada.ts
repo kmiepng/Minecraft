@@ -71,7 +71,7 @@ export class ListaLigadaCircularDuasVias {
     }
 }
 //Classe de Sets utilizada para implementar o Bau
-class Bau {
+export class Bau {
     bau: any
     constructor() {
         this.bau = {};
