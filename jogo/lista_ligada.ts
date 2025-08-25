@@ -71,7 +71,7 @@ export class ListaLigadaCircularDuasVias {
     }
 }
 //Lista ligada com sets
-class Inventario {
+class Bau {
     inventario: Itens[]
     constructor() {
         this.inventario = [];
@@ -97,15 +97,15 @@ class Inventario {
         return Object.values(this.inventario);
     }
     //não alterei a função pois funcionou normalmente para os mesmos objetos criados
-    bau_comunitario(otherSet : Inventario) {
-        const unionInventario = new Inventario();
+    bau_comunitario(otherSet : Bau) {
+        const unionInventario = new Bau();
         this.values().forEach(value => unionInventario.add(value));
         otherSet.values().forEach(value => unionInventario.add(value));
         return unionInventario;
     }
     //fiz uma alteração para fazer interseção pelo tipo do item
-    bau_filtrado(otherSet : Inventario, filtro : string) {
-        const intersectionSet = new Inventario();
+    bau_filtrado(otherSet : Bau, filtro : string) {
+        const intersectionSet = new Bau();
         const values = this.values();
         const otherValues = otherSet.values();
         let biggerSet = values;
@@ -134,8 +134,8 @@ class Inventario {
     }
     //verifico pelo nome se o item é o mesmo ou não
     //aparece como erro pq o valor de value é unknown pro transpilador, mas funciona direitinho
-    diferenca_inventarios(otherSet : Inventario) {
-        const differenceSet = new Inventario();
+    diferenca_inventarios(otherSet : Bau) {
+        const differenceSet = new Bau();
         this.values().forEach(value => {
         if (!otherSet.has(value.nome)) {
             differenceSet.add(value);
@@ -172,15 +172,15 @@ class Inventario {
 // Construct Single Node
 class NodeInventario {
     jogador : string
-    data : Inventario;
+    data : Bau;
     next : NodeInventario | null
-  constructor(jogador : string, data : Inventario, next : (NodeInventario | null) = null) {
+  constructor(jogador : string, data : Bau, next : (NodeInventario | null) = null) {
     this.jogador = jogador;
     this.data = data;
     this.next = next;
   }
 }
-//lista ligada que recebe os sets(inventários) dos jogadores e o nome
+//lista ligada que recebe os sets(baús) dos jogadores e o nome
 export class Jogadores {
   head : NodeInventario | null;
   size : number;
@@ -189,13 +189,13 @@ export class Jogadores {
     this.size = 0;
   }
   // Insert first node
-  insertFirst(nome : string, data : Inventario) {
+  insertFirst(nome : string, data : Bau) {
     this.head = new NodeInventario(nome, data, this.head);
     this.size++;
   }
 
   // Insert last node
-  insertLast(nome : string, data : Inventario) {
+  insertLast(nome : string, data : Bau) {
     let node = new NodeInventario(nome, data);
     let current;
 
@@ -216,7 +216,7 @@ export class Jogadores {
   }
 
   // Insert at index
-  insertAt(nome : string, data : Inventario, index : number) {
+  insertAt(nome : string, data : Bau, index : number) {
     //  If index is out of range
     if (index > 0 && index > this.size) {
       return;
