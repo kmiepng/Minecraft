@@ -11,7 +11,10 @@ export class Inventario{
         //Verificacão de existência no inventário
         let itemExistente : Itens | undefined = undefined;
         const indicesItens = this.inventario.map((i, index) => item.nome === i.nome ? index : -1).filter(index => index !== -1)
-        if (indicesItens.length > 0) itemExistente = this.inventario[indicesItens[-1]]
+        if (indicesItens.length > 0) {
+            const index = indicesItens[indicesItens.length-1]
+            itemExistente = this.inventario[index]
+        }
         if (itemExistente){
             if (item.tipo === 'Ferramenta' || item.tipo === 'Armadura'){
                 console.log('Não pode stackar armadura/ferramenta')
