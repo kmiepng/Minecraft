@@ -155,7 +155,7 @@ export class InventarioComPilha{
                 const item = slot.peek();
                 const quantidade = slot.size();
                 // Apesar do possível erro, a verificação se o slot está vazio ou não já está sendo feita na condiçãp
-                console.log(`| [ ${item.nome} x${quantidade} ] `);
+                console.log(`| [ ${item!.nome} x${quantidade} ] `);
             } else {
                 console.log(`| [ Vazio ] `);
             }
