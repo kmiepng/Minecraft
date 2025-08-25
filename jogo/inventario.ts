@@ -66,10 +66,7 @@ export class Inventario{
                 quantidadeARemover = 0;
             }
         }
-        if (quantidadeRemovida > 0) {
-            console.log(`${quantidadeRemovida} de "${nomeItem}" foram removidos.`);
-            return true;
-        }
+        if (quantidadeRemovida > 0) return true;
         return false;
     }
     print_inventario() {
@@ -88,12 +85,16 @@ export class Inventario{
 export class InventarioComPilha{
     inventario : Pilha[];
     tamanho: number
+    //Não há restrição de tamanho no array, apenas uma pré-definição do seu tamanho
     constructor(tamanho: number = 9){
         this.tamanho = tamanho;
         this.inventario = [];
         for (let i = 0; i < this.tamanho; i++) { this.inventario.push(new Pilha()); }
     }
+    //Adição de um item em apenas uma pilha
     addItens(item: ItensPilha) {
+        //Primeiro há a verificação de item
+        //Se houver um slot o mesmo item que queremos adicionar, será verificado se há espaço da pilha
         for (const slot of this.inventario) {
             if (!slot.isEmpty() && slot.size() < 64) {
                 const itemNoSlot = slot.peek();
@@ -103,6 +104,7 @@ export class InventarioComPilha{
                 }
             }
         }
+        //Caso não atenda a condição acima, o item será adicionado no primeiro slot vazio que achar
         for (const slot of this.inventario) {
             if (slot.isEmpty()) {
                 slot.push(item);
@@ -110,14 +112,14 @@ export class InventarioComPilha{
             }
         }
     }
+    //Adição de vários itens em um slot, foi feita uma função separada para melhor visualização
     addSlot(item: ItensPilha, quantidade: number = 1) {
-        let adicionados = 0;
         for (let i = 0; i < quantidade; i++) {
             if (this.addItens(item)) {
-                adicionados++;
             }
         }
     }
+    //Remoção de um item específico de um slot específico
     rmvItens(indexSlot: number, qtdRemover : number = 1) {
         //Validar o índice
         if (indexSlot < 0) {
@@ -152,6 +154,7 @@ export class InventarioComPilha{
             if (!slot.isEmpty()) {
                 const item = slot.peek();
                 const quantidade = slot.size();
+                // Apesar do possível erro, a verificação se o slot está vazio ou não já está sendo feita na condiçãp
                 console.log(`| [ ${item.nome} x${quantidade} ] `);
             } else {
                 console.log(`| [ Vazio ] `);
