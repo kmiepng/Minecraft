@@ -43,7 +43,7 @@ export class HashTable {
         }
         return false;
     }
-    //Verificação do inventário do jogador
+    //Verificação do estado do jogador
     get(key : any) {
        const position = this.hashCode(key);
         if (this.table[position] != null) {
@@ -98,5 +98,9 @@ export class HashTable {
     }
     size() {
         return Object.keys(this.table).length;
+    }
+    setPvpState(key : any){
+        const state = this.get(key);
+        
     }
 }
