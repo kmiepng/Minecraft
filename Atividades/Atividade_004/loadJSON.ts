@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { Itens } from './itens'
+import { Itens } from './itens.js'
 
 // Carrega o JSON existente
 const configPath = "./jogadores.json";

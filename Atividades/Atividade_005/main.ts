@@ -1,9 +1,9 @@
-import { Itens } from './itens'
-import { bubblesort } from './bubblesort';
-import { mergeSort } from './mergesort';
-import { gerarRecursosAleatorios } from './gerar_listas';
-import { testSearch, testSort } from './testeSort';
-import { binarySearch, linearSearch } from './search';
+import { Itens } from './itens.js'
+import { bubblesort } from './bubblesort.js';
+import { mergeSort } from './mergesort.js';
+import { gerarRecursosAleatorios } from './gerar_listas.js';
+import { testSearch, testSort } from './testeSort.js';
+import { binarySearch, linearSearch } from './search.js';
 import fs from 'fs'
 
 //Criando o inventário e arrays para armazenar dados

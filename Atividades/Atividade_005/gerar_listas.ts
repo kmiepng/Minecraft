@@ -1,4 +1,4 @@
-import { Itens } from './itens'
+import { Itens } from './itens.js'
 
 //Gerando quantidade de itens aleatória
 function getRandomQtd(min = 1, max = 64) {
