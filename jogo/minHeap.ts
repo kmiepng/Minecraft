@@ -115,7 +115,7 @@ function compareByDurability(a: Itens, b: Itens): number {
     return defaultCompare(durA, durB);
 }
 
-export function heapSortInventarioPorDurabilidade(inventario: Inventario): Itens[] {
+export function heapSortInventario(inventario: Inventario): Itens[] {
     const sortedInventario: Itens[] = [];
     if (!inventario || inventario.inventario.length === 0) {
         return sortedInventario;

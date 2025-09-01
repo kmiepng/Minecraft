@@ -6,3 +6,4 @@ import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular";
 import { Bau, Jogadores } from "./lista_ligada_sets";
 import { Dictionary } from "./dicionario";
 import { HashTable } from "./hashTable";
+import { heapSortInventario } from "./minHeap";
