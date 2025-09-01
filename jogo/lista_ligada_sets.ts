@@ -139,6 +139,13 @@ class NodeBau {
     }
 }
 //lista ligada que recebe os sets(baús) dos jogadores e o nome
+
+export interface Jogador{
+    playerName : string;
+    pvpEnabled : boolean;
+    inventario : Inventario;
+}
+
 export class Jogadores {
     head : NodeBau | null;
     size : number;
@@ -147,8 +154,8 @@ export class Jogadores {
         this.size = 0;
     }
     // Insert first node
-    insertFirst(nome : string, data : Bau) {
-        this.head = new NodeBau(nome, data, this.head);
+    insertFirst(nome : Jogador, data : Bau) {
+        this.head = new NodeBau(nome.playerName, data, this.head);
         this.size++;
     }
     // Insert last node
@@ -168,7 +175,7 @@ export class Jogadores {
         this.size++;
     }
     // Insert at index
-    insertAt(nome : string, data : Bau, index : number) {
+    insertAt(nome : Jogador, data : Bau, index : number) {
         //  If index is out of range
         if (index > 0 && index > this.size) {
             return;
@@ -178,7 +185,7 @@ export class Jogadores {
             this.insertFirst(nome, data);
             return;
         }
-        const node = new NodeBau(nome, data);
+        const node = new NodeBau(nome.playerName, data);
         let current, previous;
         // Set current to first
         current = this.head;

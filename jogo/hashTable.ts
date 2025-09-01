@@ -1,4 +1,5 @@
 import { defaultToString, ValuePair } from "./utils";
+import { Jogador } from "./lista_ligada_sets";
 
 export class HashTable {
     toStrFn : typeof defaultToString
@@ -24,7 +25,7 @@ export class HashTable {
     }
     //O jogador entrou num servidor
     //Implementando o tratamento de colisão preguiçosa
-    put(key : any, value : any) {
+    put(key : any, value : Jogador) {
         if (key != null && value != null) {
         const position = this.hashCode(key);
             if (
@@ -99,8 +100,49 @@ export class HashTable {
     size() {
         return Object.keys(this.table).length;
     }
-    setPvpState(key : any){
-        const state = this.get(key);
-        
+    isEmpty() {
+        return this.size() === 0;
+    }
+    setPvpState(key: any, isPvpEnabled: boolean) {
+        const position = this.hashCode(key);
+        if (this.table[position] != null) {
+            // Verifica a posição original do hash
+            if (this.table[position].key === key && !this.table[position].isDeleted) {
+                // Encontrou o jogador, agora altera o estado do PvP
+                this.table[position].value.pvpEnabled = isPvpEnabled;
+                return true; // Sucesso
+            }
+            // Se não estiver na posição original, procura nas próximas (sondagem linear)
+            let index = position + 1;
+            while (
+                this.table[index] != null &&
+                (this.table[index].key !== key || this.table[index].isDeleted)
+            ) {
+                index++;
+            }
+            // Verifica se encontrou o jogador após a sondagem
+            if (
+                this.table[index] != null &&
+                this.table[index].key === key &&
+                !this.table[index].isDeleted
+            ) {
+                // Encontrou o jogador, agora altera o estado do PvP
+                this.table[index].value.pvpEnabled = isPvpEnabled;
+                return true; // Sucesso
+            }
+        }
+        // Se o loop terminar e não encontrar o jogador
+        return false; // Jogador não encontrado
+    }
+    toString() {
+        if (this.isEmpty()) {
+            return '';
+        }
+        const keys = Object.keys(this.table);
+        let objString = `{${keys[0]} => ${this.table[keys[0]].pvpEnabled}}`;
+        for (let i = 1; i < keys.length; i++) {
+            objString = `${objString},{${keys[i]} => ${this.table[keys[i]].pvpEnabled}}`;
+        }
+        return objString;
     }
 }
