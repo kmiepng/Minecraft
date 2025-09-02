@@ -142,6 +142,7 @@ class NodeBau {
 
 export interface Jogador{
     playerName : string;
+    dificuldade : string;
     pvpEnabled : boolean;
     inventario : Inventario;
 }
@@ -159,8 +160,8 @@ export class Jogadores {
         this.size++;
     }
     // Insert last node
-    insertLast(nome : string, data : Bau) {
-        let node = new NodeBau(nome, data);
+    insertLast(nome : Jogador, data : Bau) {
+        let node = new NodeBau(nome.playerName, data);
         let current;
         // If empty, make head
         if (!this.head) {
