@@ -430,15 +430,12 @@ export class Jogo {
         this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
     }
     // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL DEQUE ---------------------------------------
-    /**
-     * O renderizarFunil agora usa o toArray() do Deque. O resto é idêntico.
-     */
     renderizarFunilDeque() {
-        this.elementoFunilHTML.innerHTML = '';
+        this.elementoFunilDequeHTML.innerHTML = '';
         const itensNoFunil = this.funilDeque.toArray(); // Usa o Deque
         for (let i = 0; i < 5; i++) { // Renderiza 5 slots
             const slotDiv = document.createElement('div');
-            slotDiv.className = 'inventory-slot';
+            slotDiv.className = 'inventory-slot deque';
             const item = itensNoFunil[i];
             if (item) {
                 // Adiciona o tooltip com as informações do item
@@ -456,7 +453,7 @@ export class Jogo {
                     slotDiv.appendChild(quantidadeTexto);
                 }
             }
-            this.elementoFunilHTML.appendChild(slotDiv);
+            this.elementoFunilDequeHTML.appendChild(slotDiv);
         }
     }
     /**
@@ -526,9 +523,9 @@ export class Jogo {
     popularBauDeCimaDeque() {
         const min_drop = 1, max_drop = 4;
         const drop = Math.floor(Math.random() * (max_drop - min_drop + 1)) + min_drop;
-        this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
-        this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
-        this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
+        this.inventarioCimaDeque.add_slot(new Itens("Pedra", 10, "Bloco"));
+        this.inventarioCimaDeque.add_slot(new Itens("Diamante", drop, "Minério"));
+        this.inventarioCimaDeque.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventariosDeque();
     }
 }
