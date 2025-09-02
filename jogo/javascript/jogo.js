@@ -2,6 +2,7 @@
 import { Itens } from "./itens.js";
 import { Inventario } from "./inventario.js";
 import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
+import { heapSortInventario } from "./minHeap.js";
 // -------------------------JOGO-----------------------------------------
 function drop_Minerio(nome_drop, encantamento, min_drop = 1, max_drop = 4) {
     //não to considerando os drops extras de carvão, cobre e redstone
@@ -176,6 +177,22 @@ export class Jogo {
         // 4. Atualizar o inventário real com o resultado do algoritmo mais eficiente
         this.inventario.inventario = inventarioOrdenado;
         this.slotSelecionado = 0; // Resetar a seleção
+        this.renderizarInventario();
+    }
+    ordenarPorDurabilidade() {
+        if (this.inventario.inventario.length < 2) {
+            console.log("Inventário muito pequeno para ordenar.");
+            return;
+        }
+        console.log("Ordenando inventário por durabilidade com Heap Sort...");
+        const startTime = performance.now();
+        // Chama a função de Heap Sort e atualiza o inventário com o resultado
+        this.inventario.inventario = heapSortInventario(this.inventario);
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+        console.log(`Ordenação por durabilidade concluída em ${duration.toFixed(4)} ms.`);
+        // Atualiza a UI para refletir a nova ordem
+        this.slotSelecionado = 0;
         this.renderizarInventario();
     }
 }

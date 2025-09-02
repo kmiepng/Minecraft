@@ -8,10 +8,13 @@ export class Inventario {
         const capacidade = 64;
         //Verificacão de existência no inventário
         let itemExistente = undefined;
-        const indicesItens = this.inventario.map((i, index) => item.nome === i.nome ? index : -1).filter(index => index !== -1);
-        if (indicesItens.length > 0) {
-            const index = indicesItens[indicesItens.length - 1];
-            itemExistente = this.inventario[index];
+        // Procura por um slot que não esteja cheio para o mesmo item
+        for (let i = this.inventario.length - 1; i >= 0; i--) {
+            const slot = this.inventario[i];
+            if (slot.nome === item.nome && slot.quantidade < capacidade && item.tipo !== 'Ferramenta' && item.tipo !== 'Armadura') {
+                itemExistente = slot;
+                break;
+            }
         }
         if (itemExistente) {
             if (item.tipo === 'Ferramenta' || item.tipo === 'Armadura') {
@@ -21,7 +24,7 @@ export class Inventario {
             }
             //Verificando se falta adicionar item
             let isSobrando = itemExistente.add_item(item.quantidade);
-            if (isSobrando !== false) {
+            if (isSobrando > 0) {
                 while (isSobrando > 0) {
                     const quantidadeAdicionar = Math.min(isSobrando, capacidade);
                     this.inventario.push(new Itens(item.nome, quantidadeAdicionar, item.tipo, item.durabilidade, item.encantamento));

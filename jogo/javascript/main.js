@@ -2,7 +2,7 @@ import { Jogo } from "./jogo.js";
 import { Itens } from "./itens.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
     // Cria uma instância do jogo, ligando-a à div 'inventario-grid'
     const meuJogo = new Jogo('inventario-grid');
     // Renderiza o inventário inicial (vazio)
@@ -50,8 +50,13 @@ window.addEventListener('DOMContentLoaded', () => {
         meuJogo.minerarBloco("Diamante");
     });
     // --- Listener para Ordenação ---
+    // Listener para o botão de comparação por nome
     (_k = document.getElementById('sort-compare')) === null || _k === void 0 ? void 0 : _k.addEventListener('click', () => {
         meuJogo.compararOrdenacao();
+    });
+    // Listener para o botão de ordenação por durabilidade
+    (_l = document.getElementById('sort-heap')) === null || _l === void 0 ? void 0 : _l.addEventListener('click', () => {
+        meuJogo.ordenarPorDurabilidade();
     });
 });
 //# sourceMappingURL=main.js.map

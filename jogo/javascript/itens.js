@@ -44,11 +44,11 @@ export class Itens {
         //Se a quantidade do bloco for igual a 64 não dá mais pra adicionar bloco
         if (espaço_sobrando === 0) {
             console.log('Slot cheio');
-            return false;
+            return quantidade;
         } //Se tiver espaço sobrando, adiciona até atingir o limite
         else if (espaço_sobrando >= quantidade) {
             this.quantidade += quantidade;
-            return false;
+            return 0; // Não sobrou nada
         } //Se o espaço sobrando for menor q a quantiadade que queremos adicionar, adicionamos apenas o que dá
         else {
             this.quantidade += espaço_sobrando;
