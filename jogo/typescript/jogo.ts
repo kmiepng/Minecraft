@@ -409,14 +409,14 @@ export class Jogo{
         }
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
         this.transferenciaInterval = window.setInterval(() => {
-            // 1. Puxar item do baú de cima para o funil
+            // Puxar item do baú de cima para o funil
             if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
                 this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
                 this.funilFila.add_item(itemParaPuxar);
             }
 
-            // 2. Empurrar item do funil para o baú de baixo
+            // Empurrar item do funil para o baú de baixo
             if (!this.funilFila.isEmpty()) {
                 const itemParaEmpurrar = this.funilFila.remove_item();
                 if (itemParaEmpurrar) {
@@ -426,7 +426,7 @@ export class Jogo{
             
             this.renderizarTodosOsInventarios();
 
-            // 3. Parar a transferência se não houver mais nada a fazer
+            // Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
