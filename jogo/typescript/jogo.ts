@@ -67,7 +67,7 @@ export class Jogo{
         this.elementoFunilHTML = document.getElementById(idGridFunil)!;
         this.elementoStatusFunilHTML = document.getElementById(idStatusFunil)!;
     }
-
+    // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
      * Adiciona um item ao inventário e atualiza a interface gráfica.
      */
@@ -89,25 +89,24 @@ export class Jogo{
      * e adiciona o drop resultante ao inventário.
     */
     minerarBloco(nomeMinerio: string) {
-        // 1. Verificar se um slot está selecionado
+        // Verificar se um slot está selecionado
         if (this.slotSelecionado === null || this.inventario.inventario[this.slotSelecionado] === undefined) {
             console.log("Nenhuma ferramenta selecionada!");
             return;
         }
 
-        // 2. Obter a ferramenta ativa e verificar se é válida
+        // Obter a ferramenta ativa e verificar se é válida
         const ferramentaAtiva = this.inventario.inventario[this.slotSelecionado];
         if (ferramentaAtiva.tipo !== 'Ferramenta') {
             console.log(`O item "${ferramentaAtiva.nome}" não é uma ferramenta!`);
             return;
         }
 
-        // 3. Usar a ferramenta e diminuir a durabilidade
-        // O método 'usar' da sua classe Itens já faz isso!
+        // Usar a ferramenta e diminuir a durabilidade
         ferramentaAtiva.usar(1);
         console.log(`Durabilidade de ${ferramentaAtiva.nome}: ${ferramentaAtiva.durabilidade}`);
 
-        // 4. Calcular o drop do minério (lógica da sua função)
+        // Calcular o drop do minério
         let itemDropado: Itens;
         const encantamento = ferramentaAtiva.encantamento;
         
@@ -121,14 +120,13 @@ export class Jogo{
             itemDropado = new Itens(nomeMinerio, drop, 'Minério');
         } else {
             // Se não tiver encantamento, dropa o minério bruto (ex: Ferro, Diamante)
-            // No Minecraft, minérios como ferro dropam o bloco, mas vamos simplificar para dropar o item final.
             itemDropado = new Itens(nomeMinerio, 1, 'Minério'); 
         }
 
         console.log(`Dropou: ${itemDropado.quantidade}x ${itemDropado.nome}`);
         this.adicionarItem(itemDropado);
 
-        // 5. Verificar se a ferramenta quebrou e removê-la
+        // Verificar se a ferramenta quebrou e removê-la
         if (ferramentaAtiva.durabilidade !== null && ferramentaAtiva.durabilidade <= 0) {
             console.log(`Sua ${ferramentaAtiva.nome} quebrou!`);
             // Remove o item que estava no slot selecionado
@@ -210,7 +208,7 @@ export class Jogo{
         // Chama o método ajudante com os dados do inventário principal
         this._renderizarInventario(this.inventario, this.elementoInventarioHTML, this.slotSelecionado, clickHandler);
     }
-    // --- MÉTODOS PARA A TROUXA ---
+    // --------------------------------------------------- MÉTODOS PARA A TROUXA -----------------------------------------------------
 
     /**
      * Guarda o item do slot selecionado dentro da primeira trouxa encontrada.
@@ -270,7 +268,8 @@ export class Jogo{
             alert("O item selecionado não é uma trouxa.");
         }
     }
-     compararOrdenacao() {
+    // -------------------------------------------- ALGORITMOS DE SORT -----------------------------------------------
+    compararOrdenacao() {
         const inventarioAtual = this.inventario.inventario;
 
         if (inventarioAtual.length < 2) {
@@ -280,17 +279,17 @@ export class Jogo{
 
         console.log(`--- Iniciando Comparação de Desempenho (Tamanho do Array: ${inventarioAtual.length}) ---`);
 
-        // 1. Criar uma cópia do array. É ESSENCIAL para uma comparação justa!
+        // Criar uma cópia do array. É essencial para uma comparação justa
         const inventarioParaTeste = [...inventarioAtual];
 
-        // 2. Testar Bubble Sort
+        // Testar Bubble Sort
         const startTimeBubble = performance.now();
         bubblesort(inventarioParaTeste); // Executamos na cópia
         const endTimeBubble = performance.now();
         const durationBubble = endTimeBubble - startTimeBubble;
         console.log(`Bubble Sort: ${durationBubble.toFixed(4)} ms`);
 
-        // 3. Testar Merge Sort (na MESMA cópia original e desordenada)
+        // Testar Merge Sort (na MESMA cópia original e desordenada)
         const startTimeMerge = performance.now();
         const inventarioOrdenado = mergeSort(inventarioParaTeste); // Executamos e guardamos o resultado
         const endTimeMerge = performance.now();
@@ -298,7 +297,7 @@ export class Jogo{
         console.log(`Merge Sort:  ${durationMerge.toFixed(4)} ms`);
         console.log(`----------------------------------------------------`);
 
-        // Bônus: Exibir os resultados na página HTML
+        // Exibir os resultados na página HTML
         const resultsElement = document.getElementById('performance-results');
         if (resultsElement) {
             resultsElement.innerText = `Resultados (Inventário com ${inventarioAtual.length} slots):\n` +
@@ -306,7 +305,7 @@ export class Jogo{
                                        `Merge Sort:  ${durationMerge.toFixed(4)} ms`;
         }
 
-        // 4. Atualizar o inventário real com o resultado do algoritmo mais eficiente
+        // Atualizar o inventário real com o resultado do algoritmo mais eficiente
         this.inventario.inventario = inventarioOrdenado;
         this.slotSelecionado = 0; // Resetar a seleção
         this.renderizarInventario();
@@ -335,7 +334,7 @@ export class Jogo{
     }
 
     
-    // --------------------- MÉTODOS PARA O INVENTÁRIO DE PILHA ----------------------
+    // ------------------------------------ MÉTODOS PARA O INVENTÁRIO DE PILHA ------------------------------------
 
     adicionarItemPilha(item: ItensPilha, quantidade: number) {
         this.inventarioPilha.addSlot(item, quantidade);
@@ -400,7 +399,7 @@ export class Jogo{
             this.elementoInventarioPilhaHTML.appendChild(slotDiv);
         });
     }
-    // --- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---
+    // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---------------------------------------
 
     renderizarFunil() {
         this.elementoFunilHTML.innerHTML = '';
