@@ -415,7 +415,7 @@ export class Jogo{
 
                 // Cria e configura a imagem do item
                 const img = document.createElement('img');
-                img.src = itemImagens[item.nome] || 'assets/images/default.png';
+                img.src = itemImagens[item.nome] || 'images/default.png';
                 img.alt = item.nome;
                 slotDiv.appendChild(img);
 
@@ -439,10 +439,19 @@ export class Jogo{
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
 
         this.transferenciaInterval = window.setInterval(() => {
-            // Puxar item do baú de cima para o funil
-            if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
+            let algoAconteceu = false;
+            // Se o funil já tem um item, nossa primeira ação é tentar movê-lo para baixo.
+            if (!this.funilFila.isEmpty()) {
+                const itemParaEmpurrar = this.funilFila.remove_item();
+                if (itemParaEmpurrar) {
+                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
+                    algoAconteceu = true;
+                }
+            } 
+            // Só tentamos puxar um novo item se o funil estava vazio E o baú de cima tem itens.
+            else if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
-                // Criamos um novo item com quantidade 1, copiando as propriedades do original.
+                // Criamos um novo item copiando as propriedades do original.
                 const itemTransferido = new Itens(
                     itemParaPuxar.nome,
                     1, // Apenas uma unidade é transferida por vez
@@ -456,23 +465,19 @@ export class Jogo{
                 if (itemParaPuxar.quantidade <= 0) {
                     this.inventarioCima.inventario.shift();
                 }
-            }
-    
-            if (!this.funilFila.isEmpty()) {
-                const itemParaEmpurrar = this.funilFila.remove_item();
-                if (itemParaEmpurrar) {
-                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
-                }
+
+                algoAconteceu = true;
             }
 
-            this.renderizarTodosOsInventarios()
+            if (algoAconteceu) {
+                this.renderizarTodosOsInventarios();
+            }
 
             // Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             };
 
-            this.renderizarTodosOsInventarios();
         }, 1000); // Transfere 1 item por segundo
     }
 
@@ -501,10 +506,10 @@ export class Jogo{
         // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
         this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null, null);
 
-        // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
-        this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
-
         // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
         this.renderizarFunil();
+
+        // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
+        this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
     }
 }
