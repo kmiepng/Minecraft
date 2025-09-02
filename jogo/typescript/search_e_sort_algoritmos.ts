@@ -1,6 +1,8 @@
 // Bubblesort
 
-export function bubblesort(arr : any[]){
+import { Itens } from "./itens";
+
+export function bubblesort(arr : Itens[]) : Itens[]{
     let n = arr.length;
     // Outer loop: Iterate over the entire array
     for (let i = 0; i < n - 1; i++) {
@@ -32,7 +34,7 @@ export function bubblesort(arr : any[]){
 
 //Mergesort
 
-function merge(leftArr : any[], rightArr : any[]) : any{
+function merge(leftArr : Itens[], rightArr : Itens[]) : Itens[]{
     let resultArr = [];
     let leftIndex = 0;
     let rightIndex = 0;
@@ -54,7 +56,7 @@ function merge(leftArr : any[], rightArr : any[]) : any{
     return resultArr.concat(leftArr.slice(leftIndex)).concat(rightArr.slice(rightIndex));
 }
 
-export function mergeSort(arr : any[]) : any{
+export function mergeSort(arr : Itens[]) : Itens[]{
     if (arr.length < 2){
         return arr;
     }

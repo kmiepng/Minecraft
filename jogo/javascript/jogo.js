@@ -1,6 +1,7 @@
 // ------------------------- IMPORTS -------------------------------------
 import { Itens } from "./itens.js";
 import { Inventario } from "./inventario.js";
+import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 // -------------------------JOGO-----------------------------------------
 function drop_Minerio(nome_drop, encantamento, min_drop = 1, max_drop = 4) {
     //não to considerando os drops extras de carvão, cobre e redstone
@@ -55,10 +56,10 @@ export class Jogo {
         this.renderizarInventario(); // Re-desenha o inventário na tela
     }
     /**
-     * NOVO MÉTODO: Simula a mineração de um bloco.
+     * Simula a mineração de um bloco.
      * Ele usa a ferramenta no slot selecionado, diminui a durabilidade
      * e adiciona o drop resultante ao inventário.
-     */
+    */
     minerarBloco(nomeMinerio) {
         // 1. Verificar se um slot está selecionado
         if (this.slotSelecionado === null || this.inventario.inventario[this.slotSelecionado] === undefined) {
@@ -109,7 +110,7 @@ export class Jogo {
     /**
      * Limpa o HTML e desenha cada item do inventário na tela.
      * Esta é a função-chave para a representação gráfica.
-     */
+    */
     renderizarInventario() {
         this.elementoInventarioHTML.innerHTML = '';
         if (this.inventario.inventario.length === 0) {
@@ -142,6 +143,40 @@ export class Jogo {
             }
             this.elementoInventarioHTML.appendChild(slot);
         });
+    }
+    compararOrdenacao() {
+        const inventarioAtual = this.inventario.inventario;
+        if (inventarioAtual.length < 2) {
+            console.log("Inventário muito pequeno para comparar ordenação.");
+            return;
+        }
+        console.log(`--- Iniciando Comparação de Desempenho (Tamanho do Array: ${inventarioAtual.length}) ---`);
+        // 1. Criar uma cópia do array. É ESSENCIAL para uma comparação justa!
+        const inventarioParaTeste = [...inventarioAtual];
+        // 2. Testar Bubble Sort
+        const startTimeBubble = performance.now();
+        bubblesort(inventarioParaTeste); // Executamos na cópia
+        const endTimeBubble = performance.now();
+        const durationBubble = endTimeBubble - startTimeBubble;
+        console.log(`Bubble Sort: ${durationBubble.toFixed(4)} ms`);
+        // 3. Testar Merge Sort (na MESMA cópia original e desordenada)
+        const startTimeMerge = performance.now();
+        const inventarioOrdenado = mergeSort(inventarioParaTeste); // Executamos e guardamos o resultado
+        const endTimeMerge = performance.now();
+        const durationMerge = endTimeMerge - startTimeMerge;
+        console.log(`Merge Sort:  ${durationMerge.toFixed(4)} ms`);
+        console.log(`----------------------------------------------------`);
+        // Bônus: Exibir os resultados na página HTML
+        const resultsElement = document.getElementById('performance-results');
+        if (resultsElement) {
+            resultsElement.innerText = `Resultados (Inventário com ${inventarioAtual.length} slots):\n` +
+                `Bubble Sort: ${durationBubble.toFixed(4)} ms\n` +
+                `Merge Sort:  ${durationMerge.toFixed(4)} ms`;
+        }
+        // 4. Atualizar o inventário real com o resultado do algoritmo mais eficiente
+        this.inventario.inventario = inventarioOrdenado;
+        this.slotSelecionado = 0; // Resetar a seleção
+        this.renderizarInventario();
     }
 }
 //# sourceMappingURL=jogo.js.map

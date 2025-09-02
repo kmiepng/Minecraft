@@ -1,13 +1,13 @@
 import { Jogo } from "./jogo.js";
-import { Itens } from "./itens.js"; // Supondo que Itens.ts está na mesma pasta
-// 1. Quando a página carregar, inicialize o jogo.
+import { Itens } from "./itens.js";
+// Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-    // Cria uma instância do nosso jogo, ligando-a à div 'inventario-grid'
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    // Cria uma instância do jogo, ligando-a à div 'inventario-grid'
     const meuJogo = new Jogo('inventario-grid');
     // Renderiza o inventário inicial (vazio)
     meuJogo.renderizarInventario();
-    // 2. Conecta os botões do HTML às funções do nosso jogo
+    // Conecta os botões do HTML às funções do nosso jogo
     // Botão para adicionar Terra
     (_a = document.getElementById('add-terra')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
         const itemTerra = new Itens("Terra", 10, "Bloco");
@@ -41,13 +41,17 @@ window.addEventListener('DOMContentLoaded', () => {
         meuJogo.adicionarItem(new Itens("Picareta de Diamante", 1, "Ferramenta", 1561, "Toque de seda"));
     });
     // --- Botões de Ação ---
-    // Novo: Conecta o botão de minerar ao nosso novo método
+    // Conecta o botão de minerar ao nosso método
     (_h = document.getElementById('minerar-ferro')) === null || _h === void 0 ? void 0 : _h.addEventListener('click', () => {
         meuJogo.minerarBloco("Ferro");
     });
-    // Novo: Conecta o botão de minerar ao nosso novo método
+    // Conecta o botão de minerar ao nosso método
     (_j = document.getElementById('minerar-diamante')) === null || _j === void 0 ? void 0 : _j.addEventListener('click', () => {
         meuJogo.minerarBloco("Diamante");
+    });
+    // --- Listener para Ordenação ---
+    (_k = document.getElementById('sort-compare')) === null || _k === void 0 ? void 0 : _k.addEventListener('click', () => {
+        meuJogo.compararOrdenacao();
     });
 });
 //# sourceMappingURL=main.js.map

@@ -1,15 +1,15 @@
 import { Jogo } from "./jogo";
-import { Itens } from "./itens"; // Supondo que Itens.ts está na mesma pasta
+import { Itens } from "./itens";
 
-// 1. Quando a página carregar, inicialize o jogo.
+// Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    // Cria uma instância do nosso jogo, ligando-a à div 'inventario-grid'
+    // Cria uma instância do jogo, ligando-a à div 'inventario-grid'
     const meuJogo = new Jogo('inventario-grid');
     
     // Renderiza o inventário inicial (vazio)
     meuJogo.renderizarInventario();
 
-    // 2. Conecta os botões do HTML às funções do nosso jogo
+    // Conecta os botões do HTML às funções do nosso jogo
     
     // Botão para adicionar Terra
     document.getElementById('add-terra')?.addEventListener('click', () => {
@@ -51,13 +51,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // --- Botões de Ação ---
     
-    // Novo: Conecta o botão de minerar ao nosso novo método
+    // Conecta o botão de minerar ao nosso método
     document.getElementById('minerar-ferro')?.addEventListener('click', () => {
         meuJogo.minerarBloco("Ferro");
     });
     
-    // Novo: Conecta o botão de minerar ao nosso novo método
+    // Conecta o botão de minerar ao nosso método
     document.getElementById('minerar-diamante')?.addEventListener('click', () => {
         meuJogo.minerarBloco("Diamante");
+    });
+
+    // --- Listener para Ordenação ---
+     document.getElementById('sort-compare')?.addEventListener('click', () => {
+        meuJogo.compararOrdenacao();
     });
 });

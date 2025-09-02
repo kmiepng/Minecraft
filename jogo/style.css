@@ -63,3 +63,16 @@ body {
     border: 2px solid yellow; /* Borda amarela para destacar */
     background-color: #a0a0a0;
 }
+#performance-results {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 5px;
+    white-space: pre-wrap; /* Mantém as quebras de linha do texto */
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
