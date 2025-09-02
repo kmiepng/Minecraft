@@ -3,7 +3,7 @@
 import { Itens, ItensPilha } from "./itens";
 import { Inventario, InventarioComPilha } from "./inventario";
 import { bubblesort, mergeSort, linearSearch, binarySearch, testSearch, testSort } from "./search_e_sort_algoritmos";
-import { TrouxaPilha } from "./pilhas";
+import { TrouxaPilha, ItemTrouxa } from "./pilhas";
 import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular";
 import { Bau, Jogadores } from "./lista_ligada_sets";
 import { Dictionary } from "./dicionario";
@@ -38,7 +38,8 @@ const itemImagens: { [key: string]: string } = {
     "Ferro": "images/iron_ingot.png",
     "Diamante": "images/diamond.png",
     "Bloco de Ferro": "images/iron_ore.png", // Imagem para o bloco dropado por Toque de Seda
-    "Bloco de Diamante": "images/diamond_ore.png"
+    "Bloco de Diamante": "images/diamond_ore.png",
+    "Trouxa": "images/bundle.png"
 };
 
 export class Jogo{
@@ -155,6 +156,14 @@ export class Jogo{
             if (index === this.slotSelecionado) {
                 slot.classList.add('selected');
             }
+            // LÓGICA ATUALIZADA DO TOOLTIP
+            if (item instanceof ItemTrouxa) {
+                // Se o item for uma Trouxa, o tooltip mostra seu conteúdo
+                slot.title = item.conteudo.mostrarTrouxa();
+            } else {
+                // Caso contrário, mostra as informações normais do item
+                slot.title = item.info_item();
+            }
 
             // Adiciona o evento para tornar este o slot ativo ao clicar
             slot.addEventListener('click', () => {
@@ -178,6 +187,66 @@ export class Jogo{
             
             this.elementoInventarioHTML.appendChild(slot);
         });
+    }
+    // --- MÉTODOS PARA A TROUXA ---
+
+    /**
+     * Guarda o item do slot selecionado dentro da primeira trouxa encontrada.
+     */
+    guardarItemNaTrouxa() {
+        if (this.slotSelecionado === null) {
+            alert("Selecione um item para guardar!");
+            return;
+        }
+        const itemSelecionado = this.inventario.inventario[this.slotSelecionado];
+        
+        // Validações
+        if (!itemSelecionado) return;
+        if (itemSelecionado instanceof ItemTrouxa) {
+            alert("Não é possível guardar uma trouxa dentro de outra.");
+            return;
+        }
+        
+        // Encontra a primeira trouxa no inventário
+        const trouxa = this.inventario.inventario.find(item => item instanceof ItemTrouxa) as ItemTrouxa | undefined;
+
+        if (!trouxa) {
+            alert("Você não tem uma trouxa no inventário!");
+            return;
+        }
+
+        // Adiciona o item na trouxa e remove do inventário
+        trouxa.conteudo.push(itemSelecionado);
+        this.inventario.inventario.splice(this.slotSelecionado, 1);
+        
+        // Atualiza a UI
+        this.slotSelecionado = null; // Desseleciona para evitar erros
+        this.renderizarInventario();
+    }
+
+    /**
+     * Esvazia o conteúdo da trouxa selecionada de volta para o inventário.
+     */
+    esvaziarTrouxa() {
+        if (this.slotSelecionado === null) {
+            alert("Selecione uma trouxa para esvaziar!");
+            return;
+        }
+
+        const itemSelecionado = this.inventario.inventario[this.slotSelecionado];
+
+        if (itemSelecionado && itemSelecionado instanceof ItemTrouxa) {
+            // Usa o método pop() até a trouxa ficar vazia
+            while (!itemSelecionado.conteudo.isEmpty()) {
+                const itemDeDentro = itemSelecionado.conteudo.pop();
+                if (itemDeDentro) {
+                    this.adicionarItem(itemDeDentro); // Usa o método já existente para adicionar de volta
+                }
+            }
+            this.renderizarInventario();
+        } else {
+            alert("O item selecionado não é uma trouxa.");
+        }
     }
      compararOrdenacao() {
         const inventarioAtual = this.inventario.inventario;

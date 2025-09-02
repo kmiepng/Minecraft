@@ -1,8 +1,9 @@
 import { Jogo } from "./jogo.js";
 import { Itens } from "./itens.js";
+import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid');
     // Renderiza o estado inicial de ambos os inventários
@@ -40,55 +41,66 @@ window.addEventListener('DOMContentLoaded', () => {
     (_d = document.getElementById('rmv-slot-pilha')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', () => {
         meuJogo.removerSlotPilha();
     });
+    // ----------------------- CONEXÃO DOS BOTÕES DA TROUXA ----------------------------------------
+    (_e = document.getElementById('add-trouxa')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', () => {
+        // O método adicionarItem funciona com qualquer classe que herde de Itens
+        meuJogo.adicionarItem(new ItemTrouxa());
+    });
+    (_f = document.getElementById('guardar-na-trouxa')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', () => {
+        meuJogo.guardarItemNaTrouxa();
+    });
+    (_g = document.getElementById('esvaziar-trouxa')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', () => {
+        meuJogo.esvaziarTrouxa();
+    });
     // ------------------------ Conecta os botões do HTML às funções do nosso jogo -----------------------------
     // Botão para adicionar Terra
-    (_e = document.getElementById('add-terra')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', () => {
+    (_h = document.getElementById('add-terra')) === null || _h === void 0 ? void 0 : _h.addEventListener('click', () => {
         const itemTerra = new Itens("Terra", 10, "Bloco");
         meuJogo.adicionarItem(itemTerra);
     });
     // Botão para adicionar Picareta
-    (_f = document.getElementById('add-picareta')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', () => {
+    (_j = document.getElementById('add-picareta')) === null || _j === void 0 ? void 0 : _j.addEventListener('click', () => {
         const itemPicareta = new Itens("Picareta de Diamante", 1, "Ferramenta", 1561, "Eficiência V");
         meuJogo.adicionarItem(itemPicareta);
     });
     // Botão para adicionar Maçã
-    (_g = document.getElementById('add-maca')) === null || _g === void 0 ? void 0 : _g.addEventListener('click', () => {
+    (_k = document.getElementById('add-maca')) === null || _k === void 0 ? void 0 : _k.addEventListener('click', () => {
         const itemMaca = new Itens("Maçã Dourada", 5, "Comida");
         meuJogo.adicionarItem(itemMaca);
     });
     // Botão para remover Terra
-    (_h = document.getElementById('rmv-terra')) === null || _h === void 0 ? void 0 : _h.addEventListener('click', () => {
+    (_l = document.getElementById('rmv-terra')) === null || _l === void 0 ? void 0 : _l.addEventListener('click', () => {
         meuJogo.removerItem("Terra", 5);
     });
     // Botão para remover Picareta
-    (_j = document.getElementById('rmv-picareta')) === null || _j === void 0 ? void 0 : _j.addEventListener('click', () => {
+    (_m = document.getElementById('rmv-picareta')) === null || _m === void 0 ? void 0 : _m.addEventListener('click', () => {
         // Remove a primeira picareta que encontrar
         meuJogo.removerItem("Picareta de Diamante", 1);
     });
     // Novo: Adicionar picareta com Fortuna
-    (_k = document.getElementById('add-picareta-fortuna')) === null || _k === void 0 ? void 0 : _k.addEventListener('click', () => {
+    (_o = document.getElementById('add-picareta-fortuna')) === null || _o === void 0 ? void 0 : _o.addEventListener('click', () => {
         meuJogo.adicionarItem(new Itens("Picareta de Diamante", 1, "Ferramenta", 1561, "Fortuna"));
     });
     // Novo: Adicionar picareta com Toque de Seda
-    (_l = document.getElementById('add-picareta-seda')) === null || _l === void 0 ? void 0 : _l.addEventListener('click', () => {
+    (_p = document.getElementById('add-picareta-seda')) === null || _p === void 0 ? void 0 : _p.addEventListener('click', () => {
         meuJogo.adicionarItem(new Itens("Picareta de Diamante", 1, "Ferramenta", 1561, "Toque de seda"));
     });
     // --- Botões de Ação ---
     // Conecta o botão de minerar ao nosso método
-    (_m = document.getElementById('minerar-ferro')) === null || _m === void 0 ? void 0 : _m.addEventListener('click', () => {
+    (_q = document.getElementById('minerar-ferro')) === null || _q === void 0 ? void 0 : _q.addEventListener('click', () => {
         meuJogo.minerarBloco("Ferro");
     });
     // Conecta o botão de minerar ao nosso método
-    (_o = document.getElementById('minerar-diamante')) === null || _o === void 0 ? void 0 : _o.addEventListener('click', () => {
+    (_r = document.getElementById('minerar-diamante')) === null || _r === void 0 ? void 0 : _r.addEventListener('click', () => {
         meuJogo.minerarBloco("Diamante");
     });
     // --- Listener para Ordenação ---
     // Listener para o botão de comparação por nome
-    (_p = document.getElementById('sort-compare')) === null || _p === void 0 ? void 0 : _p.addEventListener('click', () => {
+    (_s = document.getElementById('sort-compare')) === null || _s === void 0 ? void 0 : _s.addEventListener('click', () => {
         meuJogo.compararOrdenacao();
     });
     // Listener para o botão de ordenação por durabilidade
-    (_q = document.getElementById('sort-heap')) === null || _q === void 0 ? void 0 : _q.addEventListener('click', () => {
+    (_t = document.getElementById('sort-heap')) === null || _t === void 0 ? void 0 : _t.addEventListener('click', () => {
         meuJogo.ordenarPorDurabilidade();
     });
 });

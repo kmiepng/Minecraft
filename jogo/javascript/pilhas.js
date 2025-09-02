@@ -1,3 +1,4 @@
+import { Itens } from "./itens.js";
 export class Pilha {
     constructor() {
         this.count = 0;
@@ -61,17 +62,17 @@ export class TrouxaPilha {
             console.log("Trouxa está vazia");
             return null;
         }
-        const poppedData = this.top.getData();
+        const poppedData = this.top;
         this.top = this.top.next;
         this.size--;
-        return poppedData;
+        return poppedData.data;
     }
     peek() {
         if (this.top === null) {
             console.log("Trouxa está vazia");
             return null;
         }
-        return this.top.getData();
+        return this.top.data;
     }
     getSize() {
         return this.size;
@@ -87,6 +88,13 @@ export class TrouxaPilha {
             current = current.next;
         }
         return result;
+    }
+}
+export class ItemTrouxa extends Itens {
+    constructor() {
+        // Inicializa como um item padrão do tipo 'Trouxa'
+        super("Trouxa", 1, "Trouxa");
+        this.conteudo = new TrouxaPilha();
     }
 }
 //# sourceMappingURL=pilhas.js.map

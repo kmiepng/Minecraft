@@ -1,5 +1,6 @@
 import { Jogo } from "./jogo";
 import { Itens, ItensPilha } from "./itens";
+import { ItemTrouxa } from "./pilhas";
 
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
@@ -37,7 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const itemTerra: ItensPilha = { id: 'terra', nome: 'Terra' };
         meuJogo.adicionarItemPilha(itemTerra, 5);
     });
-    
+
     document.getElementById('rmv-item-pilha')?.addEventListener('click', () => {
         // Remove 1 item por padrão
         meuJogo.removerItemPilha(1);
@@ -45,6 +46,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('rmv-slot-pilha')?.addEventListener('click', () => {
         meuJogo.removerSlotPilha();
+    });
+    // ----------------------- CONEXÃO DOS BOTÕES DA TROUXA ----------------------------------------
+
+    document.getElementById('add-trouxa')?.addEventListener('click', () => {
+        // O método adicionarItem funciona com qualquer classe que herde de Itens
+        meuJogo.adicionarItem(new ItemTrouxa());
+    });
+    
+    document.getElementById('guardar-na-trouxa')?.addEventListener('click', () => {
+        meuJogo.guardarItemNaTrouxa();
+    });
+
+    document.getElementById('esvaziar-trouxa')?.addEventListener('click', () => {
+        meuJogo.esvaziarTrouxa();
     });
     
     // ------------------------ Conecta os botões do HTML às funções do nosso jogo -----------------------------
