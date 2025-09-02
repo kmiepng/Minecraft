@@ -519,7 +519,7 @@ export class Jogo {
         // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
         this._renderizarInventario(this.inventarioCimaDeque, this.elementoInventarioCimaDequeHTML, null, null);
         // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
-        this.renderizarFunil();
+        this.renderizarFunilDeque();
         // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
         this._renderizarInventario(this.inventarioBaixoDeque, this.elementoInventarioBaixoDequeHTML, null, null);
     }
@@ -529,7 +529,7 @@ export class Jogo {
         this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
         this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
-        this.renderizarTodosOsInventarios();
+        this.renderizarTodosOsInventariosDeque();
     }
 }
 //# sourceMappingURL=jogo.js.map

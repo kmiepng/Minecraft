@@ -516,7 +516,7 @@ export class Jogo{
         this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
         this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
-        this.renderizarTodosOsInventarios();
+        this.renderizarTodosOsInventariosDeque();
     }
     /**
      * Renderiza os inventários da simulação do funil (baús e o próprio funil).
@@ -526,7 +526,7 @@ export class Jogo{
         this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null, null);
 
         // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
-        this.renderizarFunil();
+        this.renderizarFunilDeque();
 
         // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
         this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);

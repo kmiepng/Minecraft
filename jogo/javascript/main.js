@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
     meuJogo.renderizarInventario();
     meuJogo.renderizarInventarioPilha();
     meuJogo.renderizarTodosOsInventarios();
+    meuJogo.renderizarTodosOsInventariosDeque();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
