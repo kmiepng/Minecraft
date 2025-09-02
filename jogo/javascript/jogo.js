@@ -43,6 +43,7 @@ export class Jogo {
         this.elementoFunilHTML = document.getElementById(idGridFunil);
         this.elementoStatusFunilHTML = document.getElementById(idStatusFunil);
     }
+    // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
      * Adiciona um item ao inventário e atualiza a interface gráfica.
      */
@@ -63,22 +64,21 @@ export class Jogo {
      * e adiciona o drop resultante ao inventário.
     */
     minerarBloco(nomeMinerio) {
-        // 1. Verificar se um slot está selecionado
+        // Verificar se um slot está selecionado
         if (this.slotSelecionado === null || this.inventario.inventario[this.slotSelecionado] === undefined) {
             console.log("Nenhuma ferramenta selecionada!");
             return;
         }
-        // 2. Obter a ferramenta ativa e verificar se é válida
+        // Obter a ferramenta ativa e verificar se é válida
         const ferramentaAtiva = this.inventario.inventario[this.slotSelecionado];
         if (ferramentaAtiva.tipo !== 'Ferramenta') {
             console.log(`O item "${ferramentaAtiva.nome}" não é uma ferramenta!`);
             return;
         }
-        // 3. Usar a ferramenta e diminuir a durabilidade
-        // O método 'usar' da sua classe Itens já faz isso!
+        // Usar a ferramenta e diminuir a durabilidade
         ferramentaAtiva.usar(1);
         console.log(`Durabilidade de ${ferramentaAtiva.nome}: ${ferramentaAtiva.durabilidade}`);
-        // 4. Calcular o drop do minério (lógica da sua função)
+        // Calcular o drop do minério
         let itemDropado;
         const encantamento = ferramentaAtiva.encantamento;
         // Valores padrão para o drop
@@ -92,12 +92,11 @@ export class Jogo {
         }
         else {
             // Se não tiver encantamento, dropa o minério bruto (ex: Ferro, Diamante)
-            // No Minecraft, minérios como ferro dropam o bloco, mas vamos simplificar para dropar o item final.
             itemDropado = new Itens(nomeMinerio, 1, 'Minério');
         }
         console.log(`Dropou: ${itemDropado.quantidade}x ${itemDropado.nome}`);
         this.adicionarItem(itemDropado);
-        // 5. Verificar se a ferramenta quebrou e removê-la
+        // Verificar se a ferramenta quebrou e removê-la
         if (ferramentaAtiva.durabilidade !== null && ferramentaAtiva.durabilidade <= 0) {
             console.log(`Sua ${ferramentaAtiva.nome} quebrou!`);
             // Remove o item que estava no slot selecionado
@@ -167,7 +166,7 @@ export class Jogo {
         // Chama o método ajudante com os dados do inventário principal
         this._renderizarInventario(this.inventario, this.elementoInventarioHTML, this.slotSelecionado, clickHandler);
     }
-    // --- MÉTODOS PARA A TROUXA ---
+    // --------------------------------------------------- MÉTODOS PARA A TROUXA -----------------------------------------------------
     /**
      * Guarda o item do slot selecionado dentro da primeira trouxa encontrada.
      */
@@ -220,6 +219,7 @@ export class Jogo {
             alert("O item selecionado não é uma trouxa.");
         }
     }
+    // -------------------------------------------- ALGORITMOS DE SORT -----------------------------------------------
     compararOrdenacao() {
         const inventarioAtual = this.inventario.inventario;
         if (inventarioAtual.length < 2) {
@@ -227,29 +227,29 @@ export class Jogo {
             return;
         }
         console.log(`--- Iniciando Comparação de Desempenho (Tamanho do Array: ${inventarioAtual.length}) ---`);
-        // 1. Criar uma cópia do array. É ESSENCIAL para uma comparação justa!
+        // Criar uma cópia do array. É essencial para uma comparação justa
         const inventarioParaTeste = [...inventarioAtual];
-        // 2. Testar Bubble Sort
+        // Testar Bubble Sort
         const startTimeBubble = performance.now();
         bubblesort(inventarioParaTeste); // Executamos na cópia
         const endTimeBubble = performance.now();
         const durationBubble = endTimeBubble - startTimeBubble;
         console.log(`Bubble Sort: ${durationBubble.toFixed(4)} ms`);
-        // 3. Testar Merge Sort (na MESMA cópia original e desordenada)
+        // Testar Merge Sort (na MESMA cópia original e desordenada)
         const startTimeMerge = performance.now();
         const inventarioOrdenado = mergeSort(inventarioParaTeste); // Executamos e guardamos o resultado
         const endTimeMerge = performance.now();
         const durationMerge = endTimeMerge - startTimeMerge;
         console.log(`Merge Sort:  ${durationMerge.toFixed(4)} ms`);
         console.log(`----------------------------------------------------`);
-        // Bônus: Exibir os resultados na página HTML
+        // Exibir os resultados na página HTML
         const resultsElement = document.getElementById('performance-results');
         if (resultsElement) {
             resultsElement.innerText = `Resultados (Inventário com ${inventarioAtual.length} slots):\n` +
                 `Bubble Sort: ${durationBubble.toFixed(4)} ms\n` +
                 `Merge Sort:  ${durationMerge.toFixed(4)} ms`;
         }
-        // 4. Atualizar o inventário real com o resultado do algoritmo mais eficiente
+        // Atualizar o inventário real com o resultado do algoritmo mais eficiente
         this.inventario.inventario = inventarioOrdenado;
         this.slotSelecionado = 0; // Resetar a seleção
         this.renderizarInventario();
@@ -270,7 +270,7 @@ export class Jogo {
         this.slotSelecionado = 0;
         this.renderizarInventario();
     }
-    // --------------------- MÉTODOS PARA O INVENTÁRIO DE PILHA ----------------------
+    // ------------------------------------ MÉTODOS PARA O INVENTÁRIO DE PILHA ------------------------------------
     adicionarItemPilha(item, quantidade) {
         this.inventarioPilha.addSlot(item, quantidade);
         this.renderizarInventarioPilha();
@@ -327,7 +327,7 @@ export class Jogo {
             this.elementoInventarioPilhaHTML.appendChild(slotDiv);
         });
     }
-    // --- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---
+    // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---------------------------------------
     renderizarFunil() {
         this.elementoFunilHTML.innerHTML = '';
         const itensNoFunil = this.funilFila.toArray();
@@ -348,21 +348,22 @@ export class Jogo {
         }
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
         this.transferenciaInterval = window.setInterval(() => {
+            let algoAconteceu = false; // Flag para saber se precisamos renderizar
             // Puxar item do baú de cima para o funil
             if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
+                // Criamos um novo item com quantidade 1, copiando as propriedades do original.
+                const itemTransferido = new Itens(itemParaPuxar.nome, 1, // Apenas uma unidade é transferida por vez
+                itemParaPuxar.tipo, itemParaPuxar.durabilidade, itemParaPuxar.encantamento);
+                this.funilFila.add_item(itemTransferido);
                 this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
-                this.funilFila.add_item(itemParaPuxar);
+                algoAconteceu = true;
             }
-            // Empurrar item do funil para o baú de baixo
-            if (!this.funilFila.isEmpty()) {
-                const itemParaEmpurrar = this.funilFila.remove_item();
-                if (itemParaEmpurrar) {
-                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
-                }
+            // Renderiza a UI apenas se algo tiver mudado.
+            if (algoAconteceu) {
+                this.renderizarTodosOsInventarios();
             }
-            this.renderizarTodosOsInventarios();
-            // Parar a transferência se não houver mais nada a fazer
+            // ETAPA 3: Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
@@ -378,8 +379,10 @@ export class Jogo {
     }
     // Método auxiliar para popular o baú de cima
     popularBauDeCima() {
+        const min_drop = 1, max_drop = 4;
+        const drop = Math.floor(Math.random() * (max_drop - min_drop + 1)) + min_drop;
         this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
-        this.inventarioCima.add_slot(new Itens("Diamante", 3, "Minério"));
+        this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventarios();
     }

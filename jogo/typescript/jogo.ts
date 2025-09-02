@@ -421,25 +421,33 @@ export class Jogo{
             return;
         }
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
+
         this.transferenciaInterval = window.setInterval(() => {
+            let algoAconteceu = false; // Flag para saber se precisamos renderizar
+
             // Puxar item do baú de cima para o funil
             if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
+                // Criamos um novo item com quantidade 1, copiando as propriedades do original.
+                const itemTransferido = new Itens(
+                    itemParaPuxar.nome,
+                    1, // Apenas uma unidade é transferida por vez
+                    itemParaPuxar.tipo,
+                    itemParaPuxar.durabilidade,
+                    itemParaPuxar.encantamento
+                );
+                this.funilFila.add_item(itemTransferido);
                 this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
-                this.funilFila.add_item(itemParaPuxar);
-            }
-
-            // Empurrar item do funil para o baú de baixo
-            if (!this.funilFila.isEmpty()) {
-                const itemParaEmpurrar = this.funilFila.remove_item();
-                if (itemParaEmpurrar) {
-                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
-                }
-            }
             
-            this.renderizarTodosOsInventarios();
+                algoAconteceu = true;
+            }
 
-            // Parar a transferência se não houver mais nada a fazer
+            // Renderiza a UI apenas se algo tiver mudado.
+            if (algoAconteceu) {
+                this.renderizarTodosOsInventarios();
+            }
+
+            // ETAPA 3: Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
@@ -457,8 +465,10 @@ export class Jogo{
 
     // Método auxiliar para popular o baú de cima
     popularBauDeCima() {
+        const min_drop = 1, max_drop = 4;
+        const drop = Math.floor(Math.random() * (max_drop - min_drop + 1)) + min_drop;
         this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
-        this.inventarioCima.add_slot(new Itens("Diamante", 3, "Minério"));
+        this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventarios();
     }
