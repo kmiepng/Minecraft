@@ -82,9 +82,11 @@ export class TrouxaPilha {
     }
     mostrarTrouxa() {
         let current = this.top;
-        let result = "|";
+        let result = "Conteúdo da trouxa: ";
+        if (current === null)
+            return result + "[Vazia]";
         while (current !== null) {
-            result += current.getData() + " | ";
+            result += `- ${current.getData()}\n`;
             current = current.next;
         }
         return result;

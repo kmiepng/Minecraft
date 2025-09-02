@@ -97,9 +97,10 @@ export class TrouxaPilha {
 
     mostrarTrouxa() {
         let current = this.top;
-        let result = "|";
+        let result = "Conteúdo da trouxa: ";
+        if(current === null) return result + "[Vazia]";
         while (current !== null) {
-            result += current.getData() + " | ";
+            result += `- ${current.getData()}\n`;
             current = current.next;
         }
         return result;
@@ -107,7 +108,6 @@ export class TrouxaPilha {
 }
 export class ItemTrouxa extends Itens {
     conteudo: TrouxaPilha;
-
     constructor() {
         // Inicializa como um item padrão do tipo 'Trouxa'
         super("Trouxa", 1, "Trouxa");

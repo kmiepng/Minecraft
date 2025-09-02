@@ -43,7 +43,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     // ----------------------- CONEXÃO DOS BOTÕES DA TROUXA ----------------------------------------
     (_e = document.getElementById('add-trouxa')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', () => {
-        // O método adicionarItem funciona com qualquer classe que herde de Itens
         meuJogo.adicionarItem(new ItemTrouxa());
     });
     (_f = document.getElementById('guardar-na-trouxa')) === null || _f === void 0 ? void 0 : _f.addEventListener('click', () => {

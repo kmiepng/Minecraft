@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // ----------------------- CONEXÃO DOS BOTÕES DA TROUXA ----------------------------------------
 
     document.getElementById('add-trouxa')?.addEventListener('click', () => {
-        // O método adicionarItem funciona com qualquer classe que herde de Itens
         meuJogo.adicionarItem(new ItemTrouxa());
     });
     

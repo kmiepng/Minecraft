@@ -5,22 +5,6 @@ import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { heapSortInventario } from "./minHeap.js";
 // -------------------------JOGO-----------------------------------------
-function drop_Minerio(nome_drop, encantamento, min_drop = 1, max_drop = 4) {
-    //não to considerando os drops extras de carvão, cobre e redstone
-    let drop = Math.floor(Math.random() * (max_drop - min_drop + 1)) + min_drop;
-    if (encantamento !== undefined) { //verificando se quebrou o minério com a picareta encantada
-        if (encantamento === 'Toque de seda') {
-            nome_drop = new Itens(`Bloco de ${nome_drop}`, 1, 'Bloco');
-        }
-        else if (encantamento === 'Fortuna') {
-            nome_drop = new Itens(nome_drop, drop, 'Minério');
-        }
-    }
-    else {
-        nome_drop = new Itens(nome_drop, 1, 'Minério'); //caso não, dropa apenas 1 minério normal
-    }
-    return nome_drop;
-}
 // Um mapa para associar nomes de itens a seus arquivos de imagem
 const itemImagens = {
     "Terra": "images/dirt.png",
@@ -132,7 +116,13 @@ export class Jogo {
             if (index === this.slotSelecionado) {
                 slot.classList.add('selected');
             }
-            // LÓGICA ATUALIZADA DO TOOLTIP
+            // Adiciona o evento para tornar este o slot ativo ao clicar
+            slot.addEventListener('click', () => {
+                this.slotSelecionado = index;
+                console.log(`Slot ${index} selecionado: ${item.nome}`);
+                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
+            });
+            // Tooltip
             if (item instanceof ItemTrouxa) {
                 // Se o item for uma Trouxa, o tooltip mostra seu conteúdo
                 slot.title = item.conteudo.mostrarTrouxa();
@@ -141,15 +131,8 @@ export class Jogo {
                 // Caso contrário, mostra as informações normais do item
                 slot.title = item.info_item();
             }
-            // Adiciona o evento para tornar este o slot ativo ao clicar
-            slot.addEventListener('click', () => {
-                this.slotSelecionado = index;
-                console.log(`Slot ${index} selecionado: ${item.nome}`);
-                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
-            });
-            slot.title = item.info_item(); // Tooltip com durabilidade atualizada
             const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'assets/images/default.png';
+            img.src = itemImagens[item.nome] || 'images/default.png';
             img.alt = item.nome;
             slot.appendChild(img);
             if (item.quantidade > 1) {

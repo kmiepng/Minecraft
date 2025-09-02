@@ -13,22 +13,6 @@ import { FilaDeque, FilacomNode } from "./filas";
 
 // -------------------------JOGO-----------------------------------------
 
-function drop_Minerio(nome_drop : any, encantamento ?: string, min_drop = 1, max_drop = 4){  //quantidade de minério que dropa após minerar um bloco de minério
-    //não to considerando os drops extras de carvão, cobre e redstone
-    let drop =  Math.floor(Math.random() * (max_drop-min_drop +1)) + min_drop;
-    if (encantamento !== undefined){ //verificando se quebrou o minério com a picareta encantada
-        if (encantamento === 'Toque de seda') { 
-            nome_drop = new Itens(`Bloco de ${nome_drop}`, 1, 'Bloco') 
-        } else if (encantamento === 'Fortuna') {
-            nome_drop = new Itens(nome_drop, drop, 'Minério');
-        }
-    }
-    else{
-        nome_drop = new Itens(nome_drop, 1, 'Minério'); //caso não, dropa apenas 1 minério normal
-    }
-    return nome_drop;
-}
-
 // Um mapa para associar nomes de itens a seus arquivos de imagem
 const itemImagens: { [key: string]: string } = {
     "Terra": "images/dirt.png",
@@ -151,18 +135,10 @@ export class Jogo{
         this.inventario.inventario.forEach((item, index) => {
             const slot = document.createElement('div');
             slot.className = 'inventory-slot';
-            
+
             // Adiciona a classe 'selected' se for o slot ativo
             if (index === this.slotSelecionado) {
                 slot.classList.add('selected');
-            }
-            // LÓGICA ATUALIZADA DO TOOLTIP
-            if (item instanceof ItemTrouxa) {
-                // Se o item for uma Trouxa, o tooltip mostra seu conteúdo
-                slot.title = item.conteudo.mostrarTrouxa();
-            } else {
-                // Caso contrário, mostra as informações normais do item
-                slot.title = item.info_item();
             }
 
             // Adiciona o evento para tornar este o slot ativo ao clicar
@@ -172,9 +148,16 @@ export class Jogo{
                 this.renderizarInventario(); // Re-renderiza para mostrar a seleção
             });
 
-            slot.title = item.info_item(); // Tooltip com durabilidade atualizada
+            // Tooltip
+            if (item instanceof ItemTrouxa) {
+                // Se o item for uma Trouxa, o tooltip mostra seu conteúdo
+                slot.title = item.conteudo.mostrarTrouxa();
+            } else {
+                // Caso contrário, mostra as informações normais do item
+                slot.title = item.info_item();
+            }
             const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'assets/images/default.png';
+            img.src = itemImagens[item.nome] || 'images/default.png';
             img.alt = item.nome;
             slot.appendChild(img);
 
