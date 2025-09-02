@@ -3,7 +3,7 @@ import { Itens } from "./itens.js";
 import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil');
     // Renderiza o estado inicial de ambos os inventários
@@ -110,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
     (_v = document.getElementById('iniciar-transferencia')) === null || _v === void 0 ? void 0 : _v.addEventListener('click', () => {
         meuJogo.iniciarTransferenciaFunil();
     });
-    (_v = document.getElementById('parar-transferencia')) === null || _v === void 0 ? void 0 : _v.addEventListener('click', () => {
+    (_w = document.getElementById('parar-transferencia')) === null || _w === void 0 ? void 0 : _w.addEventListener('click', () => {
         meuJogo.pararTransferenciaFunil();
     });
 });

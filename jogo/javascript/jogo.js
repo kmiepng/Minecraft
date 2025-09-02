@@ -110,49 +110,62 @@ export class Jogo {
         }
     }
     /**
-     * Limpa o HTML e desenha cada item do inventário na tela.
-     * Esta é a função-chave para a representação gráfica.
-    */
-    renderizarInventario() {
-        this.elementoInventarioHTML.innerHTML = '';
-        if (this.inventario.inventario.length === 0) {
-            this.elementoInventarioHTML.innerHTML = '<p class="inventario-vazio">Inventário Vazio</p>';
+     * Método privado e genérico para renderizar QUALQUER inventário do tipo 'Inventario'.
+     * @param inventarioObject O objeto de inventário a ser renderizado.
+     * @param targetElement O elemento HTML onde o inventário será desenhado.
+     * @param selectedSlotIndex O índice do slot atualmente selecionado (pode ser null).
+     * @param onSlotClick Uma função a ser executada quando um slot é clicado (pode ser null).
+     */
+    _renderizarInventario(inventarioObject, targetElement, selectedSlotIndex, onSlotClick) {
+        targetElement.innerHTML = ''; // Limpa o conteúdo do elemento alvo
+        if (inventarioObject.inventario.length === 0) {
+            targetElement.innerHTML = '<p class="inventario-vazio">[ Vazio ]</p>';
             return;
         }
-        this.inventario.inventario.forEach((item, index) => {
-            const slot = document.createElement('div');
-            slot.className = 'inventory-slot';
-            // Adiciona a classe 'selected' se for o slot ativo
-            if (index === this.slotSelecionado) {
-                slot.classList.add('selected');
+        inventarioObject.inventario.forEach((item, index) => {
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'inventory-slot';
+            // Usa o índice de slot selecionado que foi passado como parâmetro
+            if (index === selectedSlotIndex) {
+                slotDiv.classList.add('selected');
             }
-            // Adiciona o evento para tornar este o slot ativo ao clicar
-            slot.addEventListener('click', () => {
-                this.slotSelecionado = index;
-                console.log(`Slot ${index} selecionado: ${item.nome}`);
-                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
-            });
-            // Tooltip
+            // Se uma função de clique foi fornecida, adiciona o evento
+            if (onSlotClick) {
+                slotDiv.addEventListener('click', () => {
+                    onSlotClick(index); // Executa a função passada
+                });
+            }
+            // A lógica de tooltip e imagem continua a mesma
             if (item instanceof ItemTrouxa) {
-                // Se o item for uma Trouxa, o tooltip mostra seu conteúdo
-                slot.title = item.conteudo.mostrarTrouxa();
+                slotDiv.title = item.conteudo.mostrarTrouxa();
             }
             else {
-                // Caso contrário, mostra as informações normais do item
-                slot.title = item.info_item();
+                slotDiv.title = item.info_item();
             }
             const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'images/default.png';
+            img.src = itemImagens[item.nome] || 'assets/images/default.png';
             img.alt = item.nome;
-            slot.appendChild(img);
+            slotDiv.appendChild(img);
             if (item.quantidade > 1) {
                 const quantidadeTexto = document.createElement('span');
                 quantidadeTexto.className = 'item-quantity';
                 quantidadeTexto.innerText = item.quantidade.toString();
-                slot.appendChild(quantidadeTexto);
+                slotDiv.appendChild(quantidadeTexto);
             }
-            this.elementoInventarioHTML.appendChild(slot);
+            targetElement.appendChild(slotDiv);
         });
+    }
+    /**
+     * Renderiza o inventário principal do jogador.
+     */
+    renderizarInventario() {
+        // Define o que acontece quando um slot do inventário principal é clicado
+        const clickHandler = (index) => {
+            this.slotSelecionado = index;
+            this.renderizarInventario(); // Re-renderiza para mostrar a seleção
+        };
+        // Chama o método ajudante com os dados do inventário principal
+        this._renderizarInventario(this.inventario, this.elementoInventarioHTML, this.slotSelecionado, clickHandler);
     }
     // --- MÉTODOS PARA A TROUXA ---
     /**
@@ -315,12 +328,6 @@ export class Jogo {
         });
     }
     // --- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---
-    renderizarTodosOsInventarios() {
-        // Reutiliza o método de renderização do inventário principal
-        this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null);
-        this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null);
-        this.renderizarFunil();
-    }
     renderizarFunil() {
         this.elementoFunilHTML.innerHTML = '';
         const itensNoFunil = this.funilFila.toArray();
@@ -341,13 +348,13 @@ export class Jogo {
         }
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
         this.transferenciaInterval = window.setInterval(() => {
-            // 1. Puxar item do baú de cima para o funil
+            // Puxar item do baú de cima para o funil
             if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
                 this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
                 this.funilFila.add_item(itemParaPuxar);
             }
-            // 2. Empurrar item do funil para o baú de baixo
+            // Empurrar item do funil para o baú de baixo
             if (!this.funilFila.isEmpty()) {
                 const itemParaEmpurrar = this.funilFila.remove_item();
                 if (itemParaEmpurrar) {
@@ -355,7 +362,7 @@ export class Jogo {
                 }
             }
             this.renderizarTodosOsInventarios();
-            // 3. Parar a transferência se não houver mais nada a fazer
+            // Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
@@ -376,41 +383,16 @@ export class Jogo {
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventarios();
     }
-    // (Precisa refatorar o renderizarInventario original para ser reutilizável)
-    // Exemplo de refatoração:
-    _renderizarInventario(inventario, elemento, slotSelecionado) {
-        this.elementoInventarioHTML.innerHTML = '';
-        if (inventario.inventario.length === 0) {
-            elemento.innerHTML = '<p class="inventario-vazio">Inventário Vazio</p>';
-            return;
-        }
-        inventario.inventario.forEach((item, index) => {
-            const slot = document.createElement('div');
-            slot.className = 'inventory-slot';
-            // Adiciona a classe 'selected' se for o slot ativo
-            if (index === slotSelecionado) {
-                slot.classList.add('selected');
-            }
-            // Adiciona o evento para tornar este o slot ativo ao clicar
-            slot.addEventListener('click', () => {
-                slotSelecionado = index;
-                console.log(`Slot ${index} selecionado: ${item.nome}`);
-                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
-            });
-            // Tooltip
-            slot.title = item.info_item();
-            const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'images/default.png';
-            img.alt = item.nome;
-            slot.appendChild(img);
-            if (item.quantidade > 1) {
-                const quantidadeTexto = document.createElement('span');
-                quantidadeTexto.className = 'item-quantity';
-                quantidadeTexto.innerText = item.quantidade.toString();
-                slot.appendChild(quantidadeTexto);
-            }
-            elemento.appendChild(slot);
-        });
+    /**
+     * Renderiza os inventários da simulação do funil (baús e o próprio funil).
+     */
+    renderizarTodosOsInventarios() {
+        // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
+        this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null, null);
+        // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
+        this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
+        // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
+        this.renderizarFunil();
     }
 }
 //# sourceMappingURL=jogo.js.map
