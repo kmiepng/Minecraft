@@ -1,4 +1,4 @@
-import { ItensPilha, Itens } from "./itens";
+import { ItensPilha, Itens } from "./typescript/itens";
 
 export class Pilha {
     count : number;

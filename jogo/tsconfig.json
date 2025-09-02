@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
-  "outDir": "javascript",
-  "target": "es2020",
-  "module": "es2020",
-  "strict": true
-  }
+    "target": "ES6",
+    "outDir": "javascript",
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["/typescript"],
 }

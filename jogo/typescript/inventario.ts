@@ -1,5 +1,5 @@
 import { Itens, ItensPilha } from './itens'
-import { Pilha } from './pilhas';
+import { Pilha } from '../pilhas';
 
 export class Inventario{
     inventario : Itens[]

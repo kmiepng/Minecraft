@@ -1,4 +1,4 @@
-import { Itens } from "./itens";
+import { Itens } from "./typescript/itens";
 
 class Node{
     item : Itens

@@ -1,5 +1,5 @@
-import { Inventario } from "./inventario";
-import { Itens } from "./itens";
+import { Inventario } from "./typescript/inventario";
+import { Itens } from "./typescript/itens";
 
 //Classe de Sets utilizada para implementar o Bau
 export class Bau {

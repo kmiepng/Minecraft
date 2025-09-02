@@ -1,6 +1,6 @@
 import { Compare, defaultCompare, swap } from './utils';
-import { Itens } from './itens';
-import { Inventario } from './inventario';
+import { Itens } from './typescript/itens';
+import { Inventario } from './typescript/inventario';
 
 class MinHeap {
     compareFn : (a : Itens, b : Itens) => number
