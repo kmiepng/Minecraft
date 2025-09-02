@@ -3,12 +3,13 @@ import { Itens } from "./itens.js";
 import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
-    const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid');
+    const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil');
     // Renderiza o estado inicial de ambos os inventários
     meuJogo.renderizarInventario();
     meuJogo.renderizarInventarioPilha();
+    meuJogo.renderizarTodosOsInventarios();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -93,7 +94,7 @@ window.addEventListener('DOMContentLoaded', () => {
     (_r = document.getElementById('minerar-diamante')) === null || _r === void 0 ? void 0 : _r.addEventListener('click', () => {
         meuJogo.minerarBloco("Diamante");
     });
-    // --- Listener para Ordenação ---
+    // ---------------------------- Listener para Ordenação ----------------------------------
     // Listener para o botão de comparação por nome
     (_s = document.getElementById('sort-compare')) === null || _s === void 0 ? void 0 : _s.addEventListener('click', () => {
         meuJogo.compararOrdenacao();
@@ -101,6 +102,16 @@ window.addEventListener('DOMContentLoaded', () => {
     // Listener para o botão de ordenação por durabilidade
     (_t = document.getElementById('sort-heap')) === null || _t === void 0 ? void 0 : _t.addEventListener('click', () => {
         meuJogo.ordenarPorDurabilidade();
+    });
+    // -------------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL ------------------------
+    (_u = document.getElementById('add-itens-bau-cima')) === null || _u === void 0 ? void 0 : _u.addEventListener('click', () => {
+        meuJogo.popularBauDeCima();
+    });
+    (_v = document.getElementById('iniciar-transferencia')) === null || _v === void 0 ? void 0 : _v.addEventListener('click', () => {
+        meuJogo.iniciarTransferenciaFunil();
+    });
+    (_v = document.getElementById('parar-transferencia')) === null || _v === void 0 ? void 0 : _v.addEventListener('click', () => {
+        meuJogo.pararTransferenciaFunil();
     });
 });
 //# sourceMappingURL=main.js.map

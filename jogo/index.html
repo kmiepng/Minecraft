@@ -12,6 +12,7 @@
     <div class="tab-buttons">
         <button class="tab-button active" data-tab="inventario-array">Inventário Principal</button>
         <button class="tab-button" data-tab="inventario-pilha">Inventário com Pilha</button>
+        <button class="tab-button" data-tab="funil-fila">Funil</button>
     </div>
 
     <div class="tab-content">
@@ -67,18 +68,19 @@
         
         <div id="funil-fila" class="tab-pane">
             <div class="simulacao-funil">
-                <h3>Baú de Cima (Fonte)</h3>
+                <h3>Baú Fonte</h3>
                 <div id="inventario-cima-grid" class="inventory-grid"></div>
 
-                <h3>Funil (Fila)</h3>
+                <h3>Funil</h3>
                 <div id="funil-grid" class="funil-grid"></div>
 
-                <h3>Baú de Baixo (Destino)</h3>
+                <h3>Baú Destino</h3>
                 <div id="inventario-baixo-grid" class="inventory-grid"></div>
                 
-                <div id="controles-funil" class="controles">
+                <div id="controles" class="controles-funil">
                     <button id="add-itens-bau-cima">Adicionar Itens Aleatórios no Baú de Cima</button>
                     <button id="iniciar-transferencia">Iniciar Transferência</button>
+                    <button id="parar-transferencia">Parar Transferência</button>
                     <p id="status-funil">Status: Parado</p>
                 </div>
             </div>

@@ -134,4 +134,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('iniciar-transferencia')?.addEventListener('click', () => {
         meuJogo.iniciarTransferenciaFunil();
     });
+
+    document.getElementById('parar-transferencia')?.addEventListener('click', () => {
+        meuJogo.pararTransferenciaFunil();
+    });    
 });

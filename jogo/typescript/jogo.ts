@@ -453,6 +453,43 @@ export class Jogo{
     // (Precisa refatorar o renderizarInventario original para ser reutilizável)
     // Exemplo de refatoração:
     _renderizarInventario(inventario: Inventario, elemento: HTMLElement, slotSelecionado: number | null) {
-       // ... (toda a lógica do seu renderizarInventario original, mas usando os parâmetros)
+        elemento.innerHTML = '';
+        if (inventario.inventario.length === 0) {
+            this.elementoInventarioHTML.innerHTML = '<p class="inventario-vazio">Inventário Vazio</p>';
+            return;
+        }
+
+        inventario.inventario.forEach((item, index) => {
+            const slot = document.createElement('div');
+            slot.className = 'inventory-slot';
+
+            // Adiciona a classe 'selected' se for o slot ativo
+            if (index === slotSelecionado) {
+                slot.classList.add('selected');
+            }
+
+            // Adiciona o evento para tornar este o slot ativo ao clicar
+            slot.addEventListener('click', () => {
+                slotSelecionado = index;
+                console.log(`Slot ${index} selecionado: ${item.nome}`);
+                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
+            });
+
+            slot.title = item.info_item();
+            
+            const img = document.createElement('img');
+            img.src = itemImagens[item.nome] || 'images/default.png';
+            img.alt = item.nome;
+            slot.appendChild(img);
+
+            if (item.quantidade > 1) {
+                const quantidadeTexto = document.createElement('span');
+                quantidadeTexto.className = 'item-quantity';
+                quantidadeTexto.innerText = item.quantidade.toString();
+                slot.appendChild(quantidadeTexto);
+            }
+            
+            elemento.appendChild(slot);
+        });
     }
 }

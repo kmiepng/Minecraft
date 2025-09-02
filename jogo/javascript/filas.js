@@ -15,53 +15,49 @@ export class FilacomNode {
         this.size = 0;
     }
     add_item(item) {
-        const newItem = new Node(item);
-        if (this.tail === null) {
-            this.head = this.tail = newItem;
+        const newNode = new Node(item, null, this.head);
+        if (this.tail !== null) {
+            this.head.prev = newNode;
         }
         else {
-            newItem.next = this.tail;
-            this.tail.prev = newItem;
-            this.tail = newItem;
+            this.tail = newNode;
         }
+        this.head = newNode;
         this.size++;
     }
     remove_item() {
-        if (this.head === null) {
+        if (this.tail === null) {
             console.log('Não há mais item no funil');
             return null;
         }
-        const data = this.head.getData();
-        this.head = this.head.prev;
+        const removedNode = this.tail;
+        this.tail = this.tail.next;
         if (this.head !== null) {
-            this.head.next = null;
+            this.tail.prev = null;
         }
         else {
-            this.tail = null;
+            this.head = null;
         }
         this.size--;
-        return data;
-    }
-    print() {
-        let current = this.head;
-        let result = '';
-        while (current !== null) {
-            result += current.getData();
-            if (current.next !== null)
-                result += '|';
-            current = current.next;
-        }
-        return result;
+        return removedNode.item;
     }
     peek() {
-        if (this.head === null) {
+        if (this.tail === null) {
             console.log("");
             return null;
         }
-        return this.head.getData();
+        return this.tail.item;
+    }
+    isEmpty() {
+        return this.size === 0;
     }
     toArray() {
-        const result = this.print().split("|");
+        const result = [];
+        let current = this.tail;
+        while (current !== null) {
+            result.push(current.item);
+            current = current.next;
+        }
         return result;
     }
 }

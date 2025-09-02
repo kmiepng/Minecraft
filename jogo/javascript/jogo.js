@@ -4,6 +4,7 @@ import { Inventario, InventarioComPilha } from "./inventario.js";
 import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { heapSortInventario } from "./minHeap.js";
+import { FilacomNode } from "./filas.js";
 // -------------------------JOGO-----------------------------------------
 // Um mapa para associar nomes de itens a seus arquivos de imagem
 const itemImagens = {
@@ -18,10 +19,11 @@ const itemImagens = {
     "Trouxa": "images/bundle.png"
 };
 export class Jogo {
-    constructor(idElementoInventario, idGridPilha) {
+    constructor(idElementoInventario, idGridPilha, idGridCima, idGridBaixo, idGridFunil, idStatusFunil) {
         //Clique no inventário
         this.slotSelecionado = 0;
         this.slotPilhaSelecionado = 0;
+        this.transferenciaInterval = null;
         this.inventario = new Inventario();
         // Garante que o elemento do inventário exista no HTML
         const elemento = document.getElementById(idElementoInventario);
@@ -32,6 +34,14 @@ export class Jogo {
         // Inicializa o inventário de Pilha
         this.inventarioPilha = new InventarioComPilha(); // Usa o tamanho padrão (9)
         this.elementoInventarioPilhaHTML = document.getElementById(idGridPilha);
+        // Inicializa os componentes do funil
+        this.inventarioCima = new Inventario();
+        this.inventarioBaixo = new Inventario();
+        this.funilFila = new FilacomNode();
+        this.elementoInventarioCimaHTML = document.getElementById(idGridCima);
+        this.elementoInventarioBaixoHTML = document.getElementById(idGridBaixo);
+        this.elementoFunilHTML = document.getElementById(idGridFunil);
+        this.elementoStatusFunilHTML = document.getElementById(idStatusFunil);
     }
     /**
      * Adiciona um item ao inventário e atualiza a interface gráfica.
@@ -302,6 +312,104 @@ export class Jogo {
                 }
             }
             this.elementoInventarioPilhaHTML.appendChild(slotDiv);
+        });
+    }
+    // --- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---
+    renderizarTodosOsInventarios() {
+        // Reutiliza o método de renderização do inventário principal
+        this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null);
+        this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null);
+        this.renderizarFunil();
+    }
+    renderizarFunil() {
+        this.elementoFunilHTML.innerHTML = '';
+        const itensNoFunil = this.funilFila.toArray();
+        for (let i = 0; i < 5; i++) { // Renderiza 5 slots
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'inventory-slot';
+            const item = itensNoFunil[i];
+            if (item) {
+                // ... (lógica para criar img e span de quantidade, igual a renderizarInventario)
+            }
+            this.elementoFunilHTML.appendChild(slotDiv);
+        }
+    }
+    iniciarTransferenciaFunil() {
+        if (this.transferenciaInterval) {
+            console.log("Transferência já está em andamento.");
+            return;
+        }
+        this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
+        this.transferenciaInterval = window.setInterval(() => {
+            // 1. Puxar item do baú de cima para o funil
+            if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
+                const itemParaPuxar = this.inventarioCima.inventario[0];
+                this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
+                this.funilFila.add_item(itemParaPuxar);
+            }
+            // 2. Empurrar item do funil para o baú de baixo
+            if (!this.funilFila.isEmpty()) {
+                const itemParaEmpurrar = this.funilFila.remove_item();
+                if (itemParaEmpurrar) {
+                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
+                }
+            }
+            this.renderizarTodosOsInventarios();
+            // 3. Parar a transferência se não houver mais nada a fazer
+            if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
+                this.pararTransferenciaFunil();
+            }
+        }, 1000); // Transfere 1 item por segundo
+    }
+    pararTransferenciaFunil() {
+        if (this.transferenciaInterval) {
+            clearInterval(this.transferenciaInterval);
+            this.transferenciaInterval = null;
+            this.elementoStatusFunilHTML.innerText = "Status: Parado";
+            console.log("Transferência parada.");
+        }
+    }
+    // Método auxiliar para popular o baú de cima
+    popularBauDeCima() {
+        this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
+        this.inventarioCima.add_slot(new Itens("Diamante", 3, "Minério"));
+        this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
+        this.renderizarTodosOsInventarios();
+    }
+    // (Precisa refatorar o renderizarInventario original para ser reutilizável)
+    // Exemplo de refatoração:
+    _renderizarInventario(inventario, elemento, slotSelecionado) {
+        this.elementoInventarioHTML.innerHTML = '';
+        if (inventario.inventario.length === 0) {
+            elemento.innerHTML = '<p class="inventario-vazio">Inventário Vazio</p>';
+            return;
+        }
+        inventario.inventario.forEach((item, index) => {
+            const slot = document.createElement('div');
+            slot.className = 'inventory-slot';
+            // Adiciona a classe 'selected' se for o slot ativo
+            if (index === slotSelecionado) {
+                slot.classList.add('selected');
+            }
+            // Adiciona o evento para tornar este o slot ativo ao clicar
+            slot.addEventListener('click', () => {
+                slotSelecionado = index;
+                console.log(`Slot ${index} selecionado: ${item.nome}`);
+                this.renderizarInventario(); // Re-renderiza para mostrar a seleção
+            });
+            // Tooltip
+            slot.title = item.info_item();
+            const img = document.createElement('img');
+            img.src = itemImagens[item.nome] || 'images/default.png';
+            img.alt = item.nome;
+            slot.appendChild(img);
+            if (item.quantidade > 1) {
+                const quantidadeTexto = document.createElement('span');
+                quantidadeTexto.className = 'item-quantity';
+                quantidadeTexto.innerText = item.quantidade.toString();
+                slot.appendChild(quantidadeTexto);
+            }
+            elemento.appendChild(slot);
         });
     }
 }
