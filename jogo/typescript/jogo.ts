@@ -48,7 +48,9 @@ export class Jogo{
     //Elementos HTML
     elementoInventarioHTML: HTMLElement;
     elementoInventarioPilhaHTML: HTMLElement;
+    //Clique no inventário
     slotSelecionado: number | null = 0;
+    slotPilhaSelecionado: number | null = 0;
 
     constructor(idElementoInventario: string, idGridPilha: string) {
         this.inventario = new Inventario();
@@ -242,19 +244,49 @@ export class Jogo{
     }
 
     
-    // --- MÉTODOS PARA O INVENTÁRIO DE PILHA ---
+    // --------------------- MÉTODOS PARA O INVENTÁRIO DE PILHA ----------------------
 
     adicionarItemPilha(item: ItensPilha, quantidade: number) {
         this.inventarioPilha.addSlot(item, quantidade);
         this.renderizarInventarioPilha();
     }
 
+    //Chama o método para remover uma quantidade do slot de pilha selecionado.
+    removerItemPilha(quantidade: number = 1) {
+        if (this.slotPilhaSelecionado !== null) {
+            this.inventarioPilha.rmvItens(this.slotPilhaSelecionado, quantidade);
+            this.renderizarInventarioPilha(); // Atualiza a UI
+        } else {
+            console.log("Nenhum slot selecionado no inventário de pilha.");
+        }
+    }
+
+    //Chama o método para limpar completamente o slot de pilha selecionado.
+    removerSlotPilha() {
+        if (this.slotPilhaSelecionado !== null) {
+            this.inventarioPilha.rmvSlot(this.slotPilhaSelecionado);
+            this.renderizarInventarioPilha(); // Atualiza a UI
+        } else {
+            console.log("Nenhum slot selecionado no inventário de pilha.");
+        }
+    }
+
     renderizarInventarioPilha() {
         this.elementoInventarioPilhaHTML.innerHTML = ''; // Limpa o grid
 
-        this.inventarioPilha.inventario.forEach(slot => { // Itera sobre as pilhas
+        this.inventarioPilha.inventario.forEach((slot, index) => { // Itera sobre as pilhas
             const slotDiv = document.createElement('div');
             slotDiv.className = 'inventory-slot';
+            // Adiciona a classe 'selected' se o slot estiver selecionado
+            if (index === this.slotPilhaSelecionado) {
+                slotDiv.classList.add('selected');
+            }
+
+            // Adiciona evento de clique para selecionar o slot
+            slotDiv.addEventListener('click', () => {
+                this.slotPilhaSelecionado = index;
+                this.renderizarInventarioPilha(); // Re-renderiza para mostrar a seleção
+            });
 
             if (!slot.isEmpty()) {
                 const item = slot.peek()!; // Pega o item do topo para saber qual é

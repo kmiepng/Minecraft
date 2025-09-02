@@ -6,10 +6,10 @@ window.addEventListener('DOMContentLoaded', () => {
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid');
 
-    // Renderiza o estado inicial de AMBOS os inventários
+    // Renderiza o estado inicial de ambos os inventários
     meuJogo.renderizarInventario();
     meuJogo.renderizarInventarioPilha();
-    // --- LÓGICA PARA TROCA DE ABAS ---
+    // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
             document.getElementById(tabId!)?.classList.add('active');
         });
     });
-        // --- CONEXÃO DOS BOTÕES (INVENTÁRIO DE PILHA) ---
+    // ----------------- CONEXÃO DOS BOTÕES (INVENTÁRIO DE PILHA) --------------------------
     document.getElementById('add-pedra-pilha')?.addEventListener('click', () => {
         const itemPedra: ItensPilha = { id: 'pedra', nome: 'Pedra' };
         meuJogo.adicionarItemPilha(itemPedra, 10);
@@ -38,7 +38,16 @@ window.addEventListener('DOMContentLoaded', () => {
         meuJogo.adicionarItemPilha(itemTerra, 5);
     });
     
-    // Conecta os botões do HTML às funções do nosso jogo
+    document.getElementById('rmv-item-pilha')?.addEventListener('click', () => {
+        // Remove 1 item por padrão
+        meuJogo.removerItemPilha(1);
+    });
+
+    document.getElementById('rmv-slot-pilha')?.addEventListener('click', () => {
+        meuJogo.removerSlotPilha();
+    });
+    
+    // ------------------------ Conecta os botões do HTML às funções do nosso jogo -----------------------------
     
     // Botão para adicionar Terra
     document.getElementById('add-terra')?.addEventListener('click', () => {
