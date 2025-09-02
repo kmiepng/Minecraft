@@ -62,7 +62,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Listener para Ordenação ---
+    // Listener para o botão de comparação por nome
      document.getElementById('sort-compare')?.addEventListener('click', () => {
         meuJogo.compararOrdenacao();
+    });
+    // Listener para o botão de ordenação por durabilidade
+    document.getElementById('sort-heap')?.addEventListener('click', () => {
+        meuJogo.ordenarPorDurabilidade();
     });
 });

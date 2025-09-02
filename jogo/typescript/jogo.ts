@@ -211,4 +211,26 @@ export class Jogo{
         this.slotSelecionado = 0; // Resetar a seleção
         this.renderizarInventario();
     }
+    ordenarPorDurabilidade() {
+        if (this.inventario.inventario.length < 2) {
+            console.log("Inventário muito pequeno para ordenar.");
+            return;
+        }
+
+        console.log("Ordenando inventário por durabilidade com Heap Sort...");
+        
+        const startTime = performance.now();
+        
+        // Chama a função de Heap Sort e atualiza o inventário com o resultado
+        this.inventario.inventario = heapSortInventario(this.inventario);
+
+        const endTime = performance.now();
+        const duration = endTime - startTime;
+
+        console.log(`Ordenação por durabilidade concluída em ${duration.toFixed(4)} ms.`);
+
+        // Atualiza a UI para refletir a nova ordem
+        this.slotSelecionado = 0;
+        this.renderizarInventario();
+    }
 }
