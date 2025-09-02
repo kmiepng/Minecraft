@@ -31,14 +31,14 @@ function drop_Minerio(nome_drop : any, encantamento ?: string, min_drop = 1, max
 
 // Um mapa para associar nomes de itens a seus arquivos de imagem
 const itemImagens: { [key: string]: string } = {
-    "Terra": "assets/images/dirt.png",
-    "Pedra": "assets/images/stone.png",
-    "Picareta de Diamante": "assets/images/diamond_pickaxe.png",
-    "Maçã Dourada": "assets/images/golden_apple.png",
-    "Ferro": "assets/images/iron_ingot.png",
-    "Diamante": "assets/images/diamond.png",
-    "Bloco de Ferro": "assets/images/iron_ore.png", // Imagem para o bloco dropado por Toque de Seda
-    "Bloco de Diamante": "assets/images/diamond_ore.png"
+    "Terra": "images/dirt.png",
+    "Pedra": "images/stone.png",
+    "Picareta de Diamante": "images/diamond_pickaxe.png",
+    "Maçã Dourada": "images/golden_apple.png",
+    "Ferro": "images/iron_ingot.png",
+    "Diamante": "images/diamond.png",
+    "Bloco de Ferro": "images/iron_ore.png", // Imagem para o bloco dropado por Toque de Seda
+    "Bloco de Diamante": "images/diamond_ore.png"
 };
 
 export class Jogo{
