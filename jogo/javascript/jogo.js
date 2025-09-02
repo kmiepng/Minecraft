@@ -362,7 +362,6 @@ export class Jogo {
         }
         this.elementoStatusFunilHTML.innerText = "Status: Transferindo...";
         this.transferenciaInterval = window.setInterval(() => {
-            let algoAconteceu = false; // Flag para saber se precisamos renderizar
             // Puxar item do baú de cima para o funil
             if (this.funilFila.size < 5 && this.inventarioCima.inventario.length > 0) {
                 const itemParaPuxar = this.inventarioCima.inventario[0];
@@ -370,17 +369,24 @@ export class Jogo {
                 const itemTransferido = new Itens(itemParaPuxar.nome, 1, // Apenas uma unidade é transferida por vez
                 itemParaPuxar.tipo, itemParaPuxar.durabilidade, itemParaPuxar.encantamento);
                 this.funilFila.add_item(itemTransferido);
-                this.inventarioCima.rmv_slot(itemParaPuxar.nome, 1);
-                algoAconteceu = true;
+                itemParaPuxar.quantidade--;
+                if (itemParaPuxar.quantidade <= 0) {
+                    this.inventarioCima.inventario.shift();
+                }
             }
-            // Renderiza a UI apenas se algo tiver mudado.
-            if (algoAconteceu) {
-                this.renderizarTodosOsInventarios();
+            if (!this.funilFila.isEmpty()) {
+                const itemParaEmpurrar = this.funilFila.remove_item();
+                if (itemParaEmpurrar) {
+                    this.inventarioBaixo.add_slot(itemParaEmpurrar);
+                }
             }
+            this.renderizarTodosOsInventarios();
             // Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
+            ;
+            this.renderizarTodosOsInventarios();
         }, 1000); // Transfere 1 item por segundo
     }
     pararTransferenciaFunil() {

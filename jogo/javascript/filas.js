@@ -17,44 +17,40 @@ export class FilacomNode {
     add_item(item) {
         const newNode = new Node(item, null, this.head);
         if (this.tail !== null) {
-            this.head.prev = newNode;
+            this.tail.next = newNode;
         }
         else {
-            this.tail = newNode;
+            this.head = newNode;
         }
-        this.head = newNode;
+        this.tail = newNode;
         this.size++;
     }
     remove_item() {
-        if (this.tail === null) {
+        if (!this.head) {
             console.log('Não há mais item no funil');
             return null;
         }
-        const removedNode = this.tail;
-        this.tail = this.tail.next;
-        if (this.head !== null) {
-            this.tail.prev = null;
+        const removedNode = this.head;
+        this.head = this.head.next;
+        if (this.head) {
+            this.head.prev = null;
         }
         else {
-            this.head = null;
+            this.tail = null;
         }
         this.size--;
         return removedNode.item;
     }
     peek() {
-        if (this.tail === null) {
-            console.log("");
-            return null;
-        }
-        return this.tail.item;
+        return this.head ? this.head.item : null;
     }
     isEmpty() {
         return this.size === 0;
     }
     toArray() {
         const result = [];
-        let current = this.tail;
-        while (current !== null) {
+        let current = this.head;
+        while (current) {
             result.push(current.item);
             current = current.next;
         }
