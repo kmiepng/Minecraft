@@ -1,15 +1,11 @@
-import { ItensPilha, Itens } from "./itens";
-
 export class Pilha {
-    count : number;
-    items : ItensPilha[];
     constructor() {
         this.count = 0;
         this.items = [];
     }
-    push(element : ItensPilha) {
-        if (this.count === 64){
-            return false
+    push(element) {
+        if (this.count === 64) {
+            return false;
         }
         this.items[this.count] = element;
         this.count++;
@@ -40,34 +36,26 @@ export class Pilha {
         this.count = 0;
     }
 }
-
 //Utilização de pilha com node para simular uma trouxa no Minecraft
 class Node {
-    data : Itens
-    next : Node | null
-    constructor(data : Itens, next : (Node | null) = null) {
+    constructor(data, next = null) {
         this.data = data;
         this.next = next;
-    }   
+    }
     getData() {
         return this.data.info_item();
     }
 }
-
 export class TrouxaPilha {
-    top : Node | null
-    size : number
     constructor() {
         this.top = null;
         this.size = 0;
     }
-
-    push(data : Itens) {
+    push(data) {
         const newNode = new Node(data, this.top);
         this.top = newNode;
         this.size++;
     }
-
     pop() {
         if (this.top === null) {
             console.log("Trouxa está vazia");
@@ -78,7 +66,6 @@ export class TrouxaPilha {
         this.size--;
         return poppedData;
     }
-
     peek() {
         if (this.top === null) {
             console.log("Trouxa está vazia");
@@ -86,15 +73,12 @@ export class TrouxaPilha {
         }
         return this.top.getData();
     }
-
     getSize() {
         return this.size;
     }
-
     isEmpty() {
         return this.size === 0;
     }
-
     mostrarTrouxa() {
         let current = this.top;
         let result = "|";
@@ -105,3 +89,4 @@ export class TrouxaPilha {
         return result;
     }
 }
+//# sourceMappingURL=pilhas.js.map

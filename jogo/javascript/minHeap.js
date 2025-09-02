@@ -1,15 +1,10 @@
 import { Compare, defaultCompare, swap } from './utils';
-import { Itens } from './itens';
-import { Inventario } from './inventario';
-
 class MinHeap {
-    compareFn : (a : Itens, b : Itens) => number
-    heap : Itens[]
     constructor(compareFn = defaultCompare) {
         this.compareFn = compareFn;
         this.heap = [];
     }
-    insert(value : Itens) {
+    insert(value) {
         if (value != null) {
             const index = this.heap.length;
             this.heap.push(value);
@@ -18,33 +13,27 @@ class MinHeap {
         }
         return false;
     }
-    siftUp(index : number) {
+    siftUp(index) {
         let parent = this.getParentIndex(index);
-        while (
-            index > 0 &&
+        while (index > 0 &&
             parent !== undefined &&
-            this.compareFn(this.heap[parent], this.heap[index]) === Compare.BIGGER_THAN
-        ) {
+            this.compareFn(this.heap[parent], this.heap[index]) === Compare.BIGGER_THAN) {
             swap(this.heap, parent, index);
             index = parent;
-            parent = this.getParentIndex(index) as number;
+            parent = this.getParentIndex(index);
         }
     }
-    siftDown(index : number) {
+    siftDown(index) {
         let element = index;
         const left = this.getLeftIndex(index);
         const right = this.getRightIndex(index);
         const size = this.size();
-        if (
-            left < size &&
-            this.compareFn(this.heap[element], this.heap[left]) === Compare.BIGGER_THAN
-        ) {
+        if (left < size &&
+            this.compareFn(this.heap[element], this.heap[left]) === Compare.BIGGER_THAN) {
             element = left;
         }
-        if (
-            right < size &&
-            this.compareFn(this.heap[element], this.heap[right]) === Compare.BIGGER_THAN
-        ) {
+        if (right < size &&
+            this.compareFn(this.heap[element], this.heap[right]) === Compare.BIGGER_THAN) {
             element = right;
         }
         if (index !== element) {
@@ -61,10 +50,10 @@ class MinHeap {
     clear() {
         this.heap = [];
     }
-    findMinimum() : Itens | undefined {
+    findMinimum() {
         return this.isEmpty() ? undefined : this.heap[0];
     }
-    extract() : Itens | undefined {
+    extract() {
         if (this.isEmpty()) {
             return undefined;
         }
@@ -72,29 +61,26 @@ class MinHeap {
             return this.heap.shift();
         }
         const removedValue = this.heap[0];
-        this.heap[0] = this.heap.pop() as Itens;
+        this.heap[0] = this.heap.pop();
         this.siftDown(0);
         return removedValue;
     }
-
-    getLeftIndex(index : number) : number{
+    getLeftIndex(index) {
         return (2 * index) + 1;
     }
-    getRightIndex(index : number) : number {
+    getRightIndex(index) {
         return (2 * index) + 2;
     }
-    getParentIndex(index : any) : undefined | number {
+    getParentIndex(index) {
         if (index === 0) {
             return undefined;
         }
         return Math.floor((index - 1) / 2);
     }
 }
-
-function compareByDurability(a: Itens, b: Itens): number {
+function compareByDurability(a, b) {
     const durA = a.durabilidade;
     const durB = b.durabilidade;
-
     // Ambos não têm durabilidade (são iguais nesse critério)
     if (durA === null && durB === null) {
         return Compare.EQUALS; // 0
@@ -107,28 +93,23 @@ function compareByDurability(a: Itens, b: Itens): number {
     if (durB === null) {
         return Compare.LESS_THAN; // -1
     }
-    
     // Ambos têm durabilidade, então comparamos os números
     // Se durA < durB, retorna -1 (LESS_THAN)
     // Se durA > durB, retorna 1 (BIGGER_THAN)
     // Se durA === durB, retorna 0 (EQUALS)
     return defaultCompare(durA, durB);
 }
-
-export function heapSortInventario(inventario: Inventario): Itens[] {
-    const sortedInventario: Itens[] = [];
+export function heapSortInventario(inventario) {
+    const sortedInventario = [];
     if (!inventario || inventario.inventario.length === 0) {
         return sortedInventario;
     }
-
     // Cria um MinHeap usando nossa função de comparação customizada
     const minHeap = new MinHeap(compareByDurability);
-
     // Insere todos os itens do inventário no heap
     for (const item of inventario.inventario) {
         minHeap.insert(item);
     }
-
     // Extrai os itens do heap um por um. Como é um MinHeap,
     // eles sairão em ordem crescente de durabilidade.
     while (!minHeap.isEmpty()) {
@@ -137,6 +118,6 @@ export function heapSortInventario(inventario: Inventario): Itens[] {
             sortedInventario.push(nextItem);
         }
     }
-
     return sortedInventario;
 }
+//# sourceMappingURL=minHeap.js.map
