@@ -111,3 +111,17 @@ body {
 .controles {
     margin-top: 20px;
 }
+.simulacao-funil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.funil-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 60px); /* Funil tem 5 slots */
+    grid-gap: 5px;
+    padding: 10px;
+    background-color: #444;
+    border: 2px solid #222;
+}

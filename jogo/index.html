@@ -23,7 +23,7 @@
             <h2>Controles</h2>
             <div id="controles">
                 <button id="add-terra">Adicionar 10 Terras (Stack)</button>
-                <button id="add-picareta">Adicionar Picareta (Não-Stack)</button>
+                <button id="add-picareta">Adicionar Picareta</button>
                 <button id="add-maca">Adicionar 5 Maçãs</button>
                 <button id="rmv-terra">Remover 5 Terras</button>
                 <button id="rmv-picareta">Remover Picareta</button>
@@ -56,12 +56,31 @@
             <div id="inventario-pilha-grid" class="inventory-grid">
                 </div>
             <div id="controles" class="controles-pilha">
-                <h2>Controles (Pilha)</h2>
+                <h2>Controles</h2>
                 <button id="add-pedra-pilha">Adicionar 10 Pedras</button>
                 <button id="add-terra-pilha">Adicionar 5 Terras</button>
                 <hr>
                 <button id="rmv-item-pilha">Remover 1 Item do Slot Selecionado</button>
                 <button id="rmv-slot-pilha">Limpar Slot Selecionado</button>
+            </div>
+        </div>
+        
+        <div id="funil-fila" class="tab-pane">
+            <div class="simulacao-funil">
+                <h3>Baú de Cima (Fonte)</h3>
+                <div id="inventario-cima-grid" class="inventory-grid"></div>
+
+                <h3>Funil (Fila)</h3>
+                <div id="funil-grid" class="funil-grid"></div>
+
+                <h3>Baú de Baixo (Destino)</h3>
+                <div id="inventario-baixo-grid" class="inventory-grid"></div>
+                
+                <div id="controles-funil" class="controles">
+                    <button id="add-itens-bau-cima">Adicionar Itens Aleatórios no Baú de Cima</button>
+                    <button id="iniciar-transferencia">Iniciar Transferência</button>
+                    <p id="status-funil">Status: Parado</p>
+                </div>
             </div>
         </div>
     </div>
