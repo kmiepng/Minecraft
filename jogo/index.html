@@ -9,35 +9,54 @@
 <body>
     <h1>Inventário</h1>
 
-    <div id="inventario-grid" class="inventory-grid"></div>
+    <div class="tab-buttons">
+        <button class="tab-button active" data-tab="inventario-array">Inventário Principal</button>
+        <button class="tab-button" data-tab="inventario-pilha">Inventário com Pilha</button>
+    </div>
 
-    <hr>
+    <div class="tab-content">
+        <div id="inventario-array" class="tab-pane active">
+            <div id="inventario-grid" class="inventory-grid"></div>
 
-    <h2>Controles</h2>
-    <div id="controles">
-        <button id="add-terra">Adicionar 10 Terras (Stack)</button>
-        <button id="add-picareta">Adicionar Picareta (Não-Stack)</button>
-        <button id="add-maca">Adicionar 5 Maçãs</button>
-        <button id="rmv-terra">Remover 5 Terras</button>
-        <button id="rmv-picareta">Remover Picareta</button>
-        <button id="add-picareta-fortuna">Adicionar Picareta (Fortuna)</button>
-        <button id="add-picareta-seda">Adicionar Picareta (Toque de Seda)</button> 
+            <hr>
 
-        <hr>
+            <h2>Controles</h2>
+            <div id="controles">
+                <button id="add-terra">Adicionar 10 Terras (Stack)</button>
+                <button id="add-picareta">Adicionar Picareta (Não-Stack)</button>
+                <button id="add-maca">Adicionar 5 Maçãs</button>
+                <button id="rmv-terra">Remover 5 Terras</button>
+                <button id="rmv-picareta">Remover Picareta</button>
+                <button id="add-picareta-fortuna">Adicionar Picareta (Fortuna)</button>
+                <button id="add-picareta-seda">Adicionar Picareta (Toque de Seda)</button> 
 
-        <button id="minerar-ferro">Minerar Ferro</button> <button id="minerar-diamante">Minerar Diamante</button>
+                <hr>
+
+                <button id="minerar-ferro">Minerar Ferro</button> <button id="minerar-diamante">Minerar Diamante</button>
+            </div>
+                
+            <hr>
+
+            <h2>Ordenar Inventário</h2>
+
+            <div id="controles">
+                <button id="sort-compare">Organizar Inventário</button>                    <button id="sort-heap">Organizar por Durabilidade (Heap Sort)</button>
+            </div>
+
+            <div id="performance-results"></div>
+        </div>
+        
+        <div id="inventario-pilha" class="tab-pane">
+            <div id="inventario-pilha-grid" class="inventory-grid">
+                </div>
+            <div id="controles-pilha" class="controles">
+                <h2>Controles (Pilha)</h2>
+                <button id="add-pedra-pilha">Adicionar 10 Pedras</button>
+                <button id="add-terra-pilha">Adicionar 5 Terras</button>
+            </div>
+        </div>
     </div>
     
-    <hr>
-
-    <h2>Ordenar Inventário</h2>
-
-    <div id="controles">
-        <button id="sort-compare">Organizar Inventário</button>
-        <button id="sort-heap">Organizar por Durabilidade (Heap Sort)</button>
-    </div>
-
-    <div id="performance-results"></div>
 
     <script type="module" src="javascript/main.js"></script>
 </body>

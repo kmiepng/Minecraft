@@ -42,11 +42,15 @@ const itemImagens: { [key: string]: string } = {
 };
 
 export class Jogo{
+    //Inventario
     inventario: Inventario;
+    inventarioPilha: InventarioComPilha;
+    //Elementos HTML
     elementoInventarioHTML: HTMLElement;
+    elementoInventarioPilhaHTML: HTMLElement;
     slotSelecionado: number | null = 0;
 
-    constructor(idElementoInventario: string) {
+    constructor(idElementoInventario: string, idGridPilha: string) {
         this.inventario = new Inventario();
         // Garante que o elemento do inventário exista no HTML
         const elemento = document.getElementById(idElementoInventario);
@@ -54,6 +58,9 @@ export class Jogo{
             throw new Error(`Elemento com id "${idElementoInventario}" não encontrado no DOM.`);
         }
         this.elementoInventarioHTML = elemento;
+        // Inicializa o inventário de Pilha
+        this.inventarioPilha = new InventarioComPilha(); // Usa o tamanho padrão (9)
+        this.elementoInventarioPilhaHTML = document.getElementById(idGridPilha)!;
     }
 
     /**
@@ -232,5 +239,42 @@ export class Jogo{
         // Atualiza a UI para refletir a nova ordem
         this.slotSelecionado = 0;
         this.renderizarInventario();
+    }
+
+    
+    // --- MÉTODOS PARA O INVENTÁRIO DE PILHA ---
+
+    adicionarItemPilha(item: ItensPilha, quantidade: number) {
+        this.inventarioPilha.addSlot(item, quantidade);
+        this.renderizarInventarioPilha();
+    }
+
+    renderizarInventarioPilha() {
+        this.elementoInventarioPilhaHTML.innerHTML = ''; // Limpa o grid
+
+        this.inventarioPilha.inventario.forEach(slot => { // Itera sobre as pilhas
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'inventory-slot';
+
+            if (!slot.isEmpty()) {
+                const item = slot.peek()!; // Pega o item do topo para saber qual é
+                const quantidade = slot.size(); // Pega o tamanho da pilha para a quantidade
+
+                slotDiv.title = `${item.nome} x${quantidade}`;
+
+                const img = document.createElement('img');
+                img.src = itemImagens[item.nome] || 'assets/images/default.png';
+                img.alt = item.nome;
+                slotDiv.appendChild(img);
+
+                if (quantidade > 1) {
+                    const quantidadeTexto = document.createElement('span');
+                    quantidadeTexto.className = 'item-quantity';
+                    quantidadeTexto.innerText = quantidade.toString();
+                    slotDiv.appendChild(quantidadeTexto);
+                }
+            }
+            this.elementoInventarioPilhaHTML.appendChild(slotDiv);
+        });
     }
 }

@@ -1,14 +1,43 @@
 import { Jogo } from "./jogo";
-import { Itens } from "./itens";
+import { Itens, ItensPilha } from "./itens";
 
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    // Cria uma instância do jogo, ligando-a à div 'inventario-grid'
-    const meuJogo = new Jogo('inventario-grid');
-    
-    // Renderiza o inventário inicial (vazio)
-    meuJogo.renderizarInventario();
+    // Passa os IDs dos dois grids de inventário para o construtor do Jogo
+    const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid');
 
+    // Renderiza o estado inicial de AMBOS os inventários
+    meuJogo.renderizarInventario();
+    meuJogo.renderizarInventarioPilha();
+    // --- LÓGICA PARA TROCA DE ABAS ---
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove 'active' de todos os botões e painéis
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+
+            // Adiciona 'active' ao botão clicado
+            button.classList.add('active');
+            
+            // Adiciona 'active' ao painel correspondente
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(tabId!)?.classList.add('active');
+        });
+    });
+        // --- CONEXÃO DOS BOTÕES (INVENTÁRIO DE PILHA) ---
+    document.getElementById('add-pedra-pilha')?.addEventListener('click', () => {
+        const itemPedra: ItensPilha = { id: 'pedra', nome: 'Pedra' };
+        meuJogo.adicionarItemPilha(itemPedra, 10);
+    });
+
+    document.getElementById('add-terra-pilha')?.addEventListener('click', () => {
+        const itemTerra: ItensPilha = { id: 'terra', nome: 'Terra' };
+        meuJogo.adicionarItemPilha(itemTerra, 5);
+    });
+    
     // Conecta os botões do HTML às funções do nosso jogo
     
     // Botão para adicionar Terra
