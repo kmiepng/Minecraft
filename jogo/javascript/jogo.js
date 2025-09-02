@@ -1,6 +1,6 @@
 // ------------------------- IMPORTS -------------------------------------
-import { Itens } from "./itens";
-import { Inventario } from "./inventario";
+import { Itens } from "./itens.js";
+import { Inventario } from "./inventario.js";
 // -------------------------JOGO-----------------------------------------
 function drop_Minerio(nome_drop, encantamento, min_drop = 1, max_drop = 4) {
     //não to considerando os drops extras de carvão, cobre e redstone

@@ -1,5 +1,5 @@
-import { Jogo } from "./jogo";
-import { Itens } from "./itens"; // Supondo que Itens.ts está na mesma pasta
+import { Jogo } from "./jogo.js";
+import { Itens } from "./itens.js"; // Supondo que Itens.ts está na mesma pasta
 // 1. Quando a página carregar, inicialize o jogo.
 window.addEventListener('DOMContentLoaded', () => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j;

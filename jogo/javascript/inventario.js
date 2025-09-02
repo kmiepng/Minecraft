@@ -1,5 +1,5 @@
-import { Itens } from './itens';
-import { Pilha } from './pilhas';
+import { Itens } from './itens.js';
+import { Pilha } from './pilhas.js';
 export class Inventario {
     constructor() {
         this.inventario = [];
