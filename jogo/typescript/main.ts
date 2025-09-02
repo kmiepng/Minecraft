@@ -6,8 +6,9 @@ import { ItemTrouxa } from "./pilhas";
 window.addEventListener('DOMContentLoaded', () => {
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo(
-        'inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 
-        'inventario-baixo-grid', 'funil-grid', 'status-funil');
+        'inventario-grid', 'inventario-pilha-grid',
+        'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil',
+        'inventario-cima-grid deque', 'inventario-baixo-grid deque', 'funil-grid deque');
 
     // Renderiza o estado inicial de ambos os inventários
     meuJogo.renderizarInventario();
@@ -125,7 +126,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('sort-heap')?.addEventListener('click', () => {
         meuJogo.ordenarPorDurabilidade();
     });
-    // -------------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL ------------------------
+    // -------------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL COM NODE ------------------------
 
     document.getElementById('add-itens-bau-cima')?.addEventListener('click', () => {
         meuJogo.popularBauDeCima();
@@ -137,5 +138,28 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('parar-transferencia')?.addEventListener('click', () => {
         meuJogo.pararTransferenciaFunil();
-    });    
+    });
+
+    // ----------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL DEQUE -------------------------------------
+
+    document.getElementById('add-itens-bau-cima deque')?.addEventListener('click', () => {
+        meuJogo.popularBauDeCimaDeque();
+    });
+
+    // Conecta os 4 novos botões de controle manual
+    document.getElementById('funil-puxar-normal')?.addEventListener('click', () => {
+        meuJogo.puxarItemParaFunil(false); // prioridade = false
+    });
+
+    document.getElementById('funil-puxar-prioritario')?.addEventListener('click', () => {
+        meuJogo.puxarItemParaFunil(true); // prioridade = true
+    });
+
+    document.getElementById('funil-empurrar')?.addEventListener('click', () => {
+        meuJogo.empurrarItemDoFunil();
+    });
+
+    document.getElementById('funil-devolver')?.addEventListener('click', () => {
+        meuJogo.devolverUltimoItemDoFunil();
+    });
 });

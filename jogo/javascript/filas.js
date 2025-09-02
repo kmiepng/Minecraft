@@ -61,7 +61,7 @@ export class FilaDeque {
     constructor() {
         this.count = 0;
         this.lowestCount = 0;
-        this.items = {};
+        this.items = [];
     }
     addFront(element) {
         if (this.isEmpty()) {
@@ -105,35 +105,27 @@ export class FilaDeque {
         if (this.isEmpty()) {
             return undefined;
         }
-        return this.items[this.lowestCount].info();
+        return this.items[this.lowestCount].info_item();
     }
     peekBack() {
         if (this.isEmpty()) {
             return undefined;
         }
-        return this.items[this.count - 1].info();
+        return this.items[this.count - 1].info_item();
     }
     isEmpty() {
         return this.size() === 0;
     }
     clear() {
-        this.items = {};
+        this.items = [];
         this.count = 0;
         this.lowestCount = 0;
     }
     size() {
         return this.count - this.lowestCount;
     }
-    toString() {
-        if (this.isEmpty()) {
-            return '';
-        }
-        let objString = `| ${this.items[this.lowestCount].info()}`;
-        for (let i = this.lowestCount + 1; i < this.count; i++) {
-            objString = `${objString} | ${this.items[i].info()}`;
-        }
-        objString += ' |';
-        return objString;
+    toArray() {
+        return this.items;
     }
 }
 //# sourceMappingURL=filas.js.map

@@ -3,9 +3,9 @@ import { Itens } from "./itens.js";
 import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
-    const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil');
+    const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil', 'inventario-cima-grid deque', 'inventario-baixo-grid deque', 'funil-grid deque');
     // Renderiza o estado inicial de ambos os inventários
     meuJogo.renderizarInventario();
     meuJogo.renderizarInventarioPilha();
@@ -103,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
     (_t = document.getElementById('sort-heap')) === null || _t === void 0 ? void 0 : _t.addEventListener('click', () => {
         meuJogo.ordenarPorDurabilidade();
     });
-    // -------------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL ------------------------
+    // -------------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL COM NODE ------------------------
     (_u = document.getElementById('add-itens-bau-cima')) === null || _u === void 0 ? void 0 : _u.addEventListener('click', () => {
         meuJogo.popularBauDeCima();
     });
@@ -112,6 +112,23 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     (_w = document.getElementById('parar-transferencia')) === null || _w === void 0 ? void 0 : _w.addEventListener('click', () => {
         meuJogo.pararTransferenciaFunil();
+    });
+    // ----------------------- LISTENERS PARA A SIMULAÇÃO DO FUNIL DEQUE -------------------------------------
+    (_x = document.getElementById('add-itens-bau-cima deque')) === null || _x === void 0 ? void 0 : _x.addEventListener('click', () => {
+        meuJogo.popularBauDeCimaDeque();
+    });
+    // Conecta os 4 novos botões de controle manual
+    (_y = document.getElementById('funil-puxar-normal')) === null || _y === void 0 ? void 0 : _y.addEventListener('click', () => {
+        meuJogo.puxarItemParaFunil(false); // prioridade = false
+    });
+    (_z = document.getElementById('funil-puxar-prioritario')) === null || _z === void 0 ? void 0 : _z.addEventListener('click', () => {
+        meuJogo.puxarItemParaFunil(true); // prioridade = true
+    });
+    (_0 = document.getElementById('funil-empurrar')) === null || _0 === void 0 ? void 0 : _0.addEventListener('click', () => {
+        meuJogo.empurrarItemDoFunil();
+    });
+    (_1 = document.getElementById('funil-devolver')) === null || _1 === void 0 ? void 0 : _1.addEventListener('click', () => {
+        meuJogo.devolverUltimoItemDoFunil();
     });
 });
 //# sourceMappingURL=main.js.map

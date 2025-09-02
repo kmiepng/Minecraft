@@ -4,7 +4,7 @@ import { Inventario, InventarioComPilha } from "./inventario.js";
 import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { heapSortInventario } from "./minHeap.js";
-import { FilacomNode } from "./filas.js";
+import { FilaDeque, FilacomNode } from "./filas.js";
 // -------------------------JOGO-----------------------------------------
 // Um mapa para associar nomes de itens a seus arquivos de imagem
 const itemImagens = {
@@ -19,7 +19,7 @@ const itemImagens = {
     "Trouxa": "images/bundle.png"
 };
 export class Jogo {
-    constructor(idElementoInventario, idGridPilha, idGridCima, idGridBaixo, idGridFunil, idStatusFunil) {
+    constructor(idElementoInventario, idGridPilha, idGridCima, idGridBaixo, idGridFunil, idStatusFunil, idGridCimaDeque, idGridBaixoDeque, idGridFunilDeque) {
         //Clique no inventário
         this.slotSelecionado = 0;
         this.slotPilhaSelecionado = 0;
@@ -34,7 +34,7 @@ export class Jogo {
         // Inicializa o inventário de Pilha
         this.inventarioPilha = new InventarioComPilha(); // Usa o tamanho padrão (9)
         this.elementoInventarioPilhaHTML = document.getElementById(idGridPilha);
-        // Inicializa os componentes do funil
+        // Inicializa os componentes do funil com node
         this.inventarioCima = new Inventario();
         this.inventarioBaixo = new Inventario();
         this.funilFila = new FilacomNode();
@@ -42,6 +42,13 @@ export class Jogo {
         this.elementoInventarioBaixoHTML = document.getElementById(idGridBaixo);
         this.elementoFunilHTML = document.getElementById(idGridFunil);
         this.elementoStatusFunilHTML = document.getElementById(idStatusFunil);
+        // Inicializa os componentes do funil deque
+        this.inventarioCimaDeque = new Inventario();
+        this.inventarioBaixoDeque = new Inventario();
+        this.funilDeque = new FilaDeque();
+        this.elementoInventarioCimaDequeHTML = document.getElementById(idGridCimaDeque);
+        this.elementoInventarioBaixoDequeHTML = document.getElementById(idGridBaixoDeque);
+        this.elementoFunilDequeHTML = document.getElementById(idGridFunilDeque);
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
@@ -327,7 +334,7 @@ export class Jogo {
             this.elementoInventarioPilhaHTML.appendChild(slotDiv);
         });
     }
-    // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL ---------------------------------------
+    // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL COM NODE ---------------------------------------
     renderizarFunil() {
         this.elementoFunilHTML.innerHTML = '';
         const itensNoFunil = this.funilFila.toArray();
@@ -421,6 +428,108 @@ export class Jogo {
         this.renderizarFunil();
         // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
         this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
+    }
+    // -------------------------------------- MÉTODOS PARA A SIMULAÇÃO DO FUNIL DEQUE ---------------------------------------
+    /**
+     * O renderizarFunil agora usa o toArray() do Deque. O resto é idêntico.
+     */
+    renderizarFunilDeque() {
+        this.elementoFunilHTML.innerHTML = '';
+        const itensNoFunil = this.funilDeque.toArray(); // Usa o Deque
+        for (let i = 0; i < 5; i++) { // Renderiza 5 slots
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'inventory-slot';
+            const item = itensNoFunil[i];
+            if (item) {
+                // Adiciona o tooltip com as informações do item
+                slotDiv.title = item.info_item();
+                // Cria e configura a imagem do item
+                const img = document.createElement('img');
+                img.src = itemImagens[item.nome] || 'images/default.png';
+                img.alt = item.nome;
+                slotDiv.appendChild(img);
+                // Cria e configura o texto da quantidade (se for maior que 1)
+                if (item.quantidade > 1) {
+                    const quantidadeTexto = document.createElement('span');
+                    quantidadeTexto.className = 'item-quantity';
+                    quantidadeTexto.innerText = item.quantidade.toString();
+                    slotDiv.appendChild(quantidadeTexto);
+                }
+            }
+            this.elementoFunilHTML.appendChild(slotDiv);
+        }
+    }
+    /**
+    * Puxa um item do baú de cima e o adiciona ao funil (Deque).
+    * @param prioridade Se true, adiciona no início (addFront), senão no fim (addBack).
+    */
+    puxarItemParaFunil(prioridade) {
+        if (this.inventarioCimaDeque.inventario.length === 0) {
+            alert("Baú de cima está vazio!");
+            return;
+        }
+        if (this.funilDeque.size() >= 5) {
+            alert("Funil está cheio!");
+            return;
+        }
+        const stackOriginal = this.inventarioCimaDeque.inventario[0];
+        const itemTransferido = new Itens(stackOriginal.nome, 1, stackOriginal.tipo, stackOriginal.durabilidade, stackOriginal.encantamento);
+        if (prioridade) {
+            this.funilDeque.addFront(itemTransferido);
+        }
+        else {
+            this.funilDeque.addBack(itemTransferido);
+        }
+        stackOriginal.quantidade--;
+        if (stackOriginal.quantidade <= 0) {
+            this.inventarioCimaDeque.inventario.shift();
+        }
+        this.renderizarTodosOsInventariosDeque();
+    }
+    /**
+     * Empurra o primeiro item do funil (Deque) para o baú de baixo. (removeFront)
+     */
+    empurrarItemDoFunil() {
+        if (this.funilDeque.isEmpty()) {
+            alert("Funil está vazio!");
+            return;
+        }
+        const itemEmpurrado = this.funilDeque.removeFront();
+        if (itemEmpurrado) {
+            this.inventarioBaixoDeque.add_slot(itemEmpurrado);
+        }
+        this.renderizarTodosOsInventariosDeque();
+    }
+    /**
+     * Devolve o ÚLTIMO item do funil (Deque) de volta para o baú de cima. (removeBack)
+     */
+    devolverUltimoItemDoFunil() {
+        if (this.funilDeque.isEmpty()) {
+            alert("Funil está vazio!");
+            return;
+        }
+        const itemDevolvido = this.funilDeque.removeBack();
+        if (itemDevolvido) {
+            // Usamos o add_slot aqui, ele vai empilhar ou criar um novo slot corretamente.
+            this.inventarioCimaDeque.add_slot(itemDevolvido);
+        }
+        this.renderizarTodosOsInventariosDeque();
+    }
+    renderizarTodosOsInventariosDeque() {
+        // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
+        this._renderizarInventario(this.inventarioCimaDeque, this.elementoInventarioCimaDequeHTML, null, null);
+        // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
+        this.renderizarFunil();
+        // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
+        this._renderizarInventario(this.inventarioBaixoDeque, this.elementoInventarioBaixoDequeHTML, null, null);
+    }
+    popularBauDeCimaDeque() {
+        const min_drop = 1, max_drop = 4;
+        const drop = Math.floor(Math.random() * (max_drop - min_drop + 1)) + min_drop;
+        this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
+        this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
+        this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
+        this.renderizarTodosOsInventarios();
     }
 }
 //# sourceMappingURL=jogo.js.map
