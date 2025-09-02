@@ -408,8 +408,24 @@ export class Jogo{
             const slotDiv = document.createElement('div');
             slotDiv.className = 'inventory-slot';
             const item = itensNoFunil[i];
+            // Se existir um item para este slot, desenha sua imagem e quantidade
             if (item) {
-                // ... (lógica para criar img e span de quantidade, igual a renderizarInventario)
+                // Adiciona o tooltip com as informações do item
+                slotDiv.title = item.info_item();
+
+                // Cria e configura a imagem do item
+                const img = document.createElement('img');
+                img.src = itemImagens[item.nome] || 'assets/images/default.png';
+                img.alt = item.nome;
+                slotDiv.appendChild(img);
+
+                // Cria e configura o texto da quantidade (se for maior que 1)
+                if (item.quantidade > 1) {
+                    const quantidadeTexto = document.createElement('span');
+                    quantidadeTexto.className = 'item-quantity';
+                    quantidadeTexto.innerText = item.quantidade.toString();
+                    slotDiv.appendChild(quantidadeTexto);
+                }
             }
             this.elementoFunilHTML.appendChild(slotDiv);
         }
@@ -447,7 +463,7 @@ export class Jogo{
                 this.renderizarTodosOsInventarios();
             }
 
-            // ETAPA 3: Parar a transferência se não houver mais nada a fazer
+            // Parar a transferência se não houver mais nada a fazer
             if (this.inventarioCima.inventario.length === 0 && this.funilFila.isEmpty()) {
                 this.pararTransferenciaFunil();
             }
