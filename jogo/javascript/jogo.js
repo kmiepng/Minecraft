@@ -74,7 +74,9 @@ export class Jogo {
         this.servidorPlayers = new HashTable();
         this.listaDeBaus = new Jogadores();
         this.elementoPlayerList = document.querySelector('#player-list-table tbody');
-        // ... (get outros elementos por ID)
+        if (!this.elementoPlayerList) {
+            console.error("ERRO CRÍTICO: O elemento '<tbody>' da tabela de jogadores não foi encontrado. Verifique seu HTML!");
+        }
         this._inicializarServidor();
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
@@ -710,33 +712,117 @@ export class Jogo {
         this.renderizarGerenciadorServidor();
     }
     renderizarGerenciadorServidor() {
-        // Renderiza a lista de jogadores da Tabela Hash
+        if (!this.elementoPlayerList)
+            return;
+        const player1Select = document.getElementById('player1-select');
+        const player2Select = document.getElementById('player2-select');
+        // Limpa o conteúdo antigo
         this.elementoPlayerList.innerHTML = '';
+        player1Select.innerHTML = '';
+        player2Select.innerHTML = '';
+        // Pega os jogadores ativos da Tabela Hash
         const players = this.servidorPlayers.getValues();
         players.forEach(player => {
-            const row = document.createElement('tr');
-            // ... (cria as células <td> com nome, switch de pvp, e botões)
-            // O switch de PvP chama: this.servidorPlayers.setPvpState(player.playerName, novoEstado);
-            // O botão "Inspecionar" chama: this.inspecionarBau(player.playerName);
-            this.elementoPlayerList.appendChild(row);
+            // --- 1. Preenche a Tabela de Jogadores ---
+            const row = this.elementoPlayerList.insertRow();
+            row.insertCell(0).innerText = player.playerName;
+            // Célula do Switch de PvP
+            const pvpCell = row.insertCell(1);
+            const pvpLabel = document.createElement('label');
+            pvpLabel.className = 'switch';
+            const pvpSwitch = document.createElement('input');
+            pvpSwitch.type = 'checkbox';
+            pvpSwitch.checked = player.pvpEnabled;
+            pvpSwitch.addEventListener('change', () => {
+                this.servidorPlayers.setPvpState(player.playerName, pvpSwitch.checked);
+                console.log(`PvP de ${player.playerName} alterado para: ${pvpSwitch.checked}`);
+                this.renderizarGerenciadorServidor(); // Re-renderiza para consistência
+            });
+            const slider = document.createElement('span');
+            slider.className = 'slider';
+            // Monta o switch e o adiciona na célula
+            pvpLabel.appendChild(pvpSwitch);
+            pvpLabel.appendChild(slider);
+            pvpCell.appendChild(pvpLabel);
+            // Célula de Ações
+            const actionsCell = row.insertCell(2);
+            const inspectButton = document.createElement('button');
+            inspectButton.innerText = 'Inspecionar Baú';
+            inspectButton.onclick = () => this.inspecionarBau(player.playerName);
+            actionsCell.appendChild(inspectButton);
+            // --- 2. Preenche os Dropdowns ---
+            const option1 = new Option(player.playerName, player.playerName);
+            const option2 = new Option(player.playerName, player.playerName);
+            player1Select.add(option1);
+            player2Select.add(option2);
         });
-        // Renderiza os dropdowns para operações de Set
-        // ...
     }
     inspecionarBau(playerName) {
-        const bau = this.listaDeBaus.find(playerName);
-        if (bau) {
-            this.renderizarBau(bau, document.getElementById('chest-display-area'));
+        console.log(`Inspecionando baú de: ${playerName}`);
+        // Procura o baú na Lista Ligada
+        const bauDoJogador = this.listaDeBaus.find(playerName);
+        // Pega o elemento HTML onde o baú será exibido
+        const displayArea = document.getElementById('chest-display-area');
+        if (bauDoJogador) {
+            // Usa o helper para renderizar o baú encontrado
+            this.renderizarBau(bauDoJogador, displayArea);
+        }
+        else {
+            displayArea.innerHTML = `<p class="inventario-vazio">Baú do jogador ${playerName} não encontrado.</p>`;
         }
     }
     executarOperacaoDeSet(operacao) {
-        // Pega os nomes dos jogadores dos <select>
-        // Encontra os baús de cada um na lista ligada
-        // Executa a operação (ex: bau1.bau_comunitario(bau2))
-        // Renderiza o resultado no 'set-result-area'
+        const player1Select = document.getElementById('player1-select');
+        const player2Select = document.getElementById('player2-select');
+        const resultadoArea = document.getElementById('set-result-area');
+        const p1Name = player1Select.value;
+        const p2Name = player2Select.value;
+        if (!p1Name || !p2Name) {
+            alert("Por favor, selecione dois jogadores.");
+            return;
+        }
+        const bau1 = this.listaDeBaus.find(p1Name);
+        const bau2 = this.listaDeBaus.find(p2Name);
+        if (!bau1 || !bau2) {
+            alert("Não foi possível encontrar os baús dos jogadores selecionados.");
+            return;
+        }
+        let resultadoBau;
+        switch (operacao) {
+            case 'union':
+                console.log(`Executando UNIÃO entre ${p1Name} e ${p2Name}`);
+                resultadoBau = bau1.bau_comunitario(bau2);
+                break;
+            case 'difference':
+                console.log(`Executando DIFERENÇA entre ${p1Name} e ${p2Name}`);
+                resultadoBau = bau1.diferenca_baus(bau2);
+                break;
+        }
+        this.renderizarBau(resultadoBau, resultadoArea);
     }
     renderizarBau(bau, elemento) {
-        // Lógica similar ao _renderizarInventario para desenhar os itens de um baú
+        elemento.innerHTML = ''; // Limpa o conteúdo anterior
+        const itens = bau.values(); // Pega os itens do baú (que é um Set)
+        if (itens.length === 0) {
+            elemento.innerHTML = '<p class="inventario-vazio">[ Baú Vazio ]</p>';
+            return;
+        }
+        itens.forEach(item => {
+            const slotDiv = document.createElement('div');
+            slotDiv.className = 'inventory-slot';
+            slotDiv.title = item.info_item();
+            const img = document.createElement('img');
+            img.src = itemImagens[item.nome] || 'assets/images/default.png';
+            img.alt = item.nome;
+            slotDiv.appendChild(img);
+            if (item.quantidade > 1) {
+                const quantidadeTexto = document.createElement('span');
+                quantidadeTexto.className = 'item-quantity';
+                quantidadeTexto.innerText = item.quantidade.toString();
+                slotDiv.appendChild(quantidadeTexto);
+            }
+            elemento.appendChild(slotDiv);
+        });
     }
 }
 //# sourceMappingURL=jogo.js.map
