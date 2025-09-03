@@ -7,104 +7,126 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Inventário</h1>
-
-    <div class="tab-buttons">
-        <button class="tab-button active" data-tab="inventario-array">Inventário Principal</button>
-        <button class="tab-button" data-tab="inventario-pilha">Inventário com Pilha</button>
-        <button class="tab-button" data-tab="funil-fila">Funil</button>
-    </div>
-
-    <div class="tab-content">
-        <div id="inventario-array" class="tab-pane active">
-            <div id="inventario-grid" class="inventory-grid"></div>
-
-            <hr>
-
-            <h2>Controles</h2>
-            <div id="controles">
-                <button id="add-terra">Adicionar 10 Terras (Stack)</button>
-                <button id="add-picareta">Adicionar Picareta</button>
-                <button id="add-maca">Adicionar 5 Maçãs</button>
-                <button id="rmv-terra">Remover 5 Terras</button>
-                <button id="rmv-picareta">Remover Picareta</button>
-                <button id="add-picareta-fortuna">Adicionar Picareta (Fortuna)</button>
-                <button id="add-picareta-seda">Adicionar Picareta (Toque de Seda)</button> 
-
-                <hr>
-
-                <button id="minerar-ferro">Minerar Ferro</button> <button id="minerar-diamante">Minerar Diamante</button>
-                <hr>
-                <h3>Controles da Trouxa</h3>
-                <button id="add-trouxa">Adicionar Trouxa ao Inventário</button>
-                <button id="guardar-na-trouxa">Guardar Item Selecionado na Trouxa</button>
-                <button id="esvaziar-trouxa">Esvaziar Trouxa Selecionada</button>
-            </div>
-                
-            <hr>
-
-            <h2>Ordenar Inventário</h2>
-
-            <div id="controles">
-                <button id="sort-compare">Organizar Inventário</button>
-                <button id="sort-heap">Organizar por Durabilidade</button>
+    <header class="game-hud">
+        <div class="carrossel-container">
+            <div id="ciclo-controles-manual">
+                <button id="ciclo-anterior">←</button>
             </div>
 
-            <div id="performance-results"></div>
+            <div id="ciclo-display">
+                <img id="ciclo-imagem" src="" alt="Ciclo do dia">
+                <h2 id="ciclo-nome"></h2>
+            </div>
+            
+            <div id="ciclo-controles-manual">
+                <button id="ciclo-proximo">→</button>
+            </div>
+
+            <div id="ciclo-controles-auto">
+                <button id="ciclo-iniciar">▶ Iniciar</button>
+                <button id="ciclo-pausar">❚❚ Pausar</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <h1>Inventário</h1>
+
+        <div class="tab-buttons">
+            <button class="tab-button active" data-tab="inventario-array">Inventário Principal</button>
+            <button class="tab-button" data-tab="inventario-pilha">Inventário com Pilha</button>
+            <button class="tab-button" data-tab="funil-fila">Funil</button>
         </div>
 
-        <div id="inventario-pilha" class="tab-pane">
-            <div id="inventario-pilha-grid" class="inventory-grid">
-                </div>
-            <div id="controles" class="controles-pilha">
+        <div class="tab-content">
+            <div id="inventario-array" class="tab-pane active">
+                <div id="inventario-grid" class="inventory-grid"></div>
+
+                <hr>
+
                 <h2>Controles</h2>
-                <button id="add-pedra-pilha">Adicionar 10 Pedras</button>
-                <button id="add-terra-pilha">Adicionar 5 Terras</button>
+                <div id="controles">
+                    <button id="add-terra">Adicionar 10 Terras (Stack)</button>
+                    <button id="add-picareta">Adicionar Picareta</button>
+                    <button id="add-maca">Adicionar 5 Maçãs</button>
+                    <button id="rmv-terra">Remover 5 Terras</button>
+                    <button id="rmv-picareta">Remover Picareta</button>
+                    <button id="add-picareta-fortuna">Adicionar Picareta (Fortuna)</button>
+                    <button id="add-picareta-seda">Adicionar Picareta (Toque de Seda)</button> 
+
+                    <hr>
+
+                    <button id="minerar-ferro">Minerar Ferro</button> <button id="minerar-diamante">Minerar Diamante</button>
+                    <hr>
+                    <h3>Controles da Trouxa</h3>
+                    <button id="add-trouxa">Adicionar Trouxa ao Inventário</button>
+                    <button id="guardar-na-trouxa">Guardar Item Selecionado na Trouxa</button>
+                    <button id="esvaziar-trouxa">Esvaziar Trouxa Selecionada</button>
+                </div>
+                    
                 <hr>
-                <button id="rmv-item-pilha">Remover 1 Item do Slot Selecionado</button>
-                <button id="rmv-slot-pilha">Limpar Slot Selecionado</button>
-            </div>
-        </div>
-        
-        <div id="funil-fila" class="tab-pane">
-            <div class="simulacao-funil">
-                <h3>Baú Fonte</h3>
-                <div id="inventario-cima-grid" class="inventory-grid"></div>
 
-                <h3>Funil</h3>
-                <div id="funil-grid" class="funil-grid"></div>
+                <h2>Ordenar Inventário</h2>
 
-                <h3>Baú Destino</h3>
-                <div id="inventario-baixo-grid" class="inventory-grid"></div>
-                
-                <div id="controles" class="controles-funil">
-                    <button id="add-itens-bau-cima">Adicionar Itens Aleatórios no Baú de Cima</button>
-                    <button id="iniciar-transferencia">Iniciar Transferência</button>
-                    <button id="parar-transferencia">Parar Transferência</button>
-                    <p id="status-funil">Status: Parado</p>
+                <div id="controles">
+                    <button id="sort-compare">Organizar Inventário</button>
+                    <button id="sort-heap">Organizar por Durabilidade</button>
                 </div>
-                <hr class="hr">
-                <h3>Baú Fonte</h3>
-                <div id="inventario-cima-grid deque" class="inventory-grid deque"></div>
 
-                <h3>Funil</h3>
-                <div id="funil-grid deque" class="funil-grid deque"></div>
+                <div id="performance-results"></div>
+            </div>
 
-                <h3>Baú Destino</h3>
-                <div id="inventario-baixo-grid deque" class="inventory-grid deque"></div>
-                
-                <div id="controles" class="controles-funil deque">
-                    <button id="add-itens-bau-cima deque">Adicionar Itens ao Baú de Cima</button>
-                    <button id="funil-puxar-normal">Puxar Item (Normal → Fim)</button>
-                    <button id="funil-puxar-prioritario">Puxar Item (Prioritário → Início)</button>
-                    <button id="funil-empurrar">Empurrar Item (Início → Baú)</button>
-                    <button id="funil-devolver">Devolver Item (Fim → Baú)</button>
+            <div id="inventario-pilha" class="tab-pane">
+                <div id="inventario-pilha-grid" class="inventory-grid">
+                    </div>
+                <div id="controles" class="controles-pilha">
+                    <h2>Controles</h2>
+                    <button id="add-pedra-pilha">Adicionar 10 Pedras</button>
+                    <button id="add-terra-pilha">Adicionar 5 Terras</button>
+                    <hr>
+                    <button id="rmv-item-pilha">Remover 1 Item do Slot Selecionado</button>
+                    <button id="rmv-slot-pilha">Limpar Slot Selecionado</button>
                 </div>
             </div>
+            
+            <div id="funil-fila" class="tab-pane">
+                <div class="simulacao-funil">
+                    <h3>Baú Fonte</h3>
+                    <div id="inventario-cima-grid" class="inventory-grid"></div>
+
+                    <h3>Funil</h3>
+                    <div id="funil-grid" class="funil-grid"></div>
+
+                    <h3>Baú Destino</h3>
+                    <div id="inventario-baixo-grid" class="inventory-grid"></div>
+                    
+                    <div id="controles" class="controles-funil">
+                        <button id="add-itens-bau-cima">Adicionar Itens Aleatórios no Baú de Cima</button>
+                        <button id="iniciar-transferencia">Iniciar Transferência</button>
+                        <button id="parar-transferencia">Parar Transferência</button>
+                        <p id="status-funil">Status: Parado</p>
+                    </div>
+                    <hr class="hr">
+                    <h3>Baú Fonte</h3>
+                    <div id="inventario-cima-grid deque" class="inventory-grid deque"></div>
+
+                    <h3>Funil</h3>
+                    <div id="funil-grid deque" class="funil-grid deque"></div>
+
+                    <h3>Baú Destino</h3>
+                    <div id="inventario-baixo-grid deque" class="inventory-grid deque"></div>
+                    
+                    <div id="controles" class="controles-funil deque">
+                        <button id="add-itens-bau-cima deque">Adicionar Itens ao Baú de Cima</button>
+                        <button id="funil-puxar-normal">Puxar Item (Normal → Fim)</button>
+                        <button id="funil-puxar-prioritario">Puxar Item (Prioritário → Início)</button>
+                        <button id="funil-empurrar">Empurrar Item (Início → Baú)</button>
+                        <button id="funil-devolver">Devolver Item (Fim → Baú)</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
     
-
     <script type="module" src="javascript/main.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
-//Essa LinkedList duplamente ligada será usada para mostrar o ciclo do dia do jogo
-class Nodee {
+export class Nodee {
     constructor(data) {
         this.data = data;
         this.prev = null;
@@ -13,8 +12,8 @@ export class ListaLigadaCircularDuasVias {
     constructor() {
         this.head = null;
     }
-    adicionar(horario) {
-        const novo = new Nodee(horario);
+    adicionar(ciclo) {
+        const novo = new Nodee(ciclo);
         if (!this.head) {
             novo.next = novo;
             novo.prev = novo;
@@ -28,28 +27,6 @@ export class ListaLigadaCircularDuasVias {
             this.head.prev = novo;
             ultimo.next = novo;
         }
-    }
-    remover(horario) {
-        if (!this.head)
-            return;
-        let atual = this.head;
-        do {
-            if ((atual === null || atual === void 0 ? void 0 : atual.data) === horario) {
-                if (atual.next === atual) {
-                    // Só um elemento
-                    this.head = null;
-                }
-                else {
-                    atual.prev.next = atual.next;
-                    atual.next.prev = atual.prev;
-                    if (atual === this.head) {
-                        this.head = atual.next;
-                    }
-                }
-                return;
-            }
-            atual = atual.next;
-        } while (atual !== this.head);
     }
     // Mostra a lista de horarios em ordem
     print() {

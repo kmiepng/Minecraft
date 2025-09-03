@@ -3,7 +3,7 @@ import { Itens } from "./itens.js";
 import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil', 'inventario-cima-grid deque', 'inventario-baixo-grid deque', 'funil-grid deque');
     // Renderiza o estado inicial de ambos os inventários
@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
     meuJogo.renderizarInventarioPilha();
     meuJogo.renderizarTodosOsInventarios();
     meuJogo.renderizarTodosOsInventariosDeque();
+    meuJogo.renderizarCicloDoDia();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -130,6 +131,19 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     (_1 = document.getElementById('funil-devolver')) === null || _1 === void 0 ? void 0 : _1.addEventListener('click', () => {
         meuJogo.devolverUltimoItemDoFunil();
+    });
+    // ---------------- LISTENERS PARA O CARROSSEL DO CICLO DO DIA -------------------------
+    (_2 = document.getElementById('ciclo-anterior')) === null || _2 === void 0 ? void 0 : _2.addEventListener('click', () => {
+        meuJogo.retrocederTempo();
+    });
+    (_3 = document.getElementById('ciclo-proximo')) === null || _3 === void 0 ? void 0 : _3.addEventListener('click', () => {
+        meuJogo.avancarTempo();
+    });
+    (_4 = document.getElementById('ciclo-iniciar')) === null || _4 === void 0 ? void 0 : _4.addEventListener('click', () => {
+        meuJogo.iniciarCicloAutomatico();
+    });
+    (_5 = document.getElementById('ciclo-pausar')) === null || _5 === void 0 ? void 0 : _5.addEventListener('click', () => {
+        meuJogo.pausarCicloAutomatico();
     });
 });
 //# sourceMappingURL=main.js.map

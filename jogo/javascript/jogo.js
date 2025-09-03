@@ -3,6 +3,7 @@ import { Itens } from "./itens.js";
 import { Inventario, InventarioComPilha } from "./inventario.js";
 import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
+import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular.js";
 import { heapSortInventario } from "./minHeap.js";
 import { FilaDeque, FilacomNode } from "./filas.js";
 // -------------------------JOGO-----------------------------------------
@@ -24,6 +25,7 @@ export class Jogo {
         this.slotSelecionado = 0;
         this.slotPilhaSelecionado = 0;
         this.transferenciaInterval = null;
+        this.cicloInterval = null;
         this.inventario = new Inventario();
         // Garante que o elemento do inventário exista no HTML
         const elemento = document.getElementById(idElementoInventario);
@@ -49,6 +51,13 @@ export class Jogo {
         this.elementoInventarioCimaDequeHTML = document.getElementById(idGridCimaDeque);
         this.elementoInventarioBaixoDequeHTML = document.getElementById(idGridBaixoDeque);
         this.elementoFunilDequeHTML = document.getElementById(idGridFunilDeque);
+        // Inicializa os componentes do Carrossel
+        this.cicloDoDia = new ListaLigadaCircularDuasVias();
+        this.tempoAtualNode = null;
+        this._inicializarCicloDoDia(); // Chama o método para popular a lista
+        this.elementoCicloDisplay = document.getElementById('ciclo-display');
+        this.elementoCicloImagem = document.getElementById('ciclo-imagem');
+        this.elementoCicloNome = document.getElementById('ciclo-nome');
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
@@ -416,7 +425,7 @@ export class Jogo {
         this.inventarioCima.add_slot(new Itens("Pedra", 10, "Bloco"));
         this.inventarioCima.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCima.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
-        this.renderizarTodosOsInventarios();
+        this.renderizarTodosOsInventariosDeque();
     }
     /**
      * Renderiza os inventários da simulação do funil (baús e o próprio funil).
@@ -425,7 +434,7 @@ export class Jogo {
         // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
         this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null, null);
         // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
-        this.renderizarFunil();
+        this.renderizarFunilDeque();
         // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
         this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
     }
@@ -527,6 +536,69 @@ export class Jogo {
         this.inventarioCimaDeque.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCimaDeque.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventariosDeque();
+    }
+    /**
+     * Método privado para popular nossa lista circular com os horários do dia.
+     */
+    _inicializarCicloDoDia() {
+        const horarios = [
+            { nome: "Amanhecer", imagem: "images/sunrise.png", corFundo: "#ffcf78" },
+            { nome: "Manhã", imagem: "images/day.png", corFundo: "#87CEEB" },
+            { nome: "Meio-dia", imagem: "images/noon.png", corFundo: "#4aa2d6" },
+            { nome: "Tarde", imagem: "images/afternoon.png", corFundo: "#fca34e" },
+            { nome: "Pôr do Sol", imagem: "images/sunset.png", corFundo: "#ff6a62" },
+            { nome: "Noite", imagem: "images/night.png", corFundo: "#001a3d" },
+            { nome: "Meia-noite", imagem: "images/midnight.png", corFundo: "#000f24" },
+        ];
+        horarios.forEach(h => this.cicloDoDia.adicionar(h));
+        this.tempoAtualNode = this.cicloDoDia.head; // Começa no primeiro horário
+    }
+    // --- MÉTODOS PARA O CARROSSEL ---
+    /**
+     * Atualiza a interface com os dados do nó de tempo atual.
+     */
+    renderizarCicloDoDia() {
+        if (!this.tempoAtualNode)
+            return;
+        const dadosAtuais = this.tempoAtualNode.data;
+        this.elementoCicloDisplay.style.backgroundColor = dadosAtuais.corFundo;
+        this.elementoCicloImagem.src = dadosAtuais.imagem;
+        this.elementoCicloNome.innerText = dadosAtuais.nome;
+    }
+    /**
+     * Avança para o próximo nó na lista circular.
+     */
+    avancarTempo() {
+        if (this.tempoAtualNode) {
+            this.tempoAtualNode = this.tempoAtualNode.next;
+            this.renderizarCicloDoDia();
+        }
+    }
+    /**
+     * Retrocede para o nó anterior na lista circular.
+     */
+    retrocederTempo() {
+        if (this.tempoAtualNode) {
+            this.tempoAtualNode = this.tempoAtualNode.prev;
+            this.renderizarCicloDoDia();
+        }
+    }
+    iniciarCicloAutomatico(intervaloMs = 3000) {
+        if (this.cicloInterval) {
+            console.log("O ciclo já está em andamento.");
+            return; // Evita criar múltiplos intervalos
+        }
+        console.log(`Iniciando ciclo automático a cada ${intervaloMs}ms.`);
+        this.cicloInterval = window.setInterval(() => {
+            this.avancarTempo();
+        }, intervaloMs);
+    }
+    pausarCicloAutomatico() {
+        if (this.cicloInterval) {
+            clearInterval(this.cicloInterval);
+            this.cicloInterval = null;
+            console.log("Ciclo pausado.");
+        }
     }
 }
 //# sourceMappingURL=jogo.js.map

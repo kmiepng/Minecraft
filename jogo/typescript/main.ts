@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
     meuJogo.renderizarInventarioPilha();
     meuJogo.renderizarTodosOsInventarios();
     meuJogo.renderizarTodosOsInventariosDeque();
+    meuJogo.renderizarCicloDoDia();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -162,5 +163,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('funil-devolver')?.addEventListener('click', () => {
         meuJogo.devolverUltimoItemDoFunil();
+    });
+    // ---------------- LISTENERS PARA O CARROSSEL DO CICLO DO DIA -------------------------
+
+    document.getElementById('ciclo-anterior')?.addEventListener('click', () => {
+        meuJogo.retrocederTempo();
+    });
+
+    document.getElementById('ciclo-proximo')?.addEventListener('click', () => {
+        meuJogo.avancarTempo();
+    });
+
+    document.getElementById('ciclo-iniciar')?.addEventListener('click', () => {
+        meuJogo.iniciarCicloAutomatico();
+    });
+    
+    document.getElementById('ciclo-pausar')?.addEventListener('click', () => {
+        meuJogo.pausarCicloAutomatico();
     });
 });

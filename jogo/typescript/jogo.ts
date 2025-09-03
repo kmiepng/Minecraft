@@ -4,7 +4,7 @@ import { Itens, ItensPilha } from "./itens";
 import { Inventario, InventarioComPilha } from "./inventario";
 import { bubblesort, mergeSort, linearSearch, binarySearch, testSearch, testSort } from "./search_e_sort_algoritmos";
 import { TrouxaPilha, ItemTrouxa } from "./pilhas";
-import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular";
+import { ListaLigadaCircularDuasVias, CicloDiario, Nodee } from "./lista_ligada_circular";
 import { Bau, Jogadores } from "./lista_ligada_sets";
 import { Dictionary } from "./dicionario";
 import { HashTable } from "./hashTable";
@@ -54,6 +54,14 @@ export class Jogo{
     elementoInventarioCimaDequeHTML: HTMLElement;
     elementoInventarioBaixoDequeHTML: HTMLElement;
     elementoFunilDequeHTML: HTMLElement;
+    // Propriedades para o carrossel
+    cicloDoDia: ListaLigadaCircularDuasVias;
+    tempoAtualNode: Nodee | null;
+    cicloInterval: number | null = null;
+    // Elementos HTML do carrossel
+    elementoCicloDisplay: HTMLElement;
+    elementoCicloImagem: HTMLImageElement;
+    elementoCicloNome: HTMLElement;
     constructor(idElementoInventario: string, idGridPilha: string,
         idGridCima: string, idGridBaixo: string, idGridFunil: string, idStatusFunil: string,
         idGridCimaDeque: string, idGridBaixoDeque: string, idGridFunilDeque: string
@@ -85,6 +93,14 @@ export class Jogo{
         this.elementoInventarioCimaDequeHTML = document.getElementById(idGridCimaDeque)!;
         this.elementoInventarioBaixoDequeHTML = document.getElementById(idGridBaixoDeque)!;
         this.elementoFunilDequeHTML = document.getElementById(idGridFunilDeque)!;
+        // Inicializa os componentes do Carrossel
+        this.cicloDoDia = new ListaLigadaCircularDuasVias();
+        this.tempoAtualNode = null;
+        this._inicializarCicloDoDia(); // Chama o método para popular a lista
+
+        this.elementoCicloDisplay = document.getElementById('ciclo-display')!;
+        this.elementoCicloImagem = document.getElementById('ciclo-imagem') as HTMLImageElement;
+        this.elementoCicloNome = document.getElementById('ciclo-nome')!;
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
@@ -200,7 +216,7 @@ export class Jogo{
             }
 
             const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'assets/images/default.png';
+            img.src = itemImagens[item.nome] || 'images/default.png';
             img.alt = item.nome;
             slotDiv.appendChild(img);
 
@@ -404,7 +420,7 @@ export class Jogo{
                 slotDiv.title = `${item.nome} x${quantidade}`;
 
                 const img = document.createElement('img');
-                img.src = itemImagens[item.nome] || 'assets/images/default.png';
+                img.src = itemImagens[item.nome] || 'images/default.png';
                 img.alt = item.nome;
                 slotDiv.appendChild(img);
 
@@ -639,5 +655,71 @@ export class Jogo{
         this.inventarioCimaDeque.add_slot(new Itens("Diamante", drop, "Minério"));
         this.inventarioCimaDeque.add_slot(new Itens("Maçã Dourada", 5, "Comida"));
         this.renderizarTodosOsInventariosDeque();
+    }
+    /**
+     * Método privado para popular nossa lista circular com os horários do dia.
+     */
+    private _inicializarCicloDoDia() {
+        const horarios: CicloDiario[] = [
+            { nome: "Amanhecer", imagem: "images/sunrise.png", corFundo: "#ffcf78" },
+            { nome: "Manhã", imagem: "images/day.png", corFundo: "#87CEEB" },
+            { nome: "Meio-dia", imagem: "images/noon.png", corFundo: "#4aa2d6" },
+            { nome: "Tarde", imagem: "images/afternoon.png", corFundo: "#fca34e" },
+            { nome: "Pôr do Sol", imagem: "images/sunset.png", corFundo: "#ff6a62" },
+            { nome: "Noite", imagem: "images/night.png", corFundo: "#001a3d" },
+            { nome: "Meia-noite", imagem: "images/midnight.png", corFundo: "#000f24" },
+        ];
+
+        horarios.forEach(h => this.cicloDoDia.adicionar(h));
+        this.tempoAtualNode = this.cicloDoDia.head; // Começa no primeiro horário
+    }
+    // --- MÉTODOS PARA O CARROSSEL ---
+
+    /**
+     * Atualiza a interface com os dados do nó de tempo atual.
+     */
+    renderizarCicloDoDia() {
+        if (!this.tempoAtualNode) return;
+        
+        const dadosAtuais = this.tempoAtualNode.data;
+        this.elementoCicloDisplay.style.backgroundColor = dadosAtuais.corFundo;
+        this.elementoCicloImagem.src = dadosAtuais.imagem;
+        this.elementoCicloNome.innerText = dadosAtuais.nome;
+    }
+
+    /**
+     * Avança para o próximo nó na lista circular.
+     */
+    avancarTempo() {
+        if (this.tempoAtualNode) {
+            this.tempoAtualNode = this.tempoAtualNode.next;
+            this.renderizarCicloDoDia();
+        }
+    }
+    /**
+     * Retrocede para o nó anterior na lista circular.
+     */
+    retrocederTempo() {
+        if (this.tempoAtualNode) {
+            this.tempoAtualNode = this.tempoAtualNode.prev;
+            this.renderizarCicloDoDia();
+        }
+    }
+    iniciarCicloAutomatico(intervaloMs: number = 3000) { // 3 segundos por padrão
+        if (this.cicloInterval) {
+            console.log("O ciclo já está em andamento.");
+            return; // Evita criar múltiplos intervalos
+        }
+        console.log(`Iniciando ciclo automático a cada ${intervaloMs}ms.`);
+        this.cicloInterval = window.setInterval(() => {
+            this.avancarTempo();
+        }, intervaloMs);
+    }
+    pausarCicloAutomatico() {
+        if (this.cicloInterval) {
+            clearInterval(this.cicloInterval);
+            this.cicloInterval = null;
+            console.log("Ciclo pausado.");
+        }
     }
 }

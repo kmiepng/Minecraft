@@ -128,3 +128,49 @@ body {
 .hr{
     width: 1300px;
 }
+/* Cabeçalho do jogo */
+.game-hud {
+    background-color: #333;
+    padding: 10px;
+    border-bottom: 3px solid #222;
+    margin-bottom: 20px;
+}
+
+.carrossel-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+#ciclo-display {
+    width: 250px; /* Largura fixa */
+    height: 80px; /* Altura menor */
+    flex-direction: row; /* Itens (imagem e texto) lado a lado */
+    justify-content: flex-start;
+    padding: 0 15px;
+    gap: 15px;
+}
+
+#ciclo-imagem {
+    width: 50px;
+    height: 50px;
+}
+#ciclo-nome {
+    font-size: 1.5em;
+}
+
+/* Botões de controle */
+#ciclo-controles-manual button {
+    padding: 10px 15px;
+    font-size: 1.2em;
+}
+#ciclo-controles-auto {
+    margin-left: 20px; /* Espaçamento */
+    display: flex;
+    gap: 10px;
+}
+#ciclo-controles-auto button {
+    padding: 10px;
+}
