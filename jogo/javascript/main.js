@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
     meuJogo.renderizarInventarioPilha();
     meuJogo.renderizarTodosOsInventarios();
     meuJogo.renderizarTodosOsInventariosDeque();
+    meuJogo.renderizarCicloDoDia();
     meuJogo.iniciarCicloAutomatico();
     meuJogo.renderizarTabelaDeCrafting();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
