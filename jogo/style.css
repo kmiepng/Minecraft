@@ -219,3 +219,18 @@ body {
 .recipe-arrow {
     font-size: 2em;
 }
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.search-bar input {
+    padding: 8px;
+    font-size: 1em;
+    width: 250px;
+}
+#search-result {
+    margin: 0;
+    font-style: italic;
+}
