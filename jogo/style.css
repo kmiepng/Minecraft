@@ -234,3 +234,35 @@ body {
     margin: 0;
     font-style: italic;
 }
+.server-manager-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.player-management {
+    flex-basis: 40%;
+}
+.chest-management {
+    flex-basis: 60%;
+}
+.add-player-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#player-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#player-list-table th, #player-list-table td {
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: left;
+}
+.set-operations { display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*.switch { /* ... (código CSS para um switch toggle) ... }*/

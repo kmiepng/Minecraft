@@ -20,7 +20,8 @@ class Node {
 }
 // Classe auxiliar para armazenar pares de chave-valor
 export class ValuePair<K, V> {
-    constructor(public key: K, public value: V) {}
+    public isDeleted?: boolean;
+    constructor(public key: K, public value: V) {  this.isDeleted = false;}
 }
 export const Compare = {
     LESS_THAN: -1,

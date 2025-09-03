@@ -36,6 +36,7 @@
             <button class="tab-button" data-tab="inventario-pilha">Inventário com Pilha</button>
             <button class="tab-button" data-tab="funil-fila">Funil</button>
             <button class="tab-button" data-tab="crafting-tabela">Dicionário de Criação</button>
+            <button class="tab-button" data-tab="server-manager">Gerenciador do Servidor</button>
         </div>
 
         <div class="tab-content">
@@ -137,6 +138,39 @@
                         <h3>Ingredientes</h3>
                     </div>
                     <div id="crafting-recipes-display" class="crafting-display">
+                    </div>
+                </div>
+            </div>
+            <div id="server-manager" class="tab-pane">
+                <div class="server-manager-container">
+                    <div class="player-management">
+                        <h3>Jogadores no Servidor (Tabela Hash)</h3>
+                        <div class="add-player-form">
+                            <input type="text" id="new-player-name" placeholder="Nome do Jogador">
+                            <button id="add-player-button">Adicionar Jogador</button>
+                        </div>
+                        <table id="player-list-table">
+                            <thead><tr><th>Jogador</th><th>PvP</th><th>Ações</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <div class="chest-management">
+                        <h3>Baús dos Jogadores (Lista Ligada)</h3>
+                        <div id="chest-display-area" class="inventory-grid">
+                            <p class="inventario-vazio">Selecione "Inspecionar Baú" de um jogador.</p>
+                        </div>
+                        <hr>
+                        <h3>Operações de Conjunto (Set)</h3>
+                        <div class="set-operations">
+                            <select id="player1-select"></select>
+                            <select id="player2-select"></select>
+                            <button id="union-button">União</button>
+                            <button id="diff-button">Diferença</button>
+                            </div>
+                        <div id="set-result-area" class="inventory-grid">
+                            <p class="inventario-vazio">Resultado da operação aparecerá aqui.</p>
+                        </div>
                     </div>
                 </div>
             </div>

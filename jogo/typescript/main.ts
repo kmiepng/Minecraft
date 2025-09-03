@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
     meuJogo.renderizarCicloDoDia();
     meuJogo.iniciarCicloAutomatico();
     meuJogo.renderizarTabelaDeCrafting();
+    meuJogo.renderizarGerenciadorServidor();
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
@@ -192,4 +193,16 @@ window.addEventListener('DOMContentLoaded', () => {
         const termoFormatado = termo.charAt(0).toUpperCase() + termo.slice(1).toLowerCase();
         meuJogo.buscarIngrediente(termoFormatado);
     });
+    // --- LISTENERS PARA O GERENCIADOR DE SERVIDOR ---
+    document.getElementById('add-player-button')?.addEventListener('click', () => {
+        const input = document.getElementById('new-player-name') as HTMLInputElement;
+        if (input.value) {
+            meuJogo.adicionarNovoJogador(input.value);
+            input.value = '';
+        }
+    });
+
+    document.getElementById('union-button')?.addEventListener('click', () => {
+        meuJogo.executarOperacaoDeSet('union');
+    }); 
 });

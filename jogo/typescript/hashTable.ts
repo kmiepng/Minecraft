@@ -1,15 +1,16 @@
 import { defaultToString, ValuePair } from "./utils";
-import { Jogador } from "./lista_ligada_sets";
+import { Jogador } from "./jogadores";
 
-export class HashTable {
-    toStrFn : typeof defaultToString
-    table : any
+export class HashTable<K, V> {
+    private toStrFn: (key: K) => string;
+    protected table: { [key: number]: ValuePair<K, V> };
+
     constructor(toStrFn = defaultToString) {
-        this.toStrFn = toStrFn;
+        this.toStrFn = toStrFn as (key: K) => string;
         this.table = {};
     }
     //Função Hash para jogar os jogadores para um índice na tabela
-    loseloseHashCode(key : any) {
+    private loseloseHashCode(key: K): number {
         if (typeof key === 'number') {
             return key;
         }
@@ -20,22 +21,21 @@ export class HashTable {
         }
         return hash % 37;
     }
-    hashCode(key : any) {
+    private hashCode(key: K): number {
         return this.loseloseHashCode(key);
     }
     //O jogador entrou num servidor
     //Implementando o tratamento de colisão preguiçosa
-    put(key : any, value : Jogador) {
+    put(key: K, value: V): boolean {
         if (key != null && value != null) {
-        const position = this.hashCode(key);
-            if (
-                this.table[position] == null ||
-                (this.table[position] != null && this.table[position].isDeleted)
-                ) {
+            const position = this.hashCode(key);
+            // Se a posição está livre ou foi liberada (lazy deletion), podemos inserir.
+            if (this.table[position] == null || this.table[position].isDeleted) {
                 this.table[position] = new ValuePair(key, value);
             } else {
+                // Se a posição está ocupada, procuramos a próxima livre (sondagem linear).
                 let index = position + 1;
-                while (this.table[index] != null && !this.table[position].isDeleted) {
+                while (this.table[index] != null && !this.table[index].isDeleted) {
                     index++;
                 }
                 this.table[index] = new ValuePair(key, value);
@@ -45,57 +45,47 @@ export class HashTable {
         return false;
     }
     //Verificação do estado do jogador
-    get(key : any) {
-       const position = this.hashCode(key);
+    get(key: K): V | undefined {
+        const position = this.hashCode(key);
+
         if (this.table[position] != null) {
+            // Verifica a posição original
             if (this.table[position].key === key && !this.table[position].isDeleted) {
                 return this.table[position].value;
             }
+            // Se não encontrou, inicia a sondagem linear
             let index = position + 1;
-            while (
-                this.table[index] != null &&
-                (this.table[index].key !== key || this.table[index].isDeleted)
-                ) {
-                if (this.table[index].key === key && this.table[index].isDeleted) {
-                    return undefined;
-                }
+            // O loop continua enquanto houver itens e a chave não for a correta OU o item estiver deletado
+            while (this.table[index] != null && (this.table[index].key !== key || this.table[index].isDeleted)) {
                 index++;
             }
-            if (
-                this.table[index] != null &&
-                this.table[index].key === key &&
-                !this.table[index].isDeleted
-                ) {
-                return this.table[position].value;
+            // Após o loop, verifica se encontramos um item válido
+            if (this.table[index] != null && this.table[index].key === key && !this.table[index].isDeleted) {
+                return this.table[index].value;
             }
         }
-        return undefined;
+        return undefined; // Não encontrou
     }
     //O jogador saiu do servidor
-    remove(key : any) {
+    remove(key: K): boolean {
         const position = this.hashCode(key);
+
         if (this.table[position] != null) {
+            // Lógica de busca idêntica ao 'get'
             if (this.table[position].key === key && !this.table[position].isDeleted) {
-                this.table[position].isDeleted = true;
+                this.table[position].isDeleted = true; // Apenas marca como removido
                 return true;
             }
             let index = position + 1;
-            while (
-                this.table[index] != null &&
-                (this.table[index].key !== key || this.table[index].isDeleted)
-                ) {
+            while (this.table[index] != null && (this.table[index].key !== key || this.table[index].isDeleted)) {
                 index++;
             }
-            if (
-                this.table[index] != null &&
-                this.table[index].key === key &&
-                !this.table[index].isDeleted
-                ) {
-                this.table[index].isDeleted = true;
+            if (this.table[index] != null && this.table[index].key === key && !this.table[index].isDeleted) {
+                this.table[index].isDeleted = true; // Apenas marca como removido
                 return true;
             }
         }
-        return false;
+        return false; // Não encontrou
     }
     size() {
         return Object.keys(this.table).length;
@@ -103,46 +93,21 @@ export class HashTable {
     isEmpty() {
         return this.size() === 0;
     }
-    setPvpState(key: any, isPvpEnabled: boolean) {
-        const position = this.hashCode(key);
-        if (this.table[position] != null) {
-            // Verifica a posição original do hash
-            if (this.table[position].key === key && !this.table[position].isDeleted) {
-                // Encontrou o jogador, agora altera o estado do PvP
-                this.table[position].value.pvpEnabled = isPvpEnabled;
-                return true; // Sucesso
-            }
-            // Se não estiver na posição original, procura nas próximas (sondagem linear)
-            let index = position + 1;
-            while (
-                this.table[index] != null &&
-                (this.table[index].key !== key || this.table[index].isDeleted)
-            ) {
-                index++;
-            }
-            // Verifica se encontrou o jogador após a sondagem
-            if (
-                this.table[index] != null &&
-                this.table[index].key === key &&
-                !this.table[index].isDeleted
-            ) {
-                // Encontrou o jogador, agora altera o estado do PvP
-                this.table[index].value.pvpEnabled = isPvpEnabled;
-                return true; // Sucesso
-            }
+    setPvpState(key: K, isPvpEnabled: boolean): boolean {
+        const player = this.get(key) as Jogador | undefined;
+        if (player) {
+            player.pvpEnabled = isPvpEnabled;
+            return true;
         }
-        // Se o loop terminar e não encontrar o jogador
-        return false; // Jogador não encontrado
+        return false;
     }
-    toString() {
-        if (this.isEmpty()) {
-            return '';
-        }
-        const keys = Object.keys(this.table);
-        let objString = `{${keys[0]} => ${this.table[keys[0]].pvpEnabled}}`;
-        for (let i = 1; i < keys.length; i++) {
-            objString = `${objString},{${keys[i]} => ${this.table[keys[i]].pvpEnabled}}`;
-        }
-        return objString;
+    getValues(): V[] {
+        const values: V[] = [];
+        Object.values(this.table).forEach(pair => {
+            if (pair && !pair.isDeleted) {
+                values.push(pair.value);
+            }
+        });
+        return values;
     }
 }
