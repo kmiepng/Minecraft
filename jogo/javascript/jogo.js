@@ -434,7 +434,7 @@ export class Jogo {
         // Chama o ajudante para o baú de cima. Não há seleção nem clique, então passamos 'null'.
         this._renderizarInventario(this.inventarioCima, this.elementoInventarioCimaHTML, null, null);
         // O funil tem sua própria lógica de renderização, então o chamamos separadamente.
-        this.renderizarFunilDeque();
+        this.renderizarFunil();
         // Chama o ajudante para o baú de baixo. Também sem seleção ou clique.
         this._renderizarInventario(this.inventarioBaixo, this.elementoInventarioBaixoHTML, null, null);
     }
