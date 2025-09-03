@@ -1,7 +1,7 @@
 // ------------------------- IMPORTS -------------------------------------
 import { Itens } from "./itens.js";
 import { Inventario, InventarioComPilha } from "./inventario.js";
-import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
+import { bubblesort, mergeSort, binarySearch } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular.js";
 import { Dictionary, Receita } from "./dicionario.js";
@@ -19,7 +19,7 @@ const itemImagens = {
     "Bloco de Ferro": "images/iron_ore.png", // Imagem para o bloco dropado por Toque de Seda
     "Bloco de Diamante": "images/diamond_ore.png",
     "Trouxa": "images/bundle.png",
-    "Graveto" : "images/stick.png"
+    "Graveto": "images/stick.png"
 };
 export class Jogo {
     constructor(idElementoInventario, idGridPilha, idGridCima, idGridBaixo, idGridFunil, idStatusFunil, idGridCimaDeque, idGridBaixoDeque, idGridFunilDeque) {
@@ -29,6 +29,7 @@ export class Jogo {
         this.transferenciaInterval = null;
         this.cicloInterval = null;
         this.ingredienteSelecionado = null;
+        this.chavesDeIngredientesOrdenadas = [];
         this.inventario = new Inventario();
         // Garante que o elemento do inventário exista no HTML
         const elemento = document.getElementById(idElementoInventario);
@@ -65,6 +66,7 @@ export class Jogo {
         this.receitasDeCrafting = new Dictionary();
         this.elementoCraftingKeys = document.getElementById('crafting-keys-list');
         this.elementoCraftingDisplay = document.getElementById('crafting-recipes-display');
+        this.elementoSearchResult = document.getElementById('search-result');
         this._inicializarReceitas();
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
@@ -619,16 +621,32 @@ export class Jogo {
         // A mesma receita pode ser encontrada por chaves diferentes
         this.receitasDeCrafting.set("Diamante", receitaPicareta);
         this.receitasDeCrafting.set("Graveto", receitaPicareta);
+        const chavesUnicas = [...new Set(this.receitasDeCrafting.keys())];
+        this.chavesDeIngredientesOrdenadas = chavesUnicas.sort((a, b) => a.localeCompare(b));
     }
     // --- MÉTODOS PARA A TABELA DE CRIAÇÃO ---
+    buscarIngrediente(termo) {
+        if (!termo)
+            return;
+        console.log(`Buscando por "${termo}" usando Busca Binária...`);
+        const index = binarySearch(this.chavesDeIngredientesOrdenadas, termo);
+        if (index !== -1) {
+            this.elementoSearchResult.innerText = `"${termo}" encontrado na posição ${index}!`;
+            this.elementoSearchResult.style.color = 'lightgreen';
+            // Bônus: seleciona o item encontrado e mostra suas receitas
+            this.ingredienteSelecionado = this.chavesDeIngredientesOrdenadas[index];
+            this.renderizarTabelaDeCrafting();
+        }
+        else {
+            this.elementoSearchResult.innerText = `"${termo}" não é um ingrediente-chave.`;
+            this.elementoSearchResult.style.color = 'salmon';
+        }
+    }
     renderizarTabelaDeCrafting() {
-        // 1. Renderiza a lista de ingredientes-chave (as chaves do dicionário)
+        // Renderiza a lista de ingredientes-chave (agora em ordem alfabética)
         this.elementoCraftingKeys.innerHTML = '<h3>Ingredientes</h3>';
         const listaKeys = document.createElement('ul');
-        const chaves = this.receitasDeCrafting.keys();
-        // Remove duplicatas para a lista ficar limpa
-        const chavesUnicas = [...new Set(chaves)];
-        chavesUnicas.forEach(chave => {
+        this.chavesDeIngredientesOrdenadas.forEach(chave => {
             const itemLista = document.createElement('li');
             itemLista.innerText = chave;
             if (chave === this.ingredienteSelecionado) {
@@ -636,12 +654,13 @@ export class Jogo {
             }
             itemLista.addEventListener('click', () => {
                 this.ingredienteSelecionado = chave;
-                this.renderizarTabelaDeCrafting(); // Re-renderiza tudo ao selecionar
+                this.elementoSearchResult.innerText = ''; // Limpa a busca ao clicar
+                this.renderizarTabelaDeCrafting();
             });
             listaKeys.appendChild(itemLista);
         });
         this.elementoCraftingKeys.appendChild(listaKeys);
-        // 2. Renderiza as receitas para o ingrediente selecionado
+        // Renderiza as receitas para o ingrediente selecionado
         this.elementoCraftingDisplay.innerHTML = '<h3>Receitas Possíveis</h3>';
         if (this.ingredienteSelecionado) {
             const receitas = this.receitasDeCrafting.get(this.ingredienteSelecionado);

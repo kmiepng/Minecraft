@@ -17,6 +17,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // ----------------------- LÓGICA PARA TROCA DE ABAS ---------------------------
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanes = document.querySelectorAll('.tab-pane');
+    const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             var _a;
@@ -146,6 +148,13 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     (_5 = document.getElementById('ciclo-pausar')) === null || _5 === void 0 ? void 0 : _5.addEventListener('click', () => {
         meuJogo.pausarCicloAutomatico();
+    });
+    // --- LISTENER PARA A BARRA DE BUSCA ---
+    searchButton === null || searchButton === void 0 ? void 0 : searchButton.addEventListener('click', () => {
+        // Pega o termo de busca, capitaliza a primeira letra para corresponder às nossas chaves
+        const termo = searchInput.value;
+        const termoFormatado = termo.charAt(0).toUpperCase() + termo.slice(1).toLowerCase();
+        meuJogo.buscarIngrediente(termoFormatado);
     });
 });
 //# sourceMappingURL=main.js.map
