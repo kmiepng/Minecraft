@@ -22,7 +22,8 @@ const itemImagens = {
     "Bloco de Ferro": "images/iron_ore.png", // Imagem para o bloco dropado por Toque de Seda
     "Bloco de Diamante": "images/diamond_ore.png",
     "Trouxa": "images/bundle.png",
-    "Graveto": "images/stick.png"
+    "Graveto": "images/stick.png",
+    "Tabua de Madeira" : "images/oak_wood_plants.png"
 };
 export class Jogo {
     constructor(idElementoInventario, idGridPilha, idGridCima, idGridBaixo, idGridFunil, idStatusFunil, idGridCimaDeque, idGridBaixoDeque, idGridFunilDeque) {
