@@ -624,13 +624,16 @@ export class Jogo {
         // --- Definindo os Itens ---
         const graveto = new Itens("Graveto", 2, "Material");
         const diamante = new Itens("Diamante", 3, "Minério");
+        const tabua_madeira = new Itens("Tabua de Madeira", 2, "Bloco");
         const picaretaDiamante = new Itens("Picareta de Diamante", 1, "Ferramenta", 1561);
         // --- Criando a Receita ---
         const receitaPicareta = new Receita(picaretaDiamante, [diamante, graveto]);
+        const receitaGraveto = new Receita(graveto, [tabua_madeira]);
         // --- Adicionando ao Dicionário ---
         // A mesma receita pode ser encontrada por chaves diferentes
         this.receitasDeCrafting.set("Diamante", receitaPicareta);
         this.receitasDeCrafting.set("Graveto", receitaPicareta);
+        this.receitasDeCrafting.set("Tabua de Madeira", receitaGraveto)
         const chavesUnicas = [...new Set(this.receitasDeCrafting.keys())];
         this.chavesDeIngredientesOrdenadas = chavesUnicas.sort((a, b) => a.localeCompare(b));
     }
