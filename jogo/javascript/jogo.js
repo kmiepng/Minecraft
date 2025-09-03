@@ -4,7 +4,10 @@ import { Inventario, InventarioComPilha } from "./inventario.js";
 import { bubblesort, mergeSort, binarySearch } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular.js";
+import { Bau } from "./lista_ligada_sets.js";
+import { Jogadores } from "./jogadores.js";
 import { Dictionary, Receita } from "./dicionario.js";
+import { HashTable } from "./hashTable.js";
 import { heapSortInventario } from "./minHeap.js";
 import { FilaDeque, FilacomNode } from "./filas.js";
 // -------------------------JOGO-----------------------------------------
@@ -68,6 +71,11 @@ export class Jogo {
         this.elementoCraftingDisplay = document.getElementById('crafting-recipes-display');
         this.elementoSearchResult = document.getElementById('search-result');
         this._inicializarReceitas();
+        this.servidorPlayers = new HashTable();
+        this.listaDeBaus = new Jogadores();
+        this.elementoPlayerList = document.querySelector('#player-list-table tbody');
+        // ... (get outros elementos por ID)
+        this._inicializarServidor();
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
@@ -686,6 +694,49 @@ export class Jogo {
                 });
             }
         }
+    }
+    _inicializarServidor() {
+        this.adicionarNovoJogador("Steve");
+        this.adicionarNovoJogador("Alex");
+    }
+    adicionarNovoJogador(nome) {
+        const novoJogador = { playerName: nome, pvpEnabled: false };
+        const novoBau = new Bau();
+        // Adiciona itens de exemplo ao baú do novo jogador
+        novoBau.add(new Itens(nome === "Steve" ? "Diamante" : "Pedra", 5, "Minério"));
+        novoBau.add(new Itens("Graveto", 10, "Material"));
+        this.servidorPlayers.put(nome, novoJogador);
+        this.listaDeBaus.insertLast(novoJogador, novoBau);
+        this.renderizarGerenciadorServidor();
+    }
+    renderizarGerenciadorServidor() {
+        // Renderiza a lista de jogadores da Tabela Hash
+        this.elementoPlayerList.innerHTML = '';
+        const players = this.servidorPlayers.getValues();
+        players.forEach(player => {
+            const row = document.createElement('tr');
+            // ... (cria as células <td> com nome, switch de pvp, e botões)
+            // O switch de PvP chama: this.servidorPlayers.setPvpState(player.playerName, novoEstado);
+            // O botão "Inspecionar" chama: this.inspecionarBau(player.playerName);
+            this.elementoPlayerList.appendChild(row);
+        });
+        // Renderiza os dropdowns para operações de Set
+        // ...
+    }
+    inspecionarBau(playerName) {
+        const bau = this.listaDeBaus.find(playerName);
+        if (bau) {
+            this.renderizarBau(bau, document.getElementById('chest-display-area'));
+        }
+    }
+    executarOperacaoDeSet(operacao) {
+        // Pega os nomes dos jogadores dos <select>
+        // Encontra os baús de cada um na lista ligada
+        // Executa a operação (ex: bau1.bau_comunitario(bau2))
+        // Renderiza o resultado no 'set-result-area'
+    }
+    renderizarBau(bau, elemento) {
+        // Lógica similar ao _renderizarInventario para desenhar os itens de um baú
     }
 }
 //# sourceMappingURL=jogo.js.map
