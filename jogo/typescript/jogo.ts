@@ -700,7 +700,7 @@ export class Jogo{
         horarios.forEach(h => this.cicloDoDia.adicionar(h));
         this.tempoAtualNode = this.cicloDoDia.head; // Começa no primeiro horário
     }
-    // --- MÉTODOS PARA O CARROSSEL ---
+    // -------------------------- MÉTODOS PARA O CARROSSEL -------------------------------------
 
     /**
      * Atualiza a interface com os dados do nó de tempo atual.
@@ -769,7 +769,7 @@ export class Jogo{
         const chavesUnicas = [...new Set(this.receitasDeCrafting.keys())];
         this.chavesDeIngredientesOrdenadas = chavesUnicas.sort((a, b) => a.localeCompare(b));
     }
-    // --- MÉTODOS PARA A TABELA DE CRIAÇÃO ---
+    // ------------------------------------ MÉTODOS PARA A TABELA DE CRIAÇÃO ----------------------
     buscarIngrediente(termo: string) {
         if (!termo) return;
 
@@ -839,6 +839,7 @@ export class Jogo{
             }
         }
     }
+    // -------------------------------- MÉTODOS PARA INICIAR O SERVIDOR --------------------------------
     private _inicializarServidor() {
         this.adicionarNovoJogador("Steve");
         this.adicionarNovoJogador("Alex");

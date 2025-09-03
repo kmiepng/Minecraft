@@ -15,7 +15,7 @@ export class Dictionary<K, V> {
         this.table = {};
     }
     //O valor da chave agora é um array
-    //Estou utilizando o mesmo método para evitar colisão de HashTable
+    //Estou utilizando o método preguiçoso para evitar colisão de HashTable
     set(key : K, value : V) : boolean{
         if (key != null && value != null) {
             const tableKey = this.toStrFn(key);
