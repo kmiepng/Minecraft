@@ -1,4 +1,13 @@
-import { defaultToString, ValuePair } from './utils';
+import { defaultToString, ValuePair } from './utils.js';
+/**
+ * Classe para estruturar os dados de uma receita de crafting.
+ */
+export class Receita {
+    constructor(resultado, ingredientes) {
+        this.resultado = resultado;
+        this.ingredientes = ingredientes;
+    }
+}
 //O dicionário será usado como uma 'wiki' para ver a lista de 'crafting' dos itens disponíveis
 export class Dictionary {
     constructor(toStrFn = defaultToString) {
@@ -14,14 +23,18 @@ export class Dictionary {
             if (this.table[tableKey] == null) {
                 this.table[tableKey] = [];
             }
-            this.table[tableKey].push(new ValuePair(tableKey, value));
+            this.table[tableKey].push(new ValuePair(key, value));
             return true;
         }
         return false;
     }
     get(key) {
-        const valuePair = this.table[this.toStrFn(key)];
-        return valuePair == null ? undefined : valuePair;
+        const valuePairs = this.table[this.toStrFn(key)];
+        if (valuePairs == null) {
+            return undefined;
+        }
+        // Retorna apenas os valores, não os ValuePairs completos
+        return valuePairs.map(pair => pair.value);
     }
     hasKey(key) {
         return this.table[this.toStrFn(key)] != null;
@@ -37,7 +50,14 @@ export class Dictionary {
         return this.keyValues().map((valuePair) => valuePair.value);
     }
     keys() {
-        return this.keyValues().map((valuePair) => valuePair.key);
+        const keys = [];
+        const valueArrays = Object.values(this.table);
+        for (const valueArray of valueArrays) {
+            if (valueArray.length > 0) {
+                keys.push(valueArray[0].key); // Pega a chave do primeiro par
+            }
+        }
+        return keys;
     }
     keyValues() {
         return Object.values(this.table);
@@ -73,7 +93,7 @@ export class Dictionary {
             const key = valueArray[0].key;
             // Mapeia os valores para uma string
             const valuesStr = valueArray.map(pair => pair.value).join(', ');
-            objString += `${key.info()} => [${valuesStr}]`;
+            objString += `${key} => [${valuesStr}]`;
         });
         return objString;
     }

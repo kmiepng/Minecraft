@@ -4,6 +4,7 @@ import { Inventario, InventarioComPilha } from "./inventario.js";
 import { bubblesort, mergeSort } from "./search_e_sort_algoritmos.js";
 import { ItemTrouxa } from "./pilhas.js";
 import { ListaLigadaCircularDuasVias } from "./lista_ligada_circular.js";
+import { Dictionary, Receita } from "./dicionario.js";
 import { heapSortInventario } from "./minHeap.js";
 import { FilaDeque, FilacomNode } from "./filas.js";
 // -------------------------JOGO-----------------------------------------
@@ -26,6 +27,7 @@ export class Jogo {
         this.slotPilhaSelecionado = 0;
         this.transferenciaInterval = null;
         this.cicloInterval = null;
+        this.ingredienteSelecionado = null;
         this.inventario = new Inventario();
         // Garante que o elemento do inventário exista no HTML
         const elemento = document.getElementById(idElementoInventario);
@@ -58,6 +60,11 @@ export class Jogo {
         this.elementoCicloDisplay = document.getElementById('ciclo-display');
         this.elementoCicloImagem = document.getElementById('ciclo-imagem');
         this.elementoCicloNome = document.getElementById('ciclo-nome');
+        // Inicializa os componentes da Tabela de Criação
+        this.receitasDeCrafting = new Dictionary();
+        this.elementoCraftingKeys = document.getElementById('crafting-keys-list');
+        this.elementoCraftingDisplay = document.getElementById('crafting-recipes-display');
+        this._inicializarReceitas();
     }
     // ------------------------------------------ INVENTARIO ---------------------------------------------------------
     /**
@@ -158,7 +165,7 @@ export class Jogo {
                 slotDiv.title = item.info_item();
             }
             const img = document.createElement('img');
-            img.src = itemImagens[item.nome] || 'assets/images/default.png';
+            img.src = itemImagens[item.nome] || 'images/default.png';
             img.alt = item.nome;
             slotDiv.appendChild(img);
             if (item.quantidade > 1) {
@@ -330,7 +337,7 @@ export class Jogo {
                 const quantidade = slot.size(); // Pega o tamanho da pilha para a quantidade
                 slotDiv.title = `${item.nome} x${quantidade}`;
                 const img = document.createElement('img');
-                img.src = itemImagens[item.nome] || 'assets/images/default.png';
+                img.src = itemImagens[item.nome] || 'images/default.png';
                 img.alt = item.nome;
                 slotDiv.appendChild(img);
                 if (quantidade > 1) {
@@ -598,6 +605,66 @@ export class Jogo {
             clearInterval(this.cicloInterval);
             this.cicloInterval = null;
             console.log("Ciclo pausado.");
+        }
+    }
+    _inicializarReceitas() {
+        // --- Definindo os Itens ---
+        const graveto = new Itens("Graveto", 2, "Material");
+        const diamante = new Itens("Diamante", 3, "Minério");
+        const picaretaDiamante = new Itens("Picareta de Diamante", 1, "Ferramenta", 1561);
+        // --- Criando a Receita ---
+        const receitaPicareta = new Receita(picaretaDiamante, [diamante, graveto]);
+        // --- Adicionando ao Dicionário ---
+        // A mesma receita pode ser encontrada por chaves diferentes
+        this.receitasDeCrafting.set("Diamante", receitaPicareta);
+        this.receitasDeCrafting.set("Graveto", receitaPicareta);
+    }
+    // --- MÉTODOS PARA A TABELA DE CRIAÇÃO ---
+    renderizarTabelaDeCrafting() {
+        // 1. Renderiza a lista de ingredientes-chave (as chaves do dicionário)
+        this.elementoCraftingKeys.innerHTML = '<h3>Ingredientes</h3>';
+        const listaKeys = document.createElement('ul');
+        const chaves = this.receitasDeCrafting.keys();
+        // Remove duplicatas para a lista ficar limpa
+        const chavesUnicas = [...new Set(chaves)];
+        chavesUnicas.forEach(chave => {
+            const itemLista = document.createElement('li');
+            itemLista.innerText = chave;
+            if (chave === this.ingredienteSelecionado) {
+                itemLista.className = 'selected';
+            }
+            itemLista.addEventListener('click', () => {
+                this.ingredienteSelecionado = chave;
+                this.renderizarTabelaDeCrafting(); // Re-renderiza tudo ao selecionar
+            });
+            listaKeys.appendChild(itemLista);
+        });
+        this.elementoCraftingKeys.appendChild(listaKeys);
+        // 2. Renderiza as receitas para o ingrediente selecionado
+        this.elementoCraftingDisplay.innerHTML = '<h3>Receitas Possíveis</h3>';
+        if (this.ingredienteSelecionado) {
+            const receitas = this.receitasDeCrafting.get(this.ingredienteSelecionado);
+            if (receitas) {
+                // Usamos um Set para não mostrar a mesma receita duas vezes se ela tiver múltiplas chaves
+                const receitasUnicas = new Set(receitas);
+                receitasUnicas.forEach(receita => {
+                    const divReceita = document.createElement('div');
+                    divReceita.className = 'recipe';
+                    // Renderiza os ingredientes
+                    let ingredientesHTML = '<div class="recipe-ingredients">';
+                    receita.ingredientes.forEach(ing => {
+                        ingredientesHTML += `<div class="inventory-slot" title="${ing.info_item()}"><img src="${itemImagens[ing.nome] || ''}"></div>`;
+                    });
+                    ingredientesHTML += '</div>';
+                    // Renderiza a seta e o resultado
+                    const resultadoHTML = `<div class="recipe-arrow">→</div>
+                                           <div class="recipe-result">
+                                               <div class="inventory-slot" title="${receita.resultado.info_item()}"><img src="${itemImagens[receita.resultado.nome] || ''}"></div>
+                                           </div>`;
+                    divReceita.innerHTML = ingredientesHTML + resultadoHTML;
+                    this.elementoCraftingDisplay.appendChild(divReceita);
+                });
+            }
         }
     }
 }
