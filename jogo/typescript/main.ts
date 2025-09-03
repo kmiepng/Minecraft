@@ -204,5 +204,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('union-button')?.addEventListener('click', () => {
         meuJogo.executarOperacaoDeSet('union');
+    });
+    document.getElementById('diff-button')?.addEventListener('click', () => {
+        meuJogo.executarOperacaoDeSet('difference');
     }); 
+    document.getElementById('filter-union-button')?.addEventListener('click', () => {
+        meuJogo.executarOperacaoDeSet('filter');
+    });
 });

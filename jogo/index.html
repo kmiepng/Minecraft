@@ -144,7 +144,7 @@
             <div id="server-manager" class="tab-pane">
                 <div class="server-manager-container">
                     <div class="player-management">
-                        <h3>Jogadores no Servidor (Tabela Hash)</h3>
+                        <h3>Jogadores no Servidor</h3>
                         <div class="add-player-form">
                             <input type="text" id="new-player-name" placeholder="Nome do Jogador">
                             <button id="add-player-button">Adicionar Jogador</button>
@@ -167,7 +167,12 @@
                             <select id="player2-select"></select>
                             <button id="union-button">União</button>
                             <button id="diff-button">Diferença</button>
-                            </div>
+                            
+                        </div>
+                        <div class="set-operations">
+                            <input type="text" id="filter-input" placeholder="Tipo: Ferramenta, Bloco, etc.">
+                            <button id="filter-union-button">Filtrar & Unir</button>
+                        </div>
                         <div id="set-result-area" class="inventory-grid">
                             <p class="inventario-vazio">Resultado da operação aparecerá aqui.</p>
                         </div>

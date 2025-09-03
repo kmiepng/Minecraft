@@ -3,7 +3,7 @@ import { Itens } from "./itens.js";
 import { ItemTrouxa } from "./pilhas.js";
 // Quando a página carregar, inicializa o jogo.
 window.addEventListener('DOMContentLoaded', () => {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
     // Passa os IDs dos dois grids de inventário para o construtor do Jogo
     const meuJogo = new Jogo('inventario-grid', 'inventario-pilha-grid', 'inventario-cima-grid', 'inventario-baixo-grid', 'funil-grid', 'status-funil', 'inventario-cima-grid deque', 'inventario-baixo-grid deque', 'funil-grid deque');
     // Renderiza o estado inicial de ambos os inventários
@@ -167,6 +167,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     (_7 = document.getElementById('union-button')) === null || _7 === void 0 ? void 0 : _7.addEventListener('click', () => {
         meuJogo.executarOperacaoDeSet('union');
+    });
+    (_8 = document.getElementById('diff-button')) === null || _8 === void 0 ? void 0 : _8.addEventListener('click', () => {
+        meuJogo.executarOperacaoDeSet('difference');
+    });
+    (_9 = document.getElementById('filter-union-button')) === null || _9 === void 0 ? void 0 : _9.addEventListener('click', () => {
+        meuJogo.executarOperacaoDeSet('filter');
     });
 });
 //# sourceMappingURL=main.js.map

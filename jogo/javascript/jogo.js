@@ -797,6 +797,18 @@ export class Jogo {
                 console.log(`Executando DIFERENÇA entre ${p1Name} e ${p2Name}`);
                 resultadoBau = bau1.diferenca_baus(bau2);
                 break;
+            case 'filter':
+                const filterInput = document.getElementById('filter-input');
+                const filtro = filterInput.value;
+                if (!filtro) {
+                    alert("Por favor, digite um tipo de item para filtrar (ex: Ferramenta).");
+                    return;
+                }
+                // Capitaliza a primeira letra para corresponder ao nosso tipo de dado
+                const filtroFormatado = filtro.charAt(0).toUpperCase() + filtro.slice(1).toLowerCase();
+                console.log(`Executando FILTRAR & UNIR com o filtro "${filtroFormatado}"`);
+                resultadoBau = bau1.bau_filtrado(bau2, filtroFormatado);
+                break;
         }
         this.renderizarBau(resultadoBau, resultadoArea);
     }
