@@ -1,6 +1,8 @@
 // Bubblesort
 
-export function bubblesort(arr : any[]){
+import { Itens } from "./itens";
+
+export function bubblesort(arr : Itens[]) : Itens[]{
     let n = arr.length;
     // Outer loop: Iterate over the entire array
     for (let i = 0; i < n - 1; i++) {
@@ -32,7 +34,7 @@ export function bubblesort(arr : any[]){
 
 //Mergesort
 
-function merge(leftArr : any[], rightArr : any[]) : any{
+function merge(leftArr : Itens[], rightArr : Itens[]) : Itens[]{
     let resultArr = [];
     let leftIndex = 0;
     let rightIndex = 0;
@@ -54,7 +56,7 @@ function merge(leftArr : any[], rightArr : any[]) : any{
     return resultArr.concat(leftArr.slice(leftIndex)).concat(rightArr.slice(rightIndex));
 }
 
-export function mergeSort(arr : any[]) : any{
+export function mergeSort(arr : Itens[]) : Itens[]{
     if (arr.length < 2){
         return arr;
     }
@@ -66,34 +68,34 @@ export function mergeSort(arr : any[]) : any{
     return merge(mergeSort(leftArr), mergeSort(rightArr));
 }
 
-//Binary Search
+/**
+ * Realiza uma busca binária em um array ORDENADO de strings.
+ * @param arrayOrdenado O array de strings, que deve estar em ordem alfabética.
+ * @param alvo A string que estamos procurando.
+ * @returns O índice do alvo se encontrado, senão -1.
+ */
+export function binarySearch(arrayOrdenado: string[], alvo: string): number {
+    let esquerda = 0;
+    let direita = arrayOrdenado.length - 1;
 
-export function binarySearch(arr : any[], target : any) {
-    let left = 0;
-    let right = arr.length - 1;
+    while (esquerda <= direita) {
+        const meio = Math.floor((esquerda + direita) / 2);
+        const comparacao = arrayOrdenado[meio].localeCompare(alvo);
 
-    // Keep dividing the search space by half
-    while (left <= right) {
-        // Find the middle index
-        let mid = Math.floor((left + right) / 2);
-
-        // Check if the middle element is the target
-        if (arr[mid].nome === target) {
-        return mid; // Target found, return its index
+        if (comparacao === 0) {
+            return meio; // Alvo encontrado!
         }
 
-        // If target is smaller, ignore the right half
-        if (arr[mid].nome > target) {
-        right = mid - 1;
-        } 
-        // If target is larger, ignore the left half
-        else {
-        left = mid + 1;
+        if (comparacao < 0) {
+            // O item do meio vem antes do alvo, então procuramos na metade direita
+            esquerda = meio + 1;
+        } else {
+            // O item do meio vem depois do alvo, então procuramos na metade esquerda
+            direita = meio - 1;
         }
     }
 
-    // Target not found
-    return -1;
+    return -1; // Alvo não encontrado
 }
 
 //Linear Search

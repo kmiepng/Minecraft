@@ -24,63 +24,56 @@ export class FilacomNode {
         this.size = 0
     }
     add_item(item : Itens){
-        const newItem = new Node(item)
-        if (this.tail === null){
-            this.head = this.tail = newItem
+        const newNode = new Node(item, null, this.head)
+        if (this.tail !== null){
+            this.tail.next = newNode;
         } else {
-            newItem.next = this.tail;
-            this.tail.prev = newItem;
-            this.tail = newItem
+            this.head = newNode;
         }
+        this.tail = newNode
         this.size++;
     }
-    remove_item(){
-        if (this.head === null){
+    remove_item() : Itens | null{
+        if (!this.head){
             console.log('Não há mais item no funil')
             return null;
         }
-        const data = this.head.getData();
-        this.head = this.head.prev;
+        const removedNode = this.head;
+        this.head = this.head.next;
 
-        if (this.head!==null) {
-            this.head.next = null;
+        if (this.head) {
+            this.head.prev = null;
         } else {
             this.tail = null
         }
         this.size--
-        return data
+        return removedNode.item
     }
-    print(){
+    peek() : Itens | null{
+        return this.head ? this.head.item : null;
+    }
+    isEmpty(): boolean {
+        return this.size === 0;
+    }
+    toArray(): Itens[] {
+        const result: Itens[] = [];
         let current = this.head;
-        let result = ''
-        while (current !== null){
-            result += current.getData()
-            if (current.next !== null) result += '|'
-            current = current.next
+        while (current) {
+            result.push(current.item);
+            current = current.next;
         }
-        return result
-    }
-    peek() {
-        if (this.head === null) {
-            console.log("");
-            return null;
-        }
-        return this.head.getData();
-    }
-    toArray() {
-        const result = this.print().split("|")
-        return result
+        return result;
     }
 }
 
 export class FilaDeque{
     count : number
     lowestCount : number
-    items : any
+    items : Itens[]
     constructor() {
         this.count = 0;
         this.lowestCount = 0;
-        this.items = {};
+        this.items = [];
     }
 
     addFront(element : Itens) {
@@ -127,14 +120,14 @@ export class FilaDeque{
         if (this.isEmpty()) {
         return undefined;
         }
-        return this.items[this.lowestCount].info();
+        return this.items[this.lowestCount].info_item();
     }
 
     peekBack() {
         if (this.isEmpty()) {
         return undefined;
         }
-        return this.items[this.count - 1].info();
+        return this.items[this.count - 1].info_item();
     }
 
     isEmpty() {
@@ -142,7 +135,7 @@ export class FilaDeque{
     }
 
     clear() {
-        this.items = {};
+        this.items = [];
         this.count = 0;
         this.lowestCount = 0;
     }
@@ -151,15 +144,7 @@ export class FilaDeque{
         return this.count - this.lowestCount;
     }
 
-    toString() {
-        if (this.isEmpty()) {
-        return '';
-        }
-        let objString = `| ${this.items[this.lowestCount].info()}`;
-        for (let i = this.lowestCount + 1; i < this.count; i++) {
-        objString = `${objString} | ${this.items[i].info()}`;
-        }
-        objString += ' |'
-        return objString;
+    toArray() : Itens[] {
+        return this.items
     }
 }

@@ -1,0 +1,310 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 60px); /* 9 colunas como no Minecraft */
+    grid-gap: 5px;
+    padding: 10px;
+    background-color: #555;
+    border: 2px solid #222;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.inventory-slot {
+    width: 60px;
+    height: 60px;
+    background-color: #8b8b8b;
+    border: 1px solid #373737;
+    position: relative; /* Para posicionar a quantidade */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.inventory-slot:hover {
+    background-color: #a0a0a0;
+}
+
+.inventory-slot img {
+    width: 50px;
+    height: 50px;
+    image-rendering: pixelated; /* Para manter o estilo pixel art */
+}
+
+.item-quantity {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 2px 2px #000; /* Sombra para legibilidade */
+}
+
+.inventario-vazio {
+    grid-column: 1 / -1; /* Ocupa todas as colunas */
+    color: #ccc;
+}
+
+#controles button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+.inventory-slot.selected {
+    border: 2px solid yellow; /* Borda amarela para destacar */
+    background-color: #a0a0a0;
+}
+#performance-results {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 5px;
+    white-space: pre-wrap; /* Mantém as quebras de linha do texto */
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Estilos para os Botões das Abas */
+.tab-buttons {
+    margin-bottom: 10px;
+    border-bottom: 2px solid #555;
+    padding-bottom: 5px;
+}
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #555;
+    background-color: #333;
+    color: #fff;
+    font-size: 1em;
+    border-bottom: none; /* Remove a borda de baixo para fundir com o conteúdo */
+}
+/* Estilo do botão da aba ativa */
+.tab-button.active {
+    background-color: #555;
+    border-color: #777;
+}
+
+/* Estilos para os Painéis de Conteúdo */
+.tab-pane {
+    display: none; /* Esconde todas as abas por padrão */
+    padding: 10px;
+    border: 2px solid #555;
+    border-top: none; /* Remove a borda de cima para fundir com o botão */
+}
+/* Mostra apenas o painel da aba ativa */
+.tab-pane.active {
+    display: block; /* ou flex, grid, dependendo do seu layout interno */
+}
+.controles {
+    margin-top: 20px;
+}
+.simulacao-funil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.funil-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 60px); /* Funil tem 5 slots */
+    grid-gap: 5px;
+    padding: 10px;
+    background-color: #444;
+    border: 2px solid #222;
+}
+.hr{
+    width: 1300px;
+}
+/* Cabeçalho do jogo */
+.game-hud {
+    background-color: #333;
+    padding: 8px;
+    border-bottom: 3px solid #222;
+    margin-bottom: 20px;
+}
+
+.carrossel-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+#ciclo-display {
+    width: 550px; /* Largura fixa */
+    height: 80px; /* Altura menor */
+    flex-direction: row; /* Itens (imagem e texto) lado a lado */
+    justify-content: flex-start;
+    padding: 15px;
+    gap: 15px;
+}
+
+#ciclo-imagem {
+    width: 50px;
+    height: 50px;
+}
+#ciclo-nome {
+    font-size: 1.1em;
+}
+
+/* Botões de controle */
+#ciclo-controles-manual button {
+    padding: 10px 15px;
+    font-size: 1.2em;
+}
+#ciclo-controles-auto {
+    margin-left: 20px; /* Espaçamento */
+    display: flex;
+    gap: 10px;
+}
+#ciclo-controles-auto button {
+    padding: 10px;
+}
+.crafting-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.crafting-keys {
+    flex-basis: 200px; /* Largura da coluna de ingredientes */
+    border-right: 2px solid #555;
+    padding-right: 20px;
+}
+.crafting-keys ul {
+    list-style: none;
+    padding: 0;
+}
+.crafting-keys li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.crafting-keys li:hover {
+    background-color: #444;
+}
+.crafting-keys li.selected {
+    background-color: #555;
+    font-weight: bold;
+}
+.crafting-display {
+    flex-grow: 1; /* Ocupa o resto do espaço */
+}
+.recipe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.recipe-ingredients, .recipe-result {
+    display: flex;
+    gap: 5px;
+}
+.recipe-arrow {
+    font-size: 2em;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.search-bar input {
+    padding: 8px;
+    font-size: 1em;
+    width: 250px;
+}
+#search-result {
+    margin: 0;
+    font-style: italic;
+}
+.server-manager-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.player-management {
+    flex-basis: 40%;
+}
+.chest-management {
+    flex-basis: 60%;
+}
+.add-player-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+#player-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#player-list-table th, #player-list-table td {
+    border: 1px solid #555;
+    padding: 8px;
+    text-align: left;
+}
+.set-operations { display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50; /* Verde quando ligado */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
