@@ -174,3 +174,48 @@ body {
 #ciclo-controles-auto button {
     padding: 10px;
 }
+.crafting-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.crafting-keys {
+    flex-basis: 200px; /* Largura da coluna de ingredientes */
+    border-right: 2px solid #555;
+    padding-right: 20px;
+}
+.crafting-keys ul {
+    list-style: none;
+    padding: 0;
+}
+.crafting-keys li {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.crafting-keys li:hover {
+    background-color: #444;
+}
+.crafting-keys li.selected {
+    background-color: #555;
+    font-weight: bold;
+}
+.crafting-display {
+    flex-grow: 1; /* Ocupa o resto do espaço */
+}
+.recipe {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.recipe-ingredients, .recipe-result {
+    display: flex;
+    gap: 5px;
+}
+.recipe-arrow {
+    font-size: 2em;
+}
