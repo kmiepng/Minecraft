@@ -1,6 +1,6 @@
 # Minecraft
 
-Repositório para armazernar atividades da disciplina Projeto de Algoritmos I
+Este repositório tem como objetivo armazenar todas as aplicações de Estruturas de Dados em JavaScript ao decorrer da disciplina 'Projeto de Algoritmos I'. A divisão consiste em: atividades feitas em sala de aula e demo do jogo tema escolhido, nesse caso, Minecraft.
 
 ## Organização
 
